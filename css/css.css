@@ -1,0 +1,9 @@
+body{
+    background-color: whitesmoke;
+}
+
+#homepageNav{
+    overflow: hidden;
+    display: flex;
+    gap: 5rem;
+}

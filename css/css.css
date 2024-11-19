@@ -1,9 +1,41 @@
 body{
     background-color: whitesmoke;
+    margin: 0;
+}
+*{
+    padding-left: 0.5rem;
 }
 
-#homepageNav{
-    overflow: hidden;
-    display: flex;
-    gap: 5rem;
+
+header div {
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+}
+
+header h1{
+    font-size: medium;
+}
+
+#homepageNav {
+    margin: 0; 
+    padding: 2rem; 
+    list-style: none; 
+    display: flex; 
+    gap: 2rem; 
+}
+#ads h1{
+    font-size: 3rem;
+}
+#images{
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+}
+#images img{
+    width: 20%;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-attachment: fixed;
+    background-position: center center;
 }

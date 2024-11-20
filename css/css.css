@@ -30,8 +30,12 @@ header h1{
     color: white;
 
   } 
+  a{
+    color: black;
+  }
 #homepageNav a:hover { 
-    border-bottom: 5px solid black;
+    text-decoration: underline;
+    text-decoration-thickness: 5px;
   } 
 
 
@@ -86,5 +90,20 @@ header h1{
     align-items: center; 
     justify-content: space-between; 
     padding: 5rem;
-
+}
+.pair{
+    padding:1rem;
+}
+#FeaturedArtworks{
+    display: flex;
+    align-items: center; 
+    justify-content: space-between; 
+    padding: 5rem;
+}
+#text2{
+    width: 50%;
+}
+#shopNow{
+    padding: 15px 5rem;
+    line-height: 3rem;
 }

@@ -23,7 +23,19 @@ header h1{
     list-style: none; 
     display: flex; 
     gap: 2rem; 
+    text-decoration: none;
 }
+#homepageNav a:link { 
+    text-decoration: none; 
+    color: white;
+
+  } 
+#homepageNav a:hover { 
+    border-bottom: 5px solid black;
+  } 
+
+
+
 #ads h1{
     font-size: 3rem;
 }
@@ -38,4 +50,41 @@ header h1{
     padding: 2rem;
     background-attachment: fixed;
     background-position: center center;
+}
+
+#Discover{
+    background: white;
+    font-size: 1rem;
+    color: black;
+    text-align: center;
+    padding: 0.5rem;
+    text-decoration: none;
+    border: 2px solid black;
+    margin: 0.5rem;
+
+}
+#Discover:hover{
+    background: lightgray;
+}
+
+#shopNow{
+    background: white;
+    font-size: 1rem;
+    color: black;
+    text-align: center;
+    padding: 0.5rem;
+    text-decoration: none;
+    border: 2px solid black;
+}
+
+#shopNow:hover{
+    background: lightgray;
+}
+
+#text{
+    display: flex;
+    align-items: center; 
+    justify-content: space-between; 
+    padding: 5rem;
+
 }

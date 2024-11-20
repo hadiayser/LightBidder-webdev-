@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Ludiflex | About</title>
+</head>
+<body>
+ <div class="wrapper">
+    <nav class="nav">
+        <div class="nav-logo">
+            <a href="web.html" class="logo"><img src="../img/logo-no-background.png" alt=""></a>
+        </div>
+        <div class="nav-menu" id="navMenu">
+            <ul>
+                <li><a href="web.html" class="link">Home</a></li>
+                <li><a href="#" class="link">Messages</a></li>
+                <li><a href="#" class="link">Notifications</a></li>
+                <li><a href="about.html" class="link active">About</a></li>
+            </ul>
+        </div>
+        <div class="nav-button">
+            <a href="web.html"><button class="btn white-btn" id="loginBtn" onclick="login()">Sign In</button></a>
+            <!-- <button class="btn" id="registerBtn" onclick="register()">Sign Up</button> -->
+        </div>
+        <div class="nav-menu-btn">
+            <i class="bx bx-menu" onclick="myMenuFunction()"></i>
+        </div>
+    </nav>
+
+    <div class="about-content">
+        <h1>About Ludiflex</h1>
+        <p>Welcome to Ludiflex! We are dedicated to providing the best services for our users. Our platform offers a variety of features to enhance your experience.</p>
+        <p>Our mission is to connect people and provide a seamless experience in the digital world.</p>
+        <p>Thank you for choosing Ludiflex!</p>
+    </div>
+</div>   
+
+<script>
+   function myMenuFunction() {
+    var i = document.getElementById("navMenu");
+
+    if(i.className === "nav-menu") {
+        i.className += " responsive";
+    } else {
+        i.className = "nav-menu";
+    }
+   }
+</script>
+
+</body>
+</html>

@@ -98,7 +98,7 @@ header h1{
 .pair{
     padding:1rem;
 }
-#FeaturedArtworks{
+.FeaturedArtworks{
     display: flex;
     align-items: center; 
     justify-content: space-between; 
@@ -110,4 +110,37 @@ header h1{
 #shopNow{
     padding: 15px 5rem;
     line-height: 3rem;
+}
+
+.bidButton{
+    background: white;
+    font-size: 1rem;
+    color: black;
+    text-align: center;
+    padding: 0.5rem;
+    text-decoration: none;
+    border: 2px solid black; 
+    width: 90%;
+
+}
+
+#imagesArtwork {
+    display: flex;
+    justify-content: space-between; 
+    gap: 2rem;
+    padding: 3rem;
+}
+
+.artwork {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    width: 50%; 
+}
+
+.artwork img {
+    height:100%;
+    width: 100%; 
+    margin-bottom: 1rem;
+    object-fit: cover;
 }

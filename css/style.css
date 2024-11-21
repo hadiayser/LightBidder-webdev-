@@ -84,7 +84,7 @@ body{
     margin-top: 20px;
     width: 80px;
     height: 90px;
-    
+
 }
 .nav-menu ul{
     display: flex;
@@ -136,6 +136,7 @@ body{
     height: 420px;
     overflow: hidden;
     z-index: 2;
+    margin-left: 20px;
 }
 .login-container{
     position: absolute;

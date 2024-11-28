@@ -41,26 +41,28 @@
                 <span>Don't have an account? <a href="#" onclick="register()">Sign Up</a></span>
                 <header>Login</header>
             </div>
-            <div class="input-box">
-                <input type="text" class="input-field" placeholder="Username or Email">
-                <i class="bx bx-user"></i>
-            </div>
-            <div class="input-box">
-                <input type="password" class="input-field" placeholder="Password">
-                <i class="bx bx-lock-alt"></i>
-            </div>
-            <div class="input-box">
-                <input type="submit" class="submit" value="Sign In">
-            </div>
-            <div class="two-col">
-                <div class="one">
-                    <input type="checkbox" id="login-check">
-                    <label for="login-check"> Remember Me</label>
+            <form method="POST" action="../php/auth.php">
+                <div class="input-box">
+                    <input type="text" class="input-field" placeholder="Username or Email" name="username" required>
+                    <i class="bx bx-user"></i>
                 </div>
-                <div class="two">
-                    <label><a href="#">Forgot password?</a></label>
+                <div class="input-box">
+                    <input type="password" class="input-field" placeholder="Password" name="password" required>
+                    <i class="bx bx-lock-alt"></i>
                 </div>
-            </div>
+                <div class="input-box">
+                    <input type="submit" class="submit" value="Sign In" name="login">
+                </div>
+                <div class="two-col">
+                    <div class="one">
+                        <input type="checkbox" id="login-check">
+                        <label for="login-check"> Remember Me</label>
+                    </div>
+                    <div class="two">
+                        <label><a href="#">Forgot password?</a></label>
+                    </div>
+                </div>
+            </form>
         </div>
 
         <!------------------- registration form -------------------------->
@@ -69,36 +71,40 @@
                 <span>Have an account? <a href="#" onclick="login()">Login</a></span>
                 <header>Sign Up</header>
             </div>
-            <div class="two-forms">
-                <div class="input-box">
-                    <input type="text" class="input-field" placeholder="Firstname">
-                    <i class="bx bx-user"></i>
+            <form method="POST" action="../php/auth.php">
+                <div class="two-forms">
+                    <div class="input-box">
+                        <input type="text" class="input-field" placeholder="Firstname" name="firstname" required>
+                        <i class="bx bx-user"></i>
+                    </div>
+                    <div class="input-box">
+                        <input type="text" class="input-field" placeholder="Lastname" name="lastname" required>
+                        <i class="bx bx-user"></i>
+                    </div>
                 </div>
                 <div class="input-box">
-                    <input type="text" class="input-field" placeholder="Lastname">
-                    <i class="bx bx-user"></i>
+                    <input type="text" class="input-field" placeholder="Email" name="email" required>
+                    <i class="bx bx-envelope"></i>
                 </div>
-            </div>
-            <div class="input-box">
-                <input type="text" class="input-field" placeholder="Email">
-                <i class="bx bx-envelope"></i>
-            </div>
-            <div class="input-box">
-                <input type="password" class="input-field" placeholder="Password">
-                <i class="bx bx-lock-alt"></i>
-            </div>
-            <div class="input-box">
-                <input type="submit" class="submit" value="Register">
-            </div>
-            <div class="two-col">
-                <div class="one">
-                    <input type="checkbox" id="register-check">
-                    <label for="register-check"> Remember Me</label>
+                <div class="input-box">
+                    <input type="password" class="input-field" placeholder="Password" name="password" required>
+                    <i class="bx bx-lock-alt"></i>
                 </div>
-                <div class="two">
-                    <label><a href="#">Terms & conditions</a></label>
+                <label for="role">Register as:</label>
+                <select id="role" name="role" required>
+                    <option value="bidder">Bidder</option>
+                    <option value="artist">Artist</option>
+                </select>
+                <div class="input-box">
+                    <input type="submit" class="submit" value="Register" name="register">
                 </div>
-            </div>
+                <div class="two-col">
+                    <div class="one">
+                        <input type="checkbox" id="register-check">
+                        <label for="register-check"> Remember Me</label>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
     <div class="images">
@@ -107,27 +113,19 @@
         <img src="../img/pexels-hatice-159587543-15301860.jpg" alt="">
         <img src="../img/madonna_and_child_on_a_curved_throne_1937.1.1.jpg" alt="">
         <img src="../img/saint_john_the_evangelist__right_panel__1939.1.261.c.jpg" alt="" class="fifth-image">
-
     </div>
     </div>
 </div>   
 
-
 <script>
-   
    function myMenuFunction() {
     var i = document.getElementById("navMenu");
-
     if(i.className === "nav-menu") {
         i.className += " responsive";
     } else {
         i.className = "nav-menu";
     }
    }
- 
-</script>
-
-<script>
 
     var a = document.getElementById("loginBtn");
     var b = document.getElementById("registerBtn");
@@ -141,7 +139,6 @@
         b.className = "btn";
         x.style.opacity = 1;
         y.style.opacity = 0;
-        
     }
 
     function register() {
@@ -152,7 +149,6 @@
         x.style.opacity = 0;
         y.style.opacity = 1;
     }
-
 </script>
 
 </body>

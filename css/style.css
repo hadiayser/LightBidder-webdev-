@@ -235,6 +235,32 @@ header{
 .two label a:hover{
     text-decoration: underline;
 }
+
+label[for="role"] {
+    margin-top: 16px;
+    font-weight: normal;
+}
+
+select, .role-options {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+/* For Radio Button Styling (Alternative to Dropdown) */
+.role-options {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 8px;
+}
+
+.role-options input[type="radio"] {
+    margin-right: 8px;
+}
 @media only screen and (max-width: 786px){
     .nav-button{
         display: none;

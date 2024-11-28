@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/css.css" />
+    <title>Homepage</title>
+  </head>
+  <body>
+    <header>
+      <div>
+        <div class="nav-logo">
+          <a href="#" class="logo"
+            ><img src="../img/logo-no-background.png" alt=""
+          /></a>
+        </div>
+        <ul id="homepageNav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="artworks.html">Artwork</a></li>
+          <li><a href="index.html">Collections</a></li>
+          <li><a href="index.html">Exhibitions</a></li>
+          <li><a href="forum.html">Forum</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="web.html">Login/Signup</a></li>
+        </ul>
+      </div>
+    </header>
+    <section id="create-thread">
+      <h2>Lets talk about art!</h2>
+      <input
+        type="text"
+        id="thread-title"
+        placeholder="Write something...or dont"
+      />
+      <textarea
+        id="thread-content"
+        placeholder="What is on your mind"
+      ></textarea>
+      <button id="post-thread">Post Thread</button>
+    </section>
+
+    <!-- Forum Threads Section -->
+    <section id="forum-threads">
+      <h2>Forum Threads</h2>
+      <div id="threads-container">
+        <!-- Threads will appear here -->
+      </div>
+    </section>
+    <script>
+      // This tells the browser to wait until the page is fully loaded and all the HTML has been parsed
+      document.addEventListener("DOMContentLoaded", () => {
+        const postThreadBtn = document.getElementById("post-thread");
+        const threadsContainer = document.getElementById("threads-container");
+
+        // Add Event Listener to Post Thread Button
+        postThreadBtn.addEventListener("click", () => {
+          const title = document.getElementById("thread-title").value.trim();
+          const content = document
+            .getElementById("thread-content")
+            .value.trim();
+          //   if (!title || !content) {
+          //     alert("Please fill in both the title and content!");
+          //     return;
+          //   }
+
+          // Create a new thread element
+          const thread = document.createElement("div");
+          thread.className = "thread";
+          thread.innerHTML = `
+          <h3>${title}</h3>
+          <p>${content}</p>
+          <div class="comments">
+            <input type="text" class="comment-input" placeholder="Write a comment..." />
+            <button class="add-comment">Add Comment</button>
+            <ul class="comments-list"></ul>
+          </div>
+          `;
+          //   <button class="delete-thread">Delete</button>
+
+          // Add delete functionality to the thread
+          //   const deleteButton = thread.querySelector(".delete-thread");
+          //   deleteButton.addEventListener("click", () => {
+          //     threadsContainer.removeChild(thread);
+          //   });
+
+          // Add comment functionality to the thread
+          const commentInput = thread.querySelector(".comment-input");
+          const addCommentButton = thread.querySelector(".add-comment");
+          const commentsList = thread.querySelector(".comments-list");
+
+          addCommentButton.addEventListener("click", () => {
+            const commentText = commentInput.value.trim();
+            if (!commentText) {
+              alert("Please write a comment!");
+              return;
+            }
+
+            // Create a new comment list item
+            const comment = document.createElement("li");
+            comment.textContent = commentText;
+
+            // Append the comment to the list
+            commentsList.appendChild(comment);
+
+            // Clear the comment input field
+            commentInput.value = "";
+          });
+
+          // Add the new thread to the container
+          threadsContainer.appendChild(thread);
+
+          // Clear inputs
+          document.getElementById("thread-title").value = "";
+          document.getElementById("thread-content").value = "";
+        });
+      });
+    </script>
+  </body>
+</html>

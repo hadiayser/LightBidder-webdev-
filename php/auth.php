@@ -2,11 +2,20 @@
 session_start();
 include('conn.php'); // Include database connection
 
-// Handle Login
+// Enable error reporting for debugging
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
+// Debug: Log when the form is accessed
+error_log('Attempt to login or register');
+
 // Handle Login
 if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
+
+    // Debug: Log login attempt
+    error_log("Login attempt with username: $username");
 
     $sql = "SELECT * FROM users WHERE username = ?";
     $stmt = $conn->prepare($sql);
@@ -30,19 +39,18 @@ if (isset($_POST['login'])) {
             error_log("Login successful for " . $_SESSION['username']);
 
             // Redirect to index page
-            header("Location:../html/index.html"); // Ensure the path is correct
+            header("Location: ../html/index.html");
             exit();
         } else {
             $error_message = "Incorrect password!";
+            error_log($error_message); // Debug log
         }
     } else {
         $error_message = "No user found with that username!";
+        error_log($error_message); // Debug log
     }
 }
 
-
-// Handle Registration
-// Handle Registration
 // Handle Registration
 if (isset($_POST['register'])) {
     $firstname = $_POST['firstname'];
@@ -52,7 +60,7 @@ if (isset($_POST['register'])) {
     $role = $_POST['role'];
 
     // Create the username by combining firstname and lastname
-    $username = strtolower($firstname . '' . $lastname);
+    $username = strtolower($firstname . $lastname);
 
     // Check if the username already exists
     $sql = "SELECT * FROM users WHERE username = ?";
@@ -63,6 +71,7 @@ if (isset($_POST['register'])) {
 
     if ($result->num_rows > 0) {
         $error_message = "Username already exists! Please choose a different username.";
+        error_log($error_message); // Debug log
     } else {
         // Hash password before storing it
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
@@ -70,16 +79,16 @@ if (isset($_POST['register'])) {
         // Insert the new user with the generated username
         $sql = "INSERT INTO users (firstname, lastname, email, username, password, role, date_registered) 
                 VALUES (?, ?, ?, ?, ?, ?, NOW())";
-
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ssssss", $firstname, $lastname, $email, $username, $hashed_password, $role);
         $stmt->execute();
 
-        header("Location: ../html/web.html"); // Redirect to login page after successful registration
+        // Debug: Log registration success
+        error_log("New user registered: $username");
+
+        // Redirect to login page after successful registration
+        header("Location: ../html/web.html");
         exit();
     }
 }
-
-
 ?>
-

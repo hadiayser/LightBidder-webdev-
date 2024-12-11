@@ -15,9 +15,9 @@
         <ul id="homepageNav">
           <li><a href="index.html">Home</a></li>
           <li><a href="artworks.html">Artwork</a></li>
-          <li><a href="collections.html">Collections</a></li>
+          <li><a href="collections.php">Collections</a></li>
           <li><a href="index.html">Exhibitions</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="contact.php">Contact</a></li>
           <li><a href="web.html">Login/Signup</a></li>
 
         </ul>
@@ -34,7 +34,7 @@
         include '../php/conn.php';
 
         // Fetch artworks with specific IDs from the database
-        $sql = "SELECT title, description, image_url FROM artworks WHERE artwork_id IN (4, 5, 6)";
+        $sql = "SELECT title, description, image_url FROM artworks WHERE artwork_id IN (1, 2, 3)";
         $result = $conn->query($sql);
 
         // Check if there are any results

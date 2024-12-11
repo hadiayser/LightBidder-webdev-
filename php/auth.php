@@ -11,15 +11,15 @@ error_log('Attempt to login or register');
 
 // Handle Login
 if (isset($_POST['login'])) {
-    $username = $_POST['username'];
+    $email = $_POST['email'];
     $password = $_POST['password'];
 
     // Debug: Log login attempt
-    error_log("Login attempt with username: $username");
+    error_log("Login attempt with email: $email");
 
-    $sql = "SELECT * FROM users WHERE username = ?";
+    $sql = "SELECT * FROM users WHERE email = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $username);
+    $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
 
@@ -39,14 +39,16 @@ if (isset($_POST['login'])) {
             error_log("Login successful for " . $_SESSION['username']);
 
             // Redirect to index page
-            header("Location: ../html/index.html");
+            error_log("Redirecting to index.php");
+            header("Location: ../html/index.php");
             exit();
+
         } else {
             $error_message = "Incorrect password!";
             error_log($error_message); // Debug log
         }
     } else {
-        $error_message = "No user found with that username!";
+        $error_message = "No user found with that email!";
         error_log($error_message); // Debug log
     }
 }
@@ -62,15 +64,15 @@ if (isset($_POST['register'])) {
     // Create the username by combining firstname and lastname
     $username = strtolower($firstname . $lastname);
 
-    // Check if the username already exists
-    $sql = "SELECT * FROM users WHERE username = ?";
+    // Check if the email already exists
+    $sql = "SELECT * FROM users WHERE email = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $username);
+    $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        $error_message = "Username already exists! Please choose a different username.";
+        $error_message = "Email already exists! Please use a different email.";
         error_log($error_message); // Debug log
     } else {
         // Hash password before storing it

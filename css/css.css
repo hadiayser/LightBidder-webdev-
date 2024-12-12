@@ -36,7 +36,7 @@ header h1{
 }
 #homepageNav a:link { 
     text-decoration: none; 
-    color: white;
+    /* color: white; */
 
   } 
   a{
@@ -182,3 +182,81 @@ header h1{
     height: auto;
     
 }
+<<<<<<< Updated upstream
+=======
+
+#create-thread {
+    background: whitesmoke;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    /* height: 40vh;
+    width: 100vw;
+    background-size: cover;
+    background-position: cover cover;
+    background-image: url('https://wallpapers.com/images/featured/art-dajgwkpkb3im2q3u.jpg'); */
+  }
+  
+  #create-thread input, 
+  #create-thread textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  #create-thread button {
+    background-color: #4169E1
+    ;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+  }
+  
+  #create-thread button:hover {
+    background-color: #005fa3;
+    cursor: pointer;
+  }
+  
+  /* Forum Threads */
+  #forum-threads {
+    margin-top: 20px;
+  }
+  
+  #threads-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .thread {
+    background: whitesmoke;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+  }
+  
+  .thread h3 {
+    margin: 0;
+    color: black;
+  }
+  
+  .thread p {
+    margin: 10px 0;
+  }
+  
+  .thread button {
+    background-color: #780606;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .thread button:hover {
+    background-color: #cc0000;
+  }
+>>>>>>> Stashed changes

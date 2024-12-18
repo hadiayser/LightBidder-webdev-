@@ -81,7 +81,7 @@ $artworks_result = $stmt->get_result();
             <nav>
                 <ul id="homepageNav">
                     <li><a href="index.php">Home</a></li>
-                    <li><a href="artworks.html">Artwork</a></li>
+                    <!-- <li><a href="artworks.html">Artwork</a></li> -->
                     <li><a href="collections.php">Collections</a></li>
                     <li><a href="auctions.php">Auctions</a></li>
                     <li><a href="contact.php">Contact</a></li>

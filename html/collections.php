@@ -48,10 +48,11 @@ foreach ($collections as $id => $arts) {
         </div>
         <ul id="homepageNav">
           <li><a href="index.php">Home</a></li>
-          <li><a href="artworks.html">Artwork</a></li>
+          <!-- <li><a href="artworks.html">Artwork</a></li> -->
           <li><a href="collections.php">Collections</a></li>
           <li><a href="auctions.php">Auctions</a></li>
           <li><a href="contact.php">Contact</a></li>
+          <li><a href="forum.php">Forum</a></li>
           <?php if (isset($_SESSION['user_id'])): ?>
             <li class="nav-item dropdown">
                 <button class="dropbtn">

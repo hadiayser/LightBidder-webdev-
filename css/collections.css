@@ -37,11 +37,11 @@ body {
   
   /* Category Row Styling */
   .category-row {
-    margin-bottom: 60px;
-    padding: 35px 25px;
-    border-radius: 20px;
+    margin-bottom: 40px;
+    padding: 20px 15px;
+    border-radius: 15px;
     background: white;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     transition: all 0.4s ease;
     position: relative;
     overflow: hidden;
@@ -53,13 +53,13 @@ body {
   }
   
   .category-row h3 {
-    font-size: 2.2em;
-    margin-bottom: 30px;
+    font-size: 1.8em;
+    margin-bottom: 20px;
     color: #3f7dc0;
     font-weight: bold;
     text-align: center;
     position: relative;
-    padding-bottom: 15px;
+    padding-bottom: 10px;
   }
   
   .category-row h3:after {
@@ -91,12 +91,12 @@ body {
     transition: all 0.3s ease;
     overflow: hidden;
     min-width: 350px;
-    width: 100%;
+    width: 90%;
   }
   
   .artwork img {
     width: 100%;
-    height: 400px;
+    height: 250px;
     object-fit: cover;
     border-radius: 12px;
     transition: all 0.5s ease;
@@ -126,9 +126,9 @@ body {
   .browse-button {
     display: block;
     width: fit-content;
-    margin: 30px auto 0;
-    padding: 15px 40px;
-    font-size: 1.2em;
+    margin: 20px auto 0;
+    padding: 10px 30px;
+    font-size: 1em;
     color: white;
     background: linear-gradient(135deg, #3f7dc0, #2c5a8f);
     border: none;

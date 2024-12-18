@@ -34,7 +34,7 @@ foreach ($collections as $id => $arts) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/css.css?v=3" />
-    <link rel="stylesheet" href="../css/collections.css?v=5" />
+    <link rel="stylesheet" href="../css/collections.css?v=6" />
     <title>Collections</title>
 </head>
 <body>

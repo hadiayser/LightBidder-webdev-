@@ -1,4 +1,3 @@
-/* General Styles for Auctions Page */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -6,9 +5,10 @@ body {
     color: #333;
     background: 
         url('../img/madonna_and_child_on_a_curved_throne_1937.1.1.jpg') no-repeat center center fixed,
-        /* url('../img/saint_john_the_evangelist__right_panel__1939.1.261.c.jpg') no-repeat center center fixed, */
         url('../img/background3.jpg') no-repeat center center fixed;
     background-size: cover;
+    background-blend-mode: overlay; /* Blend the images for a seamless look */
+    background-color: #1a1a1a; /* Base color for better blending */
     position: relative;
 }
 
@@ -19,7 +19,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Dimming effect */
+    background: rgba(0, 0, 0, 0.4); /* Slight dimming effect */
     z-index: 1;
 }
 
@@ -34,10 +34,12 @@ body {
     max-width: 1200px;
     margin: 40px auto;
     margin-top: 100px;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.95), rgba(240, 240, 240, 0.95)); /* Soft gradient for contrast */
+    border-radius: 15px; /* Rounded corners for a modern look */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Enhanced shadow for depth */
+    border: 1px solid rgba(200, 200, 200, 0.5); /* Subtle border for definition */
+    backdrop-filter: blur(5px); /* Slight blur for a glassy effect */
 }
 
 .auctions-container h2 {
@@ -192,30 +194,6 @@ header nav ul li a:hover {
     margin-right: 10px;
 }
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #fff;
-    min-width: 160px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 4;
-}
-
-.dropdown-content a {
-    color: #333;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    transition: background-color 0.3s;
-}
-
-.dropdown-content a:hover {
-    background-color: #f1f1f1;
-}
-
-.nav-item:hover .dropdown-content {
-    display: block;
-}
 
 /* Responsive Design */
 @media (max-width: 768px) {

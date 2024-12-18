@@ -25,9 +25,9 @@ while ($auction = mysqli_fetch_assoc($result)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/css.css?v=5">
+    <link rel="stylesheet" href="../css/css.css?v=6">
     <link rel="stylesheet" href="../css/collections.css?v=3">
-    <link rel="stylesheet" href="../css/auctions.css?v=3">
+    <link rel="stylesheet" href="../css/auctions.css?v=4">
     <title>All Auctions</title>
     <style>
         /* Background styling */
@@ -62,42 +62,38 @@ while ($auction = mysqli_fetch_assoc($result)) {
 <body>
     <div class="background-overlay"></div> <!-- Dimmed overlay -->
     <div class="content"> <!-- Content wrapper -->
-        <header>
-            <div>
-                <div class="nav-logo">
-                    <a href="index.php" class="logo">
-                        <img src="../img/bidder-high-resolution-logo-black-transparent.png" alt="Logo">
-                    </a>
+    <header>
+      <div>
+        <div class="nav-logo">
+          <a href="#" class="logo"><img src="../img/bidder-high-resolution-logo-black-transparent.png" alt=""></a>
+        </div>
+        <ul id="homepageNav">
+          <li><a href="index.php">Home</a></li>
+          <li><a href="artworks.html">Artwork</a></li>
+          <li><a href="collections.php">Collections</a></li>
+          <li><a href="auctions.php">Auctions</a></li>
+          <li><a href="contact.php">Contact</a></li>
+          <?php if (isset($_SESSION['user_id'])): ?>
+            <li class="nav-item dropdown">
+                <button class="dropbtn">
+                    <div class="user-profile">
+                        <img src="../img/—Pngtree—user avatar placeholder black_6796227.png" alt="Profile" class="profile-img">
+                        <span><?php echo htmlspecialchars($_SESSION['firstname']); ?></span>
+                    </div>
+                    <i class="arrow down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="profile.php">My Profile</a>
+                    <a href="my-collections.php">My Collections</a>
+                    <a href="../php/logout.php" style="background-color: #cb5050; !important;">Logout</a>
                 </div>
-                <nav>
-                    <ul id="homepageNav">
-                        <li><a href="index.php">Home</a></li>
-                        <li><a href="artworks.html">Artwork</a></li>
-                        <li><a href="collections.php">Collections</a></li>
-                        <li><a href="exhibitions.html">Exhibitions</a></li>
-                        <li><a href="contact.php">Contact</a></li>
-                        <?php if (isset($_SESSION['user_id'])): ?>
-                            <li class="nav-item dropdown">
-                                <button class="dropbtn">
-                                    <div class="user-profile">
-                                        <img src="../img/—Pngtree—user avatar placeholder black_6796227.png" alt="Profile" class="profile-img">
-                                        <span><?php echo htmlspecialchars($_SESSION['firstname']); ?></span>
-                                    </div>
-                                    <i class="arrow down"></i>
-                                </button>
-                                <div class="dropdown-content">
-                                    <a href="profile.php">My Profile</a>
-                                    <a href="my-collections.php">My Collections</a>
-                                    <a href="../php/logout.php" style="background-color: #cb5050; !important;">Logout</a>
-                                </div>
-                            </li>
-                        <?php else: ?>
-                            <li><a href="web.html">Login/Signup</a></li>
-                        <?php endif; ?>
-                    </ul>
-                </nav>
-            </div>
-        </header>
+            </li>
+          <?php else: ?>
+            <li><a href="web.html">Login/Signup</a></li>
+          <?php endif; ?>
+        </ul>
+      </div>
+    </header>
 
     <div class="auctions-container">
         <h2>All Auctions</h2>
@@ -126,5 +122,31 @@ while ($auction = mysqli_fetch_assoc($result)) {
             </div>
         <?php endforeach; ?>
     </div>
+    <script>
+   document.addEventListener('DOMContentLoaded', function() {
+    const dropdown = document.querySelector('.nav-item.dropdown');
+    const dropbtn = document.querySelector('.dropbtn');
+
+    if (dropdown && dropbtn) {
+        dropbtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dropdown.classList.toggle('active');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!dropdown.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        // Prevent dropdown from closing when clicking inside
+        dropdown.querySelector('.dropdown-content').addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+});
+    </script>
 </body>
 </html> 

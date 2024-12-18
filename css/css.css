@@ -11,8 +11,8 @@ body{
 }
 .nav-logo img{
     margin-top: 20px;
-    width: 80px;
-    height: 90px;
+    width: 60px;
+    height: 70px;
 }
 
 
@@ -30,7 +30,7 @@ header div {
     justify-content: space-between;
     background: linear-gradient(to bottom, rgba(192, 192, 192, 0.5) 0%, rgba(192, 192, 192, 0.582) 70%, rgba(245, 245, 245, 0.568) 100%);
     padding: 0 2rem; /* Horizontal padding */
-    height: 80px; /* Fixed height for the header */
+    /* height: 80px; Fixed height for the header */
     width: 100%; /* Ensure the inner div also spans the full width */
     box-sizing: border-box;
 }

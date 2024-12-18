@@ -132,37 +132,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <!-- Include your header here (same as profile.php) -->
     <header>
-        <div>
-            <div class="nav-logo">
-                <a href="index.php" class="logo">
-                    <img src="../img/bidder-high-resolution-logo-black-transparent.png" alt="Logo">
-                </a>
-            </div>
-            <ul id="homepageNav">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="artworks.html">Artwork</a></li>
-                <li><a href="collections.php">Collections</a></li>
-                <li><a href="exhibitions.html">Exhibitions</a></li>
-                <li><a href="contact.php">Contact</a></li>
-                <?php if (isset($_SESSION['user_id'])): ?>
-                    <li class="nav-item dropdown">
-                        <button class="dropbtn">
-                            <div class="user-profile">
-                                <img src="../img/—Pngtree—user avatar placeholder black_6796227.png" alt="Profile" class="profile-img">
-                                <span><?php echo htmlspecialchars($_SESSION['firstname']); ?></span>
-                            </div>
-                            <i class="arrow down"></i>
-                        </button>
-                        <div class="dropdown-content">
-                            <a href="profile.php">My Profile</a>
-                            <a href="my-collections.php">My Collections</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="../php/logout.php">Logout</a>
-                        </div>
-                    </li>
-                <?php endif; ?>
-            </ul>
+      <div>
+        <div class="nav-logo">
+          <a href="#" class="logo"><img src="../img/bidder-high-resolution-logo-black-transparent.png" alt=""></a>
         </div>
+        <ul id="homepageNav">
+          <li><a href="index.php">Home</a></li>
+          <li><a href="artworks.html">Artwork</a></li>
+          <li><a href="collections.php">Collections</a></li>
+          <li><a href="auctions.php">Auctions</a></li>
+          <li><a href="contact.php">Contact</a></li>
+          <?php if (isset($_SESSION['user_id'])): ?>
+            <li class="nav-item dropdown">
+                <button class="dropbtn">
+                    <div class="user-profile">
+                        <img src="../img/—Pngtree—user avatar placeholder black_6796227.png" alt="Profile" class="profile-img">
+                        <span><?php echo htmlspecialchars($_SESSION['firstname']); ?></span>
+                    </div>
+                    <i class="arrow down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="profile.php">My Profile</a>
+                    <a href="my-collections.php">My Collections</a>
+                    <a href="../php/logout.php" style="background-color: #cb5050; !important;">Logout</a>
+                </div>
+            </li>
+          <?php else: ?>
+            <li><a href="web.html">Login/Signup</a></li>
+          <?php endif; ?>
+        </ul>
+      </div>
     </header>
     <div class="collections-container">
         <div class="collections-header">

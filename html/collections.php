@@ -34,23 +34,20 @@ foreach ($collections as $id => $arts) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/css.css?v=3" />
-    <link rel="stylesheet" href="../css/collections.css?v=2" />
+    <link rel="stylesheet" href="../css/collections.css?v=5" />
     <title>Collections</title>
 </head>
 <body>
-  <header>
-    <div>
-      <div class="nav-logo">
-        <a href="index.php" class="logo">
-            <img src="../img/bidder-high-resolution-logo-black-transparent.png" alt="Logo">
-        </a>
-      </div>
-      <nav>
+<header>
+      <div>
+        <div class="nav-logo">
+          <a href="#" class="logo"><img src="../img/bidder-high-resolution-logo-black-transparent.png" alt=""></a>
+        </div>
         <ul id="homepageNav">
           <li><a href="index.php">Home</a></li>
           <li><a href="artworks.html">Artwork</a></li>
           <li><a href="collections.php">Collections</a></li>
-          <li><a href="exhibitions.html">Exhibitions</a></li>
+          <li><a href="auctions.php">Auctions</a></li>
           <li><a href="contact.php">Contact</a></li>
           <?php if (isset($_SESSION['user_id'])): ?>
             <li class="nav-item dropdown">
@@ -71,10 +68,8 @@ foreach ($collections as $id => $arts) {
             <li><a href="web.html">Login/Signup</a></li>
           <?php endif; ?>
         </ul>
-      </nav>
-    </div>
-  </header>
-
+      </div>
+    </header>
   <div id="collections">
     <h2>Explore Our Collections</h2>
 

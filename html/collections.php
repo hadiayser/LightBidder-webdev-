@@ -34,10 +34,13 @@ foreach ($collections as $id => $arts) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/css.css?v=3" />
-    <link rel="stylesheet" href="../css/collections.css?v=6" />
+    <link rel="stylesheet" href="../css/collections.css?v=7" />
+    <link rel="stylesheet" href="../css/auctions.css?v=6" />
+
     <title>Collections</title>
 </head>
 <body>
+<div class="content"> <!-- Content wrapper -->
 <header>
       <div>
         <div class="nav-logo">
@@ -91,6 +94,7 @@ foreach ($collections as $id => $arts) {
         </div>
     <?php endforeach; ?>
   </div>
+                </div>
 
   <script>
    document.addEventListener('DOMContentLoaded', function() {

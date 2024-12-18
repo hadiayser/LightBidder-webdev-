@@ -98,7 +98,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bid_amount'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/css.css?v=3">
     <link rel="stylesheet" href="../css/collections.css?v=5">
-    <title>Bid on Artwork</title>
+    <link rel="stylesheet" href="../css/auctions.css?v=3"">
+        <title>Bid on Artwork</title>
 </head>
 <body>
 <header>
@@ -134,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bid_amount'])) {
       </div>
     </header>
 
-    <div class="bid-container">
+    <div class="auctions-container">
         <div class="bid-content">
             <div class="artwork-display">
                 <h1><?php echo htmlspecialchars($auction['title']); ?></h1>

@@ -126,11 +126,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Collections</title>
-    <link rel="stylesheet" href="../css/css.css?v2">
-    <link rel="stylesheet" href="../css/collections.css?v2">
+    <link rel="stylesheet" href="../css/css.css?v5">
+    <link rel="stylesheet" href="../css/collections.css?v5">
 </head>
 <body>
-    <!-- Include your header here (same as profile.php) -->
     <header>
       <div>
         <div class="nav-logo">
@@ -408,9 +407,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </div>
     </div>
-
+    <script src="../JS/dropdown.js"></script>
     <script>
-        // Modal functionality
         function showNewArtworkForm() {
             document.getElementById('newArtworkModal').style.display = 'block';
         }
@@ -474,34 +472,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 console.log('Delete artwork:', artworkId);
             }
         }
-
-        // Replace the current dropdown JavaScript with this:
-        document.addEventListener('DOMContentLoaded', () => {
-            const dropdownBtn = document.querySelector('.dropbtn');
-            const dropdownContent = document.querySelector('.dropdown-content');
-            const arrow = document.querySelector('.arrow');
-
-            if (dropdownBtn && dropdownContent) {
-                dropdownBtn.onclick = (e) => {
-                    e.preventDefault();
-                    dropdownContent.classList.toggle('show');
-                    if (arrow) {
-                        arrow.classList.toggle('up');
-                    }
-                }
-
-                window.onclick = (e) => {
-                    if (!e.target.matches('.dropbtn') && !e.target.matches('.arrow')) {
-                        if (dropdownContent.classList.contains('show')) {
-                            dropdownContent.classList.remove('show');
-                            if (arrow) {
-                                arrow.classList.remove('up');
-                            }
-                        }
-                    }
-                }
-            }
-        });
     </script>
 </body>
 </html> 

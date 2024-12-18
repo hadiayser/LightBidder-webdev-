@@ -29,12 +29,43 @@ while ($row = $result->fetch_assoc()) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/css.css?v=3">
     <link rel="stylesheet" href="../css/collections.css?v=6">
+    <link rel="stylesheet" href="../css/my_favorites.css">
     <title>My Favorites</title>
 </head>
 <body>
 <header>
-    <!-- Your header code here -->
-</header>
+      <div>
+        <div class="nav-logo">
+          <a href="#" class="logo"><img src="../img/bidder-high-resolution-logo-black-transparent.png" alt=""></a>
+        </div>
+        <ul id="homepageNav">
+          <li><a href="index.php">Home</a></li>
+          <li><a href="artworks.html">Artwork</a></li>
+          <li><a href="collections.php">Collections</a></li>
+          <li><a href="auctions.php">Auctions</a></li>
+          <li><a href="contact.php">Contact</a></li>
+          <li><a href="forum.php">Forum</a></li>
+          <?php if (isset($_SESSION['user_id'])): ?>
+            <li class="nav-item dropdown">
+                <button class="dropbtn">
+                    <div class="user-profile">
+                        <img src="../img/—Pngtree—user avatar placeholder black_6796227.png" alt="Profile" class="profile-img">
+                        <span><?php echo htmlspecialchars($_SESSION['firstname']); ?></span>
+                    </div>
+                    <i class="arrow down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="profile.php">My Profile</a>
+                    <a href="my-collections.php">My Collections</a>
+                    <a href="../php/logout.php" style="background-color: #cb5050; !important;">Logout</a>
+                </div>
+            </li>
+          <?php else: ?>
+            <li><a href="web.html">Login/Signup</a></li>
+          <?php endif; ?>
+        </ul>
+      </div>
+    </header>
 <div id="favorites">
     <h2>My Favorite Auctions</h2>
     <?php if (empty($favorites)): ?>
@@ -57,33 +88,55 @@ while ($row = $result->fetch_assoc()) {
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const removeButtons = document.querySelectorAll('.remove-favorite-button');
+    const removeNotification = document.getElementById('remove-notification');
+    const removeNotificationMessage = document.getElementById('remove-notification-message');
+    const closeRemoveNotificationButton = document.getElementById('close-remove-notification');
 
     removeButtons.forEach(button => {
         button.addEventListener('click', function() {
             const auctionId = this.getAttribute('data-auction-id');
 
             fetch('../php/remove_favorite.php', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: 'auction_id=' + auctionId
-})
-.then(response => response.json())
-.then(data => {
-    if (data.status === 'success') {
-        alert('Removed from favorites!');
-        location.reload(); // Reload the page to update the list
-    } else {
-        alert('Error removing from favorites.');
-    }
-})
-.catch(error => {
-    console.error('Error:', error);
-});
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'auction_id=' + auctionId
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    removeNotificationMessage.textContent = 'Removed from favorites!';
+                    removeNotification.classList.add('show');
+                    setTimeout(() => {
+                        removeNotification.classList.remove('show');
+                    }, 5000); // Hide after 3 seconds
+                    location.reload(); // Reload the page to update the list
+                } else {
+                    removeNotificationMessage.textContent = 'Error removing from favorites.';
+                    removeNotification.classList.add('show');
+                    setTimeout(() => {
+                        removeNotification.classList.remove('show');
+                    }, 3000); // Hide after 3 seconds
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         });
+    });
+
+    closeRemoveNotificationButton.addEventListener('click', function() {
+        removeNotification.classList.remove('show');
     });
 });
 </script>
+<script src="../JS/dropdown.js"></script>
+<div id="remove-notification" class="notification hidden">
+    <div class="notification-content">
+        <span id="remove-notification-message"></span>
+        <button id="close-remove-notification">Close</button>
+    </div>
+</div>
 </body>
 </html> 

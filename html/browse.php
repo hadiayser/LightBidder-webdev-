@@ -49,7 +49,8 @@ $result = $stmt->get_result();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/css.css?v=4">
-    <link rel="stylesheet" href="../css/collections.css?v=3">
+    <link rel="stylesheet" href="../css/collections.css?v=7">
+    <link rel="stylesheet" href="../css/auctions.css">
     <title><?php echo htmlspecialchars($collection_name); ?> - Collections</title>
     <style>
         /* Popup styling */
@@ -170,6 +171,7 @@ $result = $stmt->get_result();
     </style>
 </head>
 <body>
+<div class="content"> 
 <header>
       <div>
         <div class="nav-logo">
@@ -202,10 +204,10 @@ $result = $stmt->get_result();
         </ul>
       </div>
     </header>
-
     <div class="browse-container">
-        <h2 class="browse-title"><?php echo htmlspecialchars($collection_name); ?></h2>
-        <p class="browse-description"><?php echo nl2br(htmlspecialchars($collection_description)); ?></p>
+    <h2 class="browse-title"><?php echo htmlspecialchars($collection_name); ?></h2>
+    <p class="browse-description"><?php echo nl2br(htmlspecialchars($collection_description)); ?></p>
+        
         <div class="browse-grid">
             <?php
             // Display artworks
@@ -247,7 +249,7 @@ $result = $stmt->get_result();
         </div>
     </div>
 </div>
-
+</div>
 
     <script>
         // Function to show the popup with artwork details

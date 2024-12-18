@@ -50,7 +50,7 @@ session_start();
         art from <br />
         emerging artists
       </h1>
-      <a href="#" id="Discover">Discover now</a href="">
+      <a href="collections.php" id="Discover">Discover now</a href="">
       <?php
         include '../php/conn.php';
 
@@ -94,7 +94,7 @@ session_start();
       <div id="text2">
       <h2>Featured <br> Artworks</h2>
       <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "</p>
-      <a href="#" id="shopNow">Shop now</a>
+      <a href="auctions.php" id="shopNow">Shop now</a>
    
     </div>
     <div id="imagesArtwork">

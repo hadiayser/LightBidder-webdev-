@@ -27,7 +27,7 @@ while ($auction = mysqli_fetch_assoc($result)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/css.css?v=6">
     <link rel="stylesheet" href="../css/collections.css?v=3">
-    <link rel="stylesheet" href="../css/auctions.css?v=4">
+    <link rel="stylesheet" href="../css/auctions.css?v=3">
     <title>All Auctions</title>
     <style>
         /* Background styling */
@@ -57,43 +57,79 @@ while ($auction = mysqli_fetch_assoc($result)) {
             position: relative;
             z-index: 2; /* Ensure content is above the overlay */
         }
+        /* Notification Styles */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #3f7dc0;
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+.notification-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.hidden {
+    display: none;
+}
+
+.notification.show {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+}
     </style>
 </head>
 <body>
     <div class="background-overlay"></div> <!-- Dimmed overlay -->
     <div class="content"> <!-- Content wrapper -->
-    <header>
-      <div>
-        <div class="nav-logo">
-          <a href="#" class="logo"><img src="../img/bidder-high-resolution-logo-black-transparent.png" alt=""></a>
-        </div>
-        <ul id="homepageNav">
-          <li><a href="index.php">Home</a></li>
-          <li><a href="artworks.html">Artwork</a></li>
-          <li><a href="collections.php">Collections</a></li>
-          <li><a href="auctions.php">Auctions</a></li>
-          <li><a href="contact.php">Contact</a></li>
-          <?php if (isset($_SESSION['user_id'])): ?>
-            <li class="nav-item dropdown">
-                <button class="dropbtn">
-                    <div class="user-profile">
-                        <img src="../img/—Pngtree—user avatar placeholder black_6796227.png" alt="Profile" class="profile-img">
-                        <span><?php echo htmlspecialchars($_SESSION['firstname']); ?></span>
-                    </div>
-                    <i class="arrow down"></i>
-                </button>
-                <div class="dropdown-content">
-                    <a href="profile.php">My Profile</a>
-                    <a href="my-collections.php">My Collections</a>
-                    <a href="../php/logout.php" style="background-color: #cb5050; !important;">Logout</a>
+        <header>
+            <div>
+                <div class="nav-logo">
+                    <a href="index.php" class="logo">
+                        <img src="../img/bidder-high-resolution-logo-black-transparent.png" alt="Logo">
+                    </a>
                 </div>
-            </li>
-          <?php else: ?>
-            <li><a href="web.html">Login/Signup</a></li>
-          <?php endif; ?>
-        </ul>
-      </div>
-    </header>
+                <nav>
+                    <ul id="homepageNav">
+                        <li><a href="index.php">Home</a></li>
+                        <li><a href="artworks.html">Artwork</a></li>
+                        <li><a href="collections.php">Collections</a></li>
+                        <li><a href="exhibitions.html">Exhibitions</a></li>
+                        <li><a href="contact.php">Contact</a></li>
+                        <?php if (isset($_SESSION['user_id'])): ?>
+                            <li class="nav-item dropdown">
+                                <button class="dropbtn">
+                                    <div class="user-profile">
+                                        <img src="../img/—Pngtree—user avatar placeholder black_6796227.png" alt="Profile" class="profile-img">
+                                        <span><?php echo htmlspecialchars($_SESSION['firstname']); ?></span>
+                                    </div>
+                                    <i class="arrow down"></i>
+                                </button>
+                                <div class="dropdown-content">
+                                    <a href="profile.php">My Profile</a>
+                                    <a href="my-collections.php">My Collections</a>
+                                    <a href="my_favorites.php">My Favorites</a>
+                                    <a href="../php/logout.php" style="background-color: #cb5050; !important;">Logout</a>
+                                </div>
+                            </li>
+                        <?php else: ?>
+                            <li><a href="web.html">Login/Signup</a></li>
+                        <?php endif; ?>
+                    </ul>
+                </nav>
+            </div>
+        </header>
 
     <div class="auctions-container">
         <h2>All Auctions</h2>
@@ -115,6 +151,9 @@ while ($auction = mysqli_fetch_assoc($result)) {
                             <p>Current Highest Bid: $<?php echo number_format($auction['highest_bid'], 2); ?></p>
                             <p>Auction Starts On: <?php echo date('Y-m-d H:i', strtotime($auction['start_date'])); ?></p>
                             <p>Auction Ends On: <?php echo date('Y-m-d H:i', strtotime($auction['end_date'])); ?></p>
+                            <button class="favorite-button" data-auction-id="<?php echo $auction['auction_id']; ?>">
+                                Add to Favorites
+                            </button>
                             <a href="bid.php?auction_id=<?php echo $auction['auction_id']; ?>" class="bid-button">Go to Auction</a>
                         </div>
                     <?php endforeach; ?>
@@ -123,30 +162,62 @@ while ($auction = mysqli_fetch_assoc($result)) {
         <?php endforeach; ?>
     </div>
     <script>
-   document.addEventListener('DOMContentLoaded', function() {
-    const dropdown = document.querySelector('.nav-item.dropdown');
-    const dropbtn = document.querySelector('.dropbtn');
+document.addEventListener('DOMContentLoaded', function() {
+    const favoriteButtons = document.querySelectorAll('.favorite-button');
+    const notification = document.getElementById('notification');
+    const notificationMessage = document.getElementById('notification-message');
+    const closeNotificationButton = document.getElementById('close-notification');
 
-    if (dropdown && dropbtn) {
-        dropbtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            dropdown.classList.toggle('active');
-        });
+    favoriteButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const auctionId = this.getAttribute('data-auction-id');
 
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!dropdown.contains(e.target)) {
-                dropdown.classList.remove('active');
-            }
+            fetch('../php/add_favorite.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'auction_id=' + auctionId
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    notificationMessage.textContent = 'Added to favorites!';
+                    notification.classList.add('show');
+                    setTimeout(() => {
+                        notification.classList.remove('show');
+                    }, 3000); // Hide after 3 seconds
+                } else if (data.status === 'already_favorited') {
+                    notificationMessage.textContent = 'This item is already in your favorites.';
+                    notification.classList.add('show');
+                    setTimeout(() => {
+                        notification.classList.remove('show');
+                    }, 3000); // Hide after 3 seconds
+                } else {
+                    notificationMessage.textContent = 'Error adding to favorites.';
+                    notification.classList.add('show');
+                    setTimeout(() => {
+                        notification.classList.remove('show');
+                    }, 3000); // Hide after 3 seconds
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         });
+    });
 
-        // Prevent dropdown from closing when clicking inside
-        dropdown.querySelector('.dropdown-content').addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-    }
+    closeNotificationButton.addEventListener('click', function() {
+        notification.classList.remove('show');
+    });
 });
-    </script>
+</script>
+<!-- Add this modal structure just before the closing </body> tag -->
+<div id="notification" class="notification hidden">
+    <div class="notification-content">
+        <span id="notification-message"></span>
+        <button id="close-notification">Close</button>
+    </div>
+</div>
 </body>
 </html> 

@@ -35,7 +35,7 @@ body {
     margin: 40px auto;
     margin-top: 100px;
     padding: 30px;
-    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.484), rgba(240, 240, 240, 0.493)); /* Soft gradient for contrast */
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.689), rgba(240, 240, 240, 0.699)); /* Soft gradient for contrast */
     border-radius: 15px; /* Rounded corners for a modern look */
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Enhanced shadow for depth */
     border: 1px solid rgba(200, 200, 200, 0.5); /* Subtle border for definition */

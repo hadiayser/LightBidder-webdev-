@@ -1,80 +1,90 @@
-/* *{
-    padding-left: 0.5rem;
-} */
-/* *{
-    padding-left: 0.5rem;
-} */
-body{
+/* General Body Styling */
+body {
     background-color: whitesmoke;
     margin: 0;
     margin-top: 80px;
 }
-.nav-logo img{
-    margin-top: 20px;
+
+/* Logo Styling */
+.nav-logo img {
+    margin-top: 10px;
     width: 60px;
     height: 70px;
 }
 
-
+/* Header Styling */
 header {
-    width: 100%; /* Ensure the header spans the full width */
-    position: fixed; /* Make the header fixed */
-    top: 0; /* Position it at the top */
-    left: 0; /* Align to the left */
-    z-index: 1000; /* Ensure it stays above other content */
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background-image: linear-gradient(to top, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
+/* Header Inner Container */
 header div {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: linear-gradient(to bottom, rgba(192, 192, 192, 0.5) 0%, rgba(192, 192, 192, 0.582) 70%, rgba(245, 245, 245, 0.568) 100%);
-    padding: 0 2rem; /* Horizontal padding */
-    /* height: 80px; Fixed height for the header */
-    width: 100%; /* Ensure the inner div also spans the full width */
+    padding: 0 2rem;
+    height: 80px;
     box-sizing: border-box;
 }
 
-header h1{
-    font-size: medium;
-}
-
+/* Navigation List Styling */
 #homepageNav {
     margin: 0;
     padding: 0;
     list-style: none;
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1.5rem;
 }
 
+/* Navigation Items */
 #homepageNav li {
     display: flex;
     align-items: center;
     height: 100%;
 }
 
+/* Navigation Links */
 #homepageNav a {
-    color: white;
+    color: #000000; /* White text for contrast */
     text-decoration: none;
     padding: 10px 15px;
-    display: flex;
-    align-items: center;
-    height: 100%;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
 }
 
-#homepageNav a:link { 
-    text-decoration: none; 
-    color: white;
+/* Hover Effect for Links */
+#homepageNav a:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Subtle background highlight */
+    text-decoration: none;
+    transform: scale(1.1); /* Slight scaling effect */
+}
 
-  } 
-  a{
-    color: black;
-  }
-#homepageNav a:hover { 
-    text-decoration: underline;
-    text-decoration-thickness: 5px;
-  } 
+/* Active Link Styling */
+#homepageNav a:active {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+    header div {
+        flex-direction: column;
+        padding: 1rem;
+    }
+    #homepageNav {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
 
 #ads{
     padding-left: 0.5rem;

@@ -29,7 +29,8 @@ while ($row = $result->fetch_assoc()) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/css.css?v=3">
     <link rel="stylesheet" href="../css/collections.css?v=6">
-    <link rel="stylesheet" href="../css/my_favorites.css">
+    <link rel="stylesheet" href="../css/my_favorites.css?v=1">
+    <link rel="stylesheet" href="../css/auctions.css?v=6">
     <title>My Favorites</title>
 </head>
 <body>

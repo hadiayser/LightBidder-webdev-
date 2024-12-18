@@ -11,7 +11,7 @@ body {
     padding: 40px 20px;
     max-width: 1200px;
     margin: 0 auto;
-    background-color: #fff;
+    background-image: linear-gradient(to top, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     margin-top: 100px;

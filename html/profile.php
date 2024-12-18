@@ -18,22 +18,43 @@ $user = $result->fetch_assoc();
 
 // Handle profile updates
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $firstname = $_POST['firstname'];
-    $lastname = $_POST['lastname'];
-    $email = $_POST['email'];
-    $username = $_POST['username'];
-    
-    // Update user information
-    $update_stmt = $conn->prepare("UPDATE users SET firstname = ?, lastname = ?, email = ?, username = ? WHERE user_id = ?");
-    $update_stmt->bind_param("ssssi", $firstname, $lastname, $email, $username, $user_id);
-    
-    if ($update_stmt->execute()) {
-        // Update session variables
-        $_SESSION['firstname'] = $firstname;
-        $_SESSION['lastname'] = $lastname;
-        $success_message = "Profile updated successfully!";
-    } else {
-        $error_message = "Error updating profile.";
+    // Handle profile updates (personal/account information)
+    if (isset($_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['username'])) {
+        $firstname = $_POST['firstname'];
+        $lastname = $_POST['lastname'];
+        $email = $_POST['email'];
+        $username = $_POST['username'];
+
+        // Update user information
+        $update_stmt = $conn->prepare("UPDATE users SET firstname = ?, lastname = ?, email = ?, username = ? WHERE user_id = ?");
+        $update_stmt->bind_param("ssssi", $firstname, $lastname, $email, $username, $user_id);
+
+        if ($update_stmt->execute()) {
+            // Update session variables
+            $_SESSION['firstname'] = $firstname;
+            $_SESSION['lastname'] = $lastname;
+            $success_message = "Profile updated successfully!";
+        } else {
+            $error_message = "Error updating profile.";
+        }
+    }
+
+    // Handle role change
+    if (isset($_POST['role'])) {
+        $newRole = $_POST['role'];
+        $updateRoleQuery = "UPDATE users SET role = ? WHERE user_id = ?";
+        $updateStmt = $conn->prepare($updateRoleQuery);
+        $updateStmt->bind_param("si", $newRole, $user_id);
+        $updateStmt->execute();
+    }
+
+    // Handle password change
+    if (isset($_POST['new_password']) && !empty($_POST['new_password'])) {
+        $newPassword = password_hash($_POST['new_password'], PASSWORD_DEFAULT);
+        $updatePasswordQuery = "UPDATE users SET password = ? WHERE user_id = ?";
+        $updateStmt = $conn->prepare($updatePasswordQuery);
+        $updateStmt->bind_param("si", $newPassword, $user_id);
+        $updateStmt->execute();
     }
 }
 ?>
@@ -45,21 +66,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile</title>
     <link rel="stylesheet" href="../css/css.css?v3">
-    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="../css/profile.css?v1">
+    <link rel="stylesheet" href="../css/auctions.css?v5">
 </head>
 <body>
     <header>
-        <!-- Copy your header from index.php -->
         <div>
             <div class="nav-logo">
                 <a href="#" class="logo"><img src="../img/bidder-high-resolution-logo-black-transparent.png" alt=""></a>
             </div>
             <ul id="homepageNav">
-                <li><a href="index.php">Home</a></li>
-                <!-- <li><a href="artworks.html">Artwork</a></li> -->
-                <li><a href="collections.php">Collections</a></li>
-                <li><a href="exhibitions.html">Exhibitions</a></li>
-                <li><a href="contact.php">Contact</a></li>
+            <li><a href="index.php">Home</a></li>
+          <!-- <li><a href="artworks.html">Artwork</a></li> -->
+          <li><a href="collections.php">Collections</a></li>
+          <li><a href="artists.php">Artists</a></li>
+          <li><a href="auctions.php">Auctions</a></li>
+          <li><a href="contact.php">Contact</a></li>
+          <li><a href="forum.php">Forum</a></li>
                 <?php if (isset($_SESSION['user_id'])): ?>
                     <li class="nav-item dropdown">
                         <button class="dropbtn">
@@ -99,7 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <?php if (isset($success_message)): ?>
             <div class="success-message"><?php echo $success_message; ?></div>
         <?php endif; ?>
-        
+
         <?php if (isset($error_message)): ?>
             <div class="error-message"><?php echo $error_message; ?></div>
         <?php endif; ?>
@@ -133,10 +156,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
             </div>
 
+            <!-- Password Display -->
+            <div class="profile-section password-display">
+                <h2>Password</h2>
+                <div class="info-display">
+                    <div class="info-group">
+                        <span class="info-label">Password</span>
+                        <span class="info-value">********</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Role Display -->
+            <div class="profile-section role-display">
+                <h2>Role</h2>
+                <div class="info-display">
+                    <div class="info-group">
+                        <span class="info-label">User Role</span>
+                        <span class="info-value"><?php echo htmlspecialchars($user['role']); ?></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Edit Profile Button -->
             <button class="edit-profile-btn" onclick="toggleEditMode()">Edit Profile</button>
         </div>
 
-        <!-- Hidden form that appears when editing -->
+        <!-- Edit Form -->
         <form method="POST" class="edit-form" id="editForm" style="display: none;">
             <div class="profile-section">
                 <h2>Edit Personal Information</h2>
@@ -159,6 +205,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="form-group">
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($user['username']); ?>" required>
+                </div>
+            </div>
+
+            <div class="profile-section role-form">
+                <h2>Role</h2>
+                <label for="role">User Role:</label>
+                <select name="role" id="role">
+                    <option value="Artist" <?php echo $user['role'] === 'Artist' ? 'selected' : ''; ?>>Artist</option>
+                    <option value="Bidder" <?php echo $user['role'] === 'Bidder' ? 'selected' : ''; ?>>Bidder</option>
+                </select>
+            </div>
+
+            <div class="profile-section password-form">
+                <h2>Password</h2>
+                <div class="form-group">
+                    <label for="new_password">New Password:</label>
+                    <input type="password" name="new_password" id="new_password">
                 </div>
             </div>
 
@@ -206,4 +269,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         });
     </script>
 </body>
-</html> 
+</html>

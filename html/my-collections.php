@@ -118,6 +118,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+// Handle artwork deletion
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['action']) && $_POST['action'] === 'delete_artwork') {
+        $artwork_id = $_POST['artwork_id'];
+
+        // Delete artwork from the database
+        $delete_query = "DELETE FROM artworks WHERE artwork_id = ? AND artist_id = ?";
+        $stmt = $conn->prepare($delete_query);
+        $stmt->bind_param("ii", $artwork_id, $artist_id);
+
+        if ($stmt->execute()) {
+            $success_message = "Artwork deleted successfully!";
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit();
+        } else {
+            $error_message = "Error deleting artwork.";
+        }
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -208,7 +228,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </p>
                             <div class="artwork-actions">
                                 <button onclick="editArtwork(<?php echo $artwork['artwork_id']; ?>)">Edit</button>
-                                <button onclick="deleteArtwork(<?php echo $artwork['artwork_id']; ?>)" class="delete-btn">Delete</button>
+                                <form method="POST" style="display:inline;">
+                                    <input type="hidden" name="action" value="delete_artwork">
+                                    <input type="hidden" name="artwork_id" value="<?php echo $artwork['artwork_id']; ?>">
+                                    <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this artwork?');">Delete</button>
+                                </form>
                             </div>
                         </div>
                     </div>

@@ -95,6 +95,7 @@ $artworks_result = $stmt->get_result();
                             <div class="dropdown-content">
                                 <a href="profile.php">My Profile</a>
                                 <a href="my-collections.php">My Collections</a>
+                                <a href="my_favorites.php">My Favorites</a>
                                 <div class="dropdown-divider"></div>
                                 <a href="../php/logout.php">Logout</a>
                             </div>

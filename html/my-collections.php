@@ -118,6 +118,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
+// Handle artwork deletion
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['action']) && $_POST['action'] === 'delete_artwork') {
+        $artwork_id = $_POST['artwork_id'];
+
+        // Delete artwork from the database
+        $delete_query = "DELETE FROM artworks WHERE artwork_id = ? AND artist_id = ?";
+        $stmt = $conn->prepare($delete_query);
+        $stmt->bind_param("ii", $artwork_id, $artist_id);
+
+        if ($stmt->execute()) {
+            $success_message = "Artwork deleted successfully!";
+            header("Location: " . $_SERVER['PHP_SELF']);
+            exit();
+        } else {
+            $error_message = "Error deleting artwork.";
+        }
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -126,22 +146,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Collections</title>
-    <link rel="stylesheet" href="../css/css.css?v2">
-    <link rel="stylesheet" href="../css/collections.css?v2">
+    <link rel="stylesheet" href="../css/css.css?v5">
+    <link rel="stylesheet" href="../css/collections.css?v5">
 </head>
 <body>
-    <!-- Include your header here (same as profile.php) -->
     <header>
       <div>
         <div class="nav-logo">
           <a href="#" class="logo"><img src="../img/bidder-high-resolution-logo-black-transparent.png" alt=""></a>
         </div>
         <ul id="homepageNav">
-          <li><a href="index.php">Home</a></li>
-          <li><a href="artworks.html">Artwork</a></li>
+        <li><a href="index.php">Home</a></li>
+          <!-- <li><a href="artworks.html">Artwork</a></li> -->
           <li><a href="collections.php">Collections</a></li>
+          <li><a href="artists.php">Artists</a></li>
           <li><a href="auctions.php">Auctions</a></li>
           <li><a href="contact.php">Contact</a></li>
+          <li><a href="forum.php">Forum</a></li>
           <?php if (isset($_SESSION['user_id'])): ?>
             <li class="nav-item dropdown">
                 <button class="dropbtn">
@@ -154,6 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="dropdown-content">
                     <a href="profile.php">My Profile</a>
                     <a href="my-collections.php">My Collections</a>
+                    <a href="my_favorites.php">My Favorites</a>
                     <a href="../php/logout.php" style="background-color: #cb5050; !important;">Logout</a>
                 </div>
             </li>
@@ -209,7 +231,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </p>
                             <div class="artwork-actions">
                                 <button onclick="editArtwork(<?php echo $artwork['artwork_id']; ?>)">Edit</button>
-                                <button onclick="deleteArtwork(<?php echo $artwork['artwork_id']; ?>)" class="delete-btn">Delete</button>
+                                <form method="POST" style="display:inline;">
+                                    <input type="hidden" name="action" value="delete_artwork">
+                                    <input type="hidden" name="artwork_id" value="<?php echo $artwork['artwork_id']; ?>">
+                                    <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this artwork?');">Delete</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -408,9 +434,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </div>
     </div>
-
+    <script src="../JS/dropdown.js"></script>
     <script>
-        // Modal functionality
         function showNewArtworkForm() {
             document.getElementById('newArtworkModal').style.display = 'block';
         }
@@ -474,34 +499,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 console.log('Delete artwork:', artworkId);
             }
         }
-
-        // Replace the current dropdown JavaScript with this:
-        document.addEventListener('DOMContentLoaded', () => {
-            const dropdownBtn = document.querySelector('.dropbtn');
-            const dropdownContent = document.querySelector('.dropdown-content');
-            const arrow = document.querySelector('.arrow');
-
-            if (dropdownBtn && dropdownContent) {
-                dropdownBtn.onclick = (e) => {
-                    e.preventDefault();
-                    dropdownContent.classList.toggle('show');
-                    if (arrow) {
-                        arrow.classList.toggle('up');
-                    }
-                }
-
-                window.onclick = (e) => {
-                    if (!e.target.matches('.dropbtn') && !e.target.matches('.arrow')) {
-                        if (dropdownContent.classList.contains('show')) {
-                            dropdownContent.classList.remove('show');
-                            if (arrow) {
-                                arrow.classList.remove('up');
-                            }
-                        }
-                    }
-                }
-            }
-        });
     </script>
 </body>
 </html> 

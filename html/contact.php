@@ -38,9 +38,10 @@ $conn->close();
           <a href="#" class="logo"><img src="../img/bidder-high-resolution-logo-black-transparent.png" alt=""></a>
         </div>
         <ul id="homepageNav">
-          <li><a href="index.php">Home</a></li>
-          <li><a href="artworks.html">Artwork</a></li>
+        <li><a href="index.php">Home</a></li>
+          <!-- <li><a href="artworks.html">Artwork</a></li> -->
           <li><a href="collections.php">Collections</a></li>
+          <li><a href="artists.php">Artists</a></li>
           <li><a href="auctions.php">Auctions</a></li>
           <li><a href="contact.php">Contact</a></li>
           <li><a href="forum.php">Forum</a></li>
@@ -56,6 +57,7 @@ $conn->close();
                 <div class="dropdown-content">
                     <a href="profile.php">My Profile</a>
                     <a href="my-collections.php">My Collections</a>
+                    <a href="my_favorites.php">My Favorites</a>
                     <a href="../php/logout.php" style="background-color: #cb5050; !important;">Logout</a>
                 </div>
             </li>

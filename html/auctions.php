@@ -26,9 +26,8 @@ while ($auction = mysqli_fetch_assoc($result)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/css.css?v=6">
-    <link rel="stylesheet" href="../css/dropdown.css?v=3">
     <link rel="stylesheet" href="../css/collections.css?v=3">
-    <link rel="stylesheet" href="../css/auctions.css?v=4">
+    <link rel="stylesheet" href="../css/auctions.css?v=3">
     <title>All Auctions</title>
     <style>
         /* Background styling */
@@ -59,11 +58,10 @@ while ($auction = mysqli_fetch_assoc($result)) {
             z-index: 2; /* Ensure content is above the overlay */
         }
         /* Notification Styles */
-/* Notification Styles */
 .notification {
     position: fixed;
-    top: 150px; /* Adjust this value to position it lower */
-    right: 20px; /* Keep this value to position it to the right */
+    top: 20px;
+    right: 20px;
     background-color: #3f7dc0;
     color: white;
     padding: 15px;
@@ -104,13 +102,11 @@ while ($auction = mysqli_fetch_assoc($result)) {
                 </div>
                 <nav>
                     <ul id="homepageNav">
-                    <li><a href="index.php">Home</a></li>
-          <!-- <li><a href="artworks.html">Artwork</a></li> -->
-          <li><a href="collections.php">Collections</a></li>
-          <li><a href="artists.php">Artists</a></li>
-          <li><a href="auctions.php">Auctions</a></li>
-          <li><a href="contact.php">Contact</a></li>
-          <li><a href="forum.php">Forum</a></li>
+                        <li><a href="index.php">Home</a></li>
+                        <li><a href="artworks.html">Artwork</a></li>
+                        <li><a href="collections.php">Collections</a></li>
+                        <li><a href="exhibitions.html">Exhibitions</a></li>
+                        <li><a href="contact.php">Contact</a></li>
                         <?php if (isset($_SESSION['user_id'])): ?>
                             <li class="nav-item dropdown">
                                 <button class="dropbtn">
@@ -155,12 +151,10 @@ while ($auction = mysqli_fetch_assoc($result)) {
                             <p>Current Highest Bid: $<?php echo number_format($auction['highest_bid'], 2); ?></p>
                             <p>Auction Starts On: <?php echo date('Y-m-d H:i', strtotime($auction['start_date'])); ?></p>
                             <p>Auction Ends On: <?php echo date('Y-m-d H:i', strtotime($auction['end_date'])); ?></p>
-                            <div class="button-container">
-        <button class="fav-button" data-auction-id="<?php echo $auction['auction_id']; ?>">
-            Favorite
-        </button>
-        <a href="bid.php?auction_id=<?php echo $auction['auction_id']; ?>" class="bid-button">Bid</a>
-    </div>
+                            <button class="favorite-button" data-auction-id="<?php echo $auction['auction_id']; ?>">
+                                Add to Favorites
+                            </button>
+                            <a href="bid.php?auction_id=<?php echo $auction['auction_id']; ?>" class="bid-button">Go to Auction</a>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -169,7 +163,7 @@ while ($auction = mysqli_fetch_assoc($result)) {
     </div>
     <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const favoriteButtons = document.querySelectorAll('.fav-button');
+    const favoriteButtons = document.querySelectorAll('.favorite-button');
     const notification = document.getElementById('notification');
     const notificationMessage = document.getElementById('notification-message');
     const closeNotificationButton = document.getElementById('close-notification');
@@ -218,7 +212,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-<script src="../JS/dropdown.js"></script>
+<!-- Add this modal structure just before the closing </body> tag -->
 <div id="notification" class="notification hidden">
     <div class="notification-content">
         <span id="notification-message"></span>

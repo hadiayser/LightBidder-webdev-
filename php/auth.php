@@ -61,9 +61,6 @@ if (isset($_POST['register'])) {
     $password = $_POST['password'];
     $role = $_POST['role'];
 
-    // Debug: Log the role
-    error_log("Role received: $role");
-
     // Create the username by combining firstname and lastname
     $username = strtolower($firstname . $lastname);
 
@@ -81,49 +78,19 @@ if (isset($_POST['register'])) {
         // Hash password before storing it
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        // Insert the new user
+        // Insert the new user with the generated username
         $sql = "INSERT INTO users (firstname, lastname, email, username, password, role, date_registered) 
                 VALUES (?, ?, ?, ?, ?, ?, NOW())";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ssssss", $firstname, $lastname, $email, $username, $hashed_password, $role);
+        $stmt->execute();
 
-        if ($stmt->execute()) {
-            // Get the newly inserted user_id
-            $user_id = $stmt->insert_id;
-            error_log("New user_id: $user_id");
+        // Debug: Log registration success
+        error_log("New user registered: $username");
 
-            // If the user is an artist, insert into the artists table
-            if ($role === 'Artist') {
-                $artist_name = "$firstname $lastname"; // Default artist name
-                $biography = $_POST['biography'] ?? "Biography not provided.";
-                $portfolio_url = $_POST['portfolio_url'] ?? null;
-
-                error_log("Inserting artist details for user_id: $user_id");
-
-                $sql = "INSERT INTO artists (user_id, artist_name, biography, portfolio_url) 
-                        VALUES (?, ?, ?, ?)";
-                $stmt = $conn->prepare($sql);
-
-                if (!$stmt) {
-                    error_log("Error preparing artist insert query: " . $conn->error);
-                } else {
-                    $stmt->bind_param("isss", $user_id, $artist_name, $biography, $portfolio_url);
-
-                    if ($stmt->execute()) {
-                        error_log("Artist successfully added for user_id: $user_id");
-                    } else {
-                        error_log("Error inserting into artists: " . $stmt->error);
-                    }
-                }
-            }
-
-            // Redirect to login page after successful registration
-            header("Location: ../html/web.html");
-            exit();
-        } else {
-            error_log("Error inserting into users: " . $stmt->error);
-        }
+        // Redirect to login page after successful registration
+        header("Location: ../html/web.html");
+        exit();
     }
 }
-
 ?>

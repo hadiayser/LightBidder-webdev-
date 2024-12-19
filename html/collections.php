@@ -34,26 +34,21 @@ foreach ($collections as $id => $arts) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/css.css?v=3" />
-    <link rel="stylesheet" href="../css/collections.css?v=7" />
-    <link rel="stylesheet" href="../css/auctions.css?v=6" />
-
+    <link rel="stylesheet" href="../css/collections.css?v=6" />
     <title>Collections</title>
 </head>
 <body>
-<div class="content"> <!-- Content wrapper -->
 <header>
       <div>
         <div class="nav-logo">
           <a href="#" class="logo"><img src="../img/bidder-high-resolution-logo-black-transparent.png" alt=""></a>
         </div>
         <ul id="homepageNav">
-        <li><a href="index.php">Home</a></li>
-          <!-- <li><a href="artworks.html">Artwork</a></li> -->
+          <li><a href="index.php">Home</a></li>
+          <li><a href="artworks.html">Artwork</a></li>
           <li><a href="collections.php">Collections</a></li>
-          <li><a href="artists.php">Artists</a></li>
           <li><a href="auctions.php">Auctions</a></li>
           <li><a href="contact.php">Contact</a></li>
-          <li><a href="forum.php">Forum</a></li>
           <?php if (isset($_SESSION['user_id'])): ?>
             <li class="nav-item dropdown">
                 <button class="dropbtn">
@@ -66,7 +61,6 @@ foreach ($collections as $id => $arts) {
                 <div class="dropdown-content">
                     <a href="profile.php">My Profile</a>
                     <a href="my-collections.php">My Collections</a>
-                    <a href="my_favorites.php">My Favorites</a>
                     <a href="../php/logout.php" style="background-color: #cb5050; !important;">Logout</a>
                 </div>
             </li>
@@ -97,7 +91,6 @@ foreach ($collections as $id => $arts) {
         </div>
     <?php endforeach; ?>
   </div>
-                </div>
 
   <script>
    document.addEventListener('DOMContentLoaded', function() {

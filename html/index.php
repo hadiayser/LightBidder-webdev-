@@ -18,9 +18,8 @@ session_start();
         </div>
         <ul id="homepageNav">
           <li><a href="index.php">Home</a></li>
-          <!-- <li><a href="artworks.html">Artwork</a></li> -->
+          <li><a href="artworks.html">Artwork</a></li>
           <li><a href="collections.php">Collections</a></li>
-          <li><a href="artists.php">Artists</a></li>
           <li><a href="auctions.php">Auctions</a></li>
           <li><a href="contact.php">Contact</a></li>
           <li><a href="forum.php">Forum</a></li>
@@ -36,7 +35,6 @@ session_start();
                 <div class="dropdown-content">
                     <a href="profile.php">My Profile</a>
                     <a href="my-collections.php">My Collections</a>
-                    <a href="my_favorites.php">My Favorites</a>
                     <a href="../php/logout.php" style="background-color: #cb5050; !important;">Logout</a>
                 </div>
             </li>
@@ -52,7 +50,7 @@ session_start();
         art from <br />
         emerging artists
       </h1>
-      <a href="collections.php" id="Discover">Discover now</a href="">
+      <a href="#" id="Discover">Discover now</a href="">
       <?php
         include '../php/conn.php';
 
@@ -96,7 +94,7 @@ session_start();
       <div id="text2">
       <h2>Featured <br> Artworks</h2>
       <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "</p>
-      <a href="auctions.php" id="shopNow">Shop now</a>
+      <a href="#" id="shopNow">Shop now</a>
    
     </div>
     <div id="imagesArtwork">

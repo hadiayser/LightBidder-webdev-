@@ -49,8 +49,7 @@ $result = $stmt->get_result();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/css.css?v=4">
-    <link rel="stylesheet" href="../css/collections.css?v=7">
-    <link rel="stylesheet" href="../css/auctions.css">
+    <link rel="stylesheet" href="../css/collections.css?v=3">
     <title><?php echo htmlspecialchars($collection_name); ?> - Collections</title>
     <style>
         /* Popup styling */
@@ -171,20 +170,17 @@ $result = $stmt->get_result();
     </style>
 </head>
 <body>
-<div class="content"> 
 <header>
       <div>
         <div class="nav-logo">
           <a href="#" class="logo"><img src="../img/bidder-high-resolution-logo-black-transparent.png" alt=""></a>
         </div>
         <ul id="homepageNav">
-        <li><a href="index.php">Home</a></li>
-          <!-- <li><a href="artworks.html">Artwork</a></li> -->
+          <li><a href="index.php">Home</a></li>
+          <li><a href="artworks.html">Artwork</a></li>
           <li><a href="collections.php">Collections</a></li>
-          <li><a href="artists.php">Artists</a></li>
           <li><a href="auctions.php">Auctions</a></li>
           <li><a href="contact.php">Contact</a></li>
-          <li><a href="forum.php">Forum</a></li>
           <?php if (isset($_SESSION['user_id'])): ?>
             <li class="nav-item dropdown">
                 <button class="dropbtn">
@@ -197,7 +193,6 @@ $result = $stmt->get_result();
                 <div class="dropdown-content">
                     <a href="profile.php">My Profile</a>
                     <a href="my-collections.php">My Collections</a>
-                    <a href="my_favorites.php">My Favorites</a>
                     <a href="../php/logout.php" style="background-color: #cb5050; !important;">Logout</a>
                 </div>
             </li>
@@ -207,10 +202,10 @@ $result = $stmt->get_result();
         </ul>
       </div>
     </header>
+
     <div class="browse-container">
-    <h2 class="browse-title"><?php echo htmlspecialchars($collection_name); ?></h2>
-    <p class="browse-description"><?php echo nl2br(htmlspecialchars($collection_description)); ?></p>
-        
+        <h2 class="browse-title"><?php echo htmlspecialchars($collection_name); ?></h2>
+        <p class="browse-description"><?php echo nl2br(htmlspecialchars($collection_description)); ?></p>
         <div class="browse-grid">
             <?php
             // Display artworks
@@ -252,7 +247,7 @@ $result = $stmt->get_result();
         </div>
     </div>
 </div>
-</div>
+
 
     <script>
         // Function to show the popup with artwork details

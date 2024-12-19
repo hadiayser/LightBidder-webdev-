@@ -1,29 +1,36 @@
 /* General Body Styling */
+
 body {
     background-color: whitesmoke;
     margin: 0;
     margin-top: 80px;
 }
 
+
 /* Logo Styling */
+
 .nav-logo img {
     margin-top: 10px;
     width: 60px;
     height: 70px;
 }
 
+
 /* Header Styling */
+
 header {
     width: 100%;
     position: fixed;
     top: 0;
     left: 0;
     z-index: 1000;
-    background-image: linear-gradient(to top, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    background-image: linear-gradient(to top, #dad4ec 0%, #f3e7e9 100%);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+
 /* Header Inner Container */
+
 header div {
     display: flex;
     align-items: center;
@@ -33,7 +40,9 @@ header div {
     box-sizing: border-box;
 }
 
+
 /* Navigation List Styling */
+
 #homepageNav {
     margin: 0;
     padding: 0;
@@ -43,16 +52,20 @@ header div {
     gap: 1.5rem;
 }
 
+
 /* Navigation Items */
+
 #homepageNav li {
     display: flex;
     align-items: center;
     height: 100%;
 }
 
+
 /* Navigation Links */
+
 #homepageNav a {
-    color: #000000; /* White text for contrast */
+    color: #000;
     text-decoration: none;
     padding: 10px 15px;
     font-size: 1rem;
@@ -61,19 +74,24 @@ header div {
     transition: all 0.3s ease-in-out;
 }
 
+
 /* Hover Effect for Links */
+
 #homepageNav a:hover {
-    background-color: rgba(255, 255, 255, 0.2); /* Subtle background highlight */
-    text-decoration: none;
-    transform: scale(1.1); /* Slight scaling effect */
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
 }
+
 
 /* Active Link Styling */
+
 #homepageNav a:active {
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
+
 /* Responsive Design for Smaller Screens */
+
 @media (max-width: 768px) {
     header div {
         flex-direction: column;
@@ -86,29 +104,33 @@ header div {
 }
 
 
-#ads{
+/* Section Styling */
+
+#ads {
     padding-left: 0.5rem;
     margin-top: 100px;
-
 }
 
-#ads h1{
+#ads h1 {
     font-size: 3rem;
 }
-#imagesArtwork{
-  justify-content: space-evely; 
-  gap: 2rem;
-  padding: 3rem;
-  flex: 2;
-}
-#imagesArtwork img{
-  height: 100%;
-  width:20rem; 
-  margin-bottom: 1rem;
-  object-fit: cover;
+
+#imagesArtwork {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 2rem;
+    padding: 3rem;
 }
 
-#Discover{
+#imagesArtwork img {
+    height: 100%;
+    width: 20rem;
+    margin-bottom: 1rem;
+    object-fit: cover;
+}
+
+#Discover,
+#shopNow {
     background: white;
     font-size: 1rem;
     color: black;
@@ -117,13 +139,41 @@ header div {
     text-decoration: none;
     border: 2px solid black;
     margin: 0.5rem;
-
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
-#Discover:hover{
+
+#Discover:hover,
+#shopNow:hover {
     background: lightgray;
 }
 
-#shopNow{
+
+/* Text Section */
+
+#text {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5rem;
+}
+
+.pair {
+    padding: 1rem;
+}
+
+.FeaturedArtworks {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5rem;
+}
+
+#text2 {
+    width: 50%;
+}
+
+.bidButton {
     background: white;
     font-size: 1rem;
     color: black;
@@ -131,99 +181,60 @@ header div {
     padding: 0.5rem;
     text-decoration: none;
     border: 2px solid black;
+    width: 90%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-#shopNow:hover{
-    background: lightgray;
-}
-
-#text{
+#imagesArtwork .artwork {
     display: flex;
-    align-items: center; 
-    justify-content: space-between; 
-    padding: 5rem;
-}
-.pair{
-    padding:1rem;
-}
-.FeaturedArtworks{
-    display: flex;
-    align-items: center; 
-    justify-content: space-between; 
-    padding: 5rem;
-}
-#text2{
+    flex-direction: column;
+    align-items: center;
     width: 50%;
 }
-#shopNow{
-    padding: 15px 5rem;
-    line-height: 3rem;
-}
 
-.bidButton{
-    background: white;
-    font-size: 1rem;
-    color: black;
-    text-align: center;
-    padding: 0.5rem;
-    text-decoration: none;
-    border: 2px solid black; 
-    width: 90%;
-
-}
-
-#imagesArtwork {
-    display: flex;
-    justify-content: space-evely; 
-    gap: 2rem;
-    padding: 3rem;
-    flex: 2;
-}
-
-.artwork {
-    display: flex;
-    flex-direction: column; 
-    align-items: center; 
-    width: 50%; 
-}
-
-.artwork img {
+#imagesArtwork .artwork img {
     height: 100%;
-    width: 100%; 
+    width: 100%;
     margin-bottom: 1rem;
     object-fit: cover;
 }
 
+
+/* Collections Section */
+
 #collections {
     padding: 20px;
     text-align: center;
-  }
-  
-  .categories {
+}
+
+.categories {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-  }
-  
-  .category {
+}
+
+.category {
     width: 30%;
     margin: 15px;
     border: 1px solid #ddd;
     padding: 15px;
     box-sizing: border-box;
-  }
-  
-  .category h3 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-  }
-  .artwork img {
-    width: 100%;
-    height: auto;
-    
 }
 
-/* New Clean Dropdown Styles */
+.category h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.artwork img {
+    width: 100%;
+    height: auto;
+}
+
+
+/* Dropdown Menu */
+
 .nav-item.dropdown {
     height: 100%;
     display: flex;
@@ -232,12 +243,11 @@ header div {
 }
 
 .dropbtn {
-    height: 100%;
     padding: 0 15px;
     display: flex;
     align-items: center;
     background: none;
-    color: white;
+    color: black;
     font-size: 16px;
     border: none;
     cursor: pointer;
@@ -250,7 +260,7 @@ header div {
 }
 
 .arrow {
-    border: solid white;
+    border: solid black;
     border-width: 0 2px 2px 0;
     display: inline-block;
     padding: 3px;
@@ -267,45 +277,31 @@ header div {
     top: 100%;
     background-color: #fff;
     min-width: 150px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     overflow: hidden;
     z-index: 1000;
-    margin-top: 0;
     transform: translateY(-10px);
     transition: all 0.2s ease-in-out;
     display: flex;
     flex-direction: column;
-    height: auto;
 }
 
 .dropdown-content a {
     color: #333 !important;
     padding: 12px 16px;
     text-decoration: none;
-    display: block;
     transition: background-color 0.2s ease;
-    white-space: nowrap;
 }
 
 .dropdown-content a:hover {
     background-color: #f0f0f0;
-    color: #6a7887 !important;
 }
 
-.dropdown-divider {
-    height: 1px;
-    background-color: #e9ecef;
-    margin: 0;
-    width: 100%;
-}
-
-/* Show dropdown when active */
 .nav-item.dropdown.active .dropdown-content {
     visibility: visible;
     opacity: 1;
     transform: translateY(0);
-    pointer-events: auto;
 }
 
 .nav-item.dropdown.active .arrow {
@@ -313,7 +309,9 @@ header div {
     margin-top: 3px;
 }
 
-/* Add these styles for the profile image and name */
+
+/* Profile Styling */
+
 .user-profile {
     display: flex;
     align-items: center;
@@ -328,125 +326,51 @@ header div {
     border: 2px solid white;
 }
 
-/* Popup styles */
-/* 
 
-#create-thread {
-    background: whitesmoke;
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    /* height: 40vh;
-    width: 100vw;
-    background-size: cover;
-    background-position: cover cover;
-    background-image: url('https://wallpapers.com/images/featured/art-dajgwkpkb3im2q3u.jpg'); */
-  
-  
-  #create-thread input, 
-  #create-thread textarea {
+/* Form Styling */
+
+input[type=text],
+select,
+textarea {
     width: 100%;
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  #create-thread button {
-    background-color: #4169E1
-    ;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-  }
-  
-  #create-thread button:hover {
-    background-color: #005fa3;
-    cursor: pointer;
-  }
-  
-  /* Forum Threads */
-  #forum-threads {
-    margin-top: 20px;
-  }
-  
-  #threads-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .thread {
-    background: whitesmoke;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 15px;
-  }
-  
-  .thread h3 {
-    margin: 0;
-    color: black;
-  }
-  
-  .thread p {
-    margin: 10px 0;
-  }
-  
-  .thread button {
-    background-color: #780606;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .thread button:hover {
-    background-color: #cc0000;
-  }
-  
-   /* Style inputs with type="text", select elements and textareas */
-input[type=text], select, textarea {
-  width: 100%; /* Full width */
-  background-color: #232b2b;
-  padding: 12px; /* Some padding */ 
-  border: 1px solid #ccc; /* Gray border */
-  border-radius: 4px; /* Rounded borders */
-  box-sizing: border-box; /* Make sure that padding and width stays in place */
-  margin-top: 6px; /* Add a top margin */
-  margin-bottom: 16px; /* Bottom margin */
-  resize: vertical; /* Allow the user to vertically resize the textarea (not horizontally) */
-  color: grey;
+    background-color: #232b2b;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+    color: grey;
 }
 
-/* Style the submit button with a specific background color etc */
 input[type=submit] {
-  background-color: #04AA6D;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+    background-color: #04AA6D;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-/* When moving the mouse over the submit button, add a darker green color */
 input[type=submit]:hover {
-  background-color: #45a049;
+    background-color: #45a049;
 }
 
-/* Add a background color and some padding around the form */
 .container {
-  border-radius: 5px;
-  background-color: #0e1111;
-  padding: 20px;
-  color: white;
-  width: 30%;
-  float: right;
+    border-radius: 5px;
+    background-color: #0e1111;
+    padding: 20px;
+    color: white;
+    width: 30%;
+    float: right;
 }
-#body_contact{
-  background-image: url("https://wallpapercat.com/w/full/c/1/f/847607-1920x1080-desktop-full-hd-mona-lisa-leonardo-da-vinci-wallpaper.jpg");
-  background-size: cover;
-  background-repeat: no-repeat; 
-  background-position: center center;
-  }
+
+
+/* Contact Page Background */
+
+#body_contact {
+    background-image: url("https://wallpapercat.com/w/full/c/1/f/847607-1920x1080-desktop-full-hd-mona-lisa-leonardo-da-vinci-wallpaper.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}

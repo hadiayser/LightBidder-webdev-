@@ -1,7 +1,28 @@
 <?php
-// Start the session at the very beginning of the file
+include '../conn.php';
 session_start();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $firstname = $conn->real_escape_string($_POST['firstname']);
+    $lastname = $conn->real_escape_string($_POST['lastname']);
+    $email = $conn->real_escape_string($_POST['email']);
+    $question_field = $conn->real_escape_string($_POST['writehere']);
+    $subject = $conn->real_escape_string($_POST['subject']);
+
+    $stmt = $conn->prepare("INSERT INTO contact (firstname, lastname, email, writehere, subject) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssss", $firstname, $lastname, $email, $question_field, $subject);
+
+    if ($stmt->execute()) {
+        echo "<script>alert('Thank you for contacting us.');</script>";
+    } else {
+        echo "<script>alert('Error: {$stmt->error}');</script>";
+    }
+
+    $stmt->close();
+}
+$conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>

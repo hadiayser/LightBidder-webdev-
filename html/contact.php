@@ -1,12 +1,12 @@
 <?php
-include '../conn.php';
+include '../php/conn.php';
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $firstname = $conn->real_escape_string($_POST['firstname']);
     $lastname = $conn->real_escape_string($_POST['lastname']);
     $email = $conn->real_escape_string($_POST['email']);
-    $question_field = $conn->real_escape_string($_POST['writehere']);
+    $question_field = $conn->real_escape_string($_POST['question_field']);
     $subject = $conn->real_escape_string($_POST['subject']);
 
     $stmt = $conn->prepare("INSERT INTO contact (firstname, lastname, email, writehere, subject) VALUES (?, ?, ?, ?, ?)");
@@ -29,7 +29,7 @@ $conn->close();
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contact Us Page</title>
-    <link rel="stylesheet" href="../css/css.css" />
+    <link rel="stylesheet" href="../css/css.css?v5" />
   </head>
   <body id="body_contact">
     <header>

@@ -456,7 +456,7 @@ select,
 textarea {
     width: 100%;
     /* Full width */
-    background-color: #232b2b;
+    background-color: #ffffff;
     padding: 12px;
     /* Some padding */
     border: 1px solid #ccc;
@@ -489,7 +489,7 @@ input[type=submit]:hover {
 
 .container {
     border-radius: 5px;
-    background-color: #0e1111;
+    background-color: #545a5a73;
     padding: 20px;
     color: white;
     width: 30%;

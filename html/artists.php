@@ -9,7 +9,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Fetch artists from the database
-$query = "SELECT artist_id, artist_name, biography, image_url FROM artists";
+$query = "SELECT artist_id, artist_name, biography, image_url, portfolio_url FROM artists";
 $stmt = $conn->prepare($query);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -189,8 +189,8 @@ body {
 
     <div class="artists-container">
         <?php while ($artist = $result->fetch_assoc()): ?>
-            <div class="artist-card" onclick="showArtistPopup('<?php echo htmlspecialchars($artist['artist_name']); ?>', '<?php echo htmlspecialchars($artist['biography']); ?>', '<?php echo htmlspecialchars($artist['image_url']); ?>')">
-                <img src="<?php echo htmlspecialchars($artist['image_url'] ?? 'placeholder.jpg'); ?>" alt="<?php echo htmlspecialchars($artist['artist_name']); ?>">
+            <div class="artist-card" onclick="showArtistPopup('<?php echo htmlspecialchars($artist['artist_name']); ?>', '<?php echo htmlspecialchars($artist['biography']); ?>', '<?php echo htmlspecialchars($artist['image_url']); ?>', '<?php echo htmlspecialchars($artist['portfolio_url']); ?>')">
+            <img src="<?php echo htmlspecialchars($artist['image_url'] ?? 'placeholder.jpg'); ?>" alt="<?php echo htmlspecialchars($artist['artist_name']); ?>">
                 <h4><?php echo htmlspecialchars($artist['artist_name']); ?></h4>
             </div>
         <?php endwhile; ?>
@@ -208,24 +208,34 @@ body {
         <div class="popup-details">
             <h3 id="popupArtistName">Artist Name</h3>
             <p id="popupArtistBiography" class="popup-biography">Biography</p>
+            <p id="popupArtistPortfolio" class="popup-portfolio">Portfolio</p>
         </div>
     </div>
 </div>
 
 
     <script>
-       function showArtistPopup(name, biography, imageUrl) {
+      function showArtistPopup(name, biography, imageUrl, portfolio) {
     document.getElementById('popupArtistImage').src = imageUrl || 'placeholder.jpg';
     document.getElementById('popupArtistName').textContent = name || 'Unknown Artist';
     document.getElementById('popupArtistBiography').textContent = biography || 'No biography available.';
-    const popup = document.getElementById('artistPopup');
-    popup.style.display = 'flex';  // Show the popup
-}
+    
+    // Set the portfolio URL or hide it if not available
+    const portfolioElement = document.getElementById('popupArtistPortfolio');
+    if (portfolio) {
+        portfolioElement.innerHTML = `<a href="${portfolio}" target="_blank">View Portfolio</a>`;
+    } else {
+        portfolioElement.textContent = 'No portfolio available.';
+    }
 
+    const popup = document.getElementById('artistPopup');
+    popup.style.display = 'flex'; // Show the popup
+}
 function closeArtistPopup() {
     const popup = document.getElementById('artistPopup');
-    popup.style.display = 'none';  // Hide the popup
+    popup.style.display = 'none'; // Hide the popup
 }
+
 
     </script>
     <script src="../JS/dropdown.js"></script>

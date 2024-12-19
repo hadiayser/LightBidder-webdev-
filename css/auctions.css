@@ -1,33 +1,67 @@
+/* Body Styling */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     color: #333;
     background: 
-        url('../img/madonna_and_child_on_a_curved_throne_1937.1.1.jpg') no-repeat center center fixed,
-        url('../img/background3.jpg') no-repeat center center fixed;
-    background-size: cover;
-    background-blend-mode: overlay; /* Blend the images for a seamless look */
-    background-color: #1a1a1a; /* Base color for better blending */
+        linear-gradient(rgba(26, 26, 26, 0.8), rgba(26, 26, 26, 0.8)), 
+        url('../img/background3.jpg') no-repeat center center fixed; /* Use one dominant image */
+    background-size: cover; /* Ensure the image covers the viewport */
     position: relative;
 }
 
-/* Dimmed overlay for better text visibility */
+/* Enhanced Dimmed Overlay */
 .background-overlay {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.4); /* Slight dimming effect */
+    background: rgba(0, 0, 0, 0.6); /* Darker overlay for better text contrast */
     z-index: 1;
 }
 
-/* Content container */
+/* Content Container */
 .content {
     position: relative;
     z-index: 2;
+    padding: 20px;
 }
+
+/* Auctions Container Styling */
+.auctions-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    margin-top: 100px;
+    padding: 30px;
+    background-image: linear-gradient(to top, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);
+    border-radius: 15px; /* Rounded corners for modern look */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Enhanced shadow for depth */
+    backdrop-filter: blur(8px); /* Glass effect */
+    border: 1px solid rgba(200, 200, 200, 0.5); /* Subtle border for definition */
+}
+
+/* Optional Parallax Effect for the Background */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../img/saint_john_the_evangelist__right_panel__1939.1.261.c.jpg') no-repeat center center;
+    background-size: cover;
+    z-index: -1;
+    transform: translateY(0);
+    will-change: transform;
+    transition: transform 0.3s ease-in-out;
+}
+
+body:hover::before {
+    transform: translateY(-10px); /* Subtle parallax movement */
+}
+
 
 /* Auctions Container */
 .auctions-container {
@@ -35,7 +69,7 @@ body {
     margin: 40px auto;
     margin-top: 100px;
     padding: 30px;
-    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.689), rgba(240, 240, 240, 0.699)); /* Soft gradient for contrast */
+    background-image: linear-gradient(to top, #dad4eca7 0%, #dad4eca2 1%, #f3e7e9ab 100%);
     border-radius: 15px; /* Rounded corners for a modern look */
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Enhanced shadow for depth */
     border: 1px solid rgba(200, 200, 200, 0.5); /* Subtle border for definition */
@@ -105,20 +139,55 @@ body {
 }
 
 /* Bid Button */
-.bid-button {
-    display: inline-block;
-    padding: 10px 15px;
-    background-color: #3f7dc0;
-    color: white;
+.button-container {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: space-between; /* Space between buttons */
+    gap: 15px; /* Add consistent spacing between buttons */
+    margin-top: 10px;
+}
+
+.fav-button, .bid-button {
+    flex: 1; /* Allow buttons to grow equally */
+    padding: 12px 20px; /* Add more padding for a modern look */
     border: none;
-    border-radius: 5px;
-    text-decoration: none;
+    border-radius: 8px; /* Rounded corners */
+    font-size: 16px; /* Slightly larger font size for readability */
     font-weight: bold;
-    transition: background-color 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    transition: all 0.3s ease; /* Smooth transitions for hover effects */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    cursor: pointer;
+}
+
+/* Bid Button Styles */
+.bid-button {
+    background: linear-gradient(135deg, #3f7dc0, #2c5a8f); /* Gradient for a polished look */
 }
 
 .bid-button:hover {
-    background-color: #2c5a8f;
+    background: linear-gradient(135deg, #2c5a8f, #1f3d66); /* Darker gradient on hover */
+    transform: translateY(-2px); /* Lift effect */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
+}
+
+/* Favorite Button Styles */
+.fav-button {
+    background: linear-gradient(135deg, #db5f7c, #a84872); /* Gradient for the favorite button */
+}
+
+.fav-button:hover {
+    background: linear-gradient(135deg, #a84872, #7a2e51); /* Darker gradient on hover */
+    color: #f1e7f6; /* Subtle contrast on hover */
+    transform: translateY(-2px); /* Lift effect */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
+}
+
+/* Button Focus Styles */
+.fav-button:focus, .bid-button:focus {
+    outline: 2px solid rgba(0, 0, 0, 0.2); /* Accessibility focus ring */
+    outline-offset: 2px;
 }
 
 /* Create Auction Button */
@@ -193,6 +262,8 @@ header nav ul li a:hover {
     border-radius: 50%;
     margin-right: 10px;
 }
+
+/* Add to Favorites Button Styles */
 
 
 /* Responsive Design */

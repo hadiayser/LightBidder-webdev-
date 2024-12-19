@@ -11,7 +11,7 @@ body {
     padding: 40px 20px;
     max-width: 1600px;
     margin: 0 auto;
-    background-color: #f9f9f9;
+    background-image: linear-gradient(to top, #dad4eca4 0%, #dad4ecab 1%, #f3e7e9a4 100%);
     margin-top: 100px;
   }
   
@@ -361,6 +361,9 @@ body {
     max-width: 1200px;
     margin: 40px auto;
     padding: 20px;
+    background-image: linear-gradient(to top, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);
+    margin-top: 100px;
+
   }
 
   .browse-title {
@@ -420,6 +423,7 @@ body {
     max-width: 1200px;
     margin: 40px auto;
     padding: 20px;
+    margin-top: 100px;
   }
 
   .collections-header {
@@ -916,9 +920,10 @@ body {
     max-width: 800px;
     margin: 40px auto;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.95);
+    background-image: linear-gradient(to top, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 100px;
   }
 
   .create-auction-container h2 {

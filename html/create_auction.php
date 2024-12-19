@@ -67,12 +67,13 @@ $artworks_result = $stmt->get_result();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/css.css?v=1">
-    <link rel="stylesheet" href="../css/collections.css?v=3">
+    <link rel="stylesheet" href="../css/collections.css?v=5">
+    <link rel="stylesheet" href="../css/auctions.css?v=6">
     <title>Create Auction</title>
 </head>
 <body>
     <header>
-        <div>
+        <div class="content">
             <div class="nav-logo">
                 <a href="index.php" class="logo">
                     <img src="../img/bidder-high-resolution-logo-black-transparent.png" alt="Logo">
@@ -80,11 +81,13 @@ $artworks_result = $stmt->get_result();
             </div>
             <nav>
                 <ul id="homepageNav">
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="artworks.html">Artwork</a></li>
-                    <li><a href="collections.php">Collections</a></li>
-                    <li><a href="auctions.php">Auctions</a></li>
-                    <li><a href="contact.php">Contact</a></li>
+                <li><a href="index.php">Home</a></li>
+          <!-- <li><a href="artworks.html">Artwork</a></li> -->
+          <li><a href="collections.php">Collections</a></li>
+          <li><a href="artists.php">Artists</a></li>
+          <li><a href="auctions.php">Auctions</a></li>
+          <li><a href="contact.php">Contact</a></li>
+          <li><a href="forum.php">Forum</a></li>
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <li class="dropdown">
                             <button class="dropbtn">
@@ -95,6 +98,7 @@ $artworks_result = $stmt->get_result();
                             <div class="dropdown-content">
                                 <a href="profile.php">My Profile</a>
                                 <a href="my-collections.php">My Collections</a>
+                                <a href="my_favorites.php">My Favorites</a>
                                 <div class="dropdown-divider"></div>
                                 <a href="../php/logout.php">Logout</a>
                             </div>

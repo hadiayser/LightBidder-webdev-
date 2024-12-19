@@ -98,7 +98,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bid_amount'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/css.css?v=3">
     <link rel="stylesheet" href="../css/collections.css?v=5">
-    <title>Bid on Artwork</title>
+    <link rel="stylesheet" href="../css/auctions.css?v=3"">
+        <title>Bid on Artwork</title>
 </head>
 <body>
 <header>
@@ -107,11 +108,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bid_amount'])) {
           <a href="#" class="logo"><img src="../img/bidder-high-resolution-logo-black-transparent.png" alt=""></a>
         </div>
         <ul id="homepageNav">
-          <li><a href="index.php">Home</a></li>
-          <li><a href="artworks.html">Artwork</a></li>
+        <li><a href="index.php">Home</a></li>
+          <!-- <li><a href="artworks.html">Artwork</a></li> -->
           <li><a href="collections.php">Collections</a></li>
+          <li><a href="artists.php">Artists</a></li>
           <li><a href="auctions.php">Auctions</a></li>
           <li><a href="contact.php">Contact</a></li>
+          <li><a href="forum.php">Forum</a></li>
           <?php if (isset($_SESSION['user_id'])): ?>
             <li class="nav-item dropdown">
                 <button class="dropbtn">
@@ -124,6 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bid_amount'])) {
                 <div class="dropdown-content">
                     <a href="profile.php">My Profile</a>
                     <a href="my-collections.php">My Collections</a>
+                    <a href="my_favorites.php">My Favorites</a>
                     <a href="../php/logout.php" style="background-color: #cb5050; !important;">Logout</a>
                 </div>
             </li>
@@ -134,7 +138,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bid_amount'])) {
       </div>
     </header>
 
-    <div class="bid-container">
+    <div class="auctions-container">
         <div class="bid-content">
             <div class="artwork-display">
                 <h1><?php echo htmlspecialchars($auction['title']); ?></h1>

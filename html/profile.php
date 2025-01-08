@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile</title>
-    <link rel="stylesheet" href="../css/css.css?v3">
+    <link rel="stylesheet" href="../css/css.css?v7">
     <link rel="stylesheet" href="../css/profile.css?v1">
     <link rel="stylesheet" href="../css/auctions.css?v5">
 </head>
@@ -93,11 +93,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <i class="arrow down"></i>
                         </button>
                         <div class="dropdown-content">
-                            <a href="profile.php">My Profile</a>
-                            <a href="my-collections.php">My Collections</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="../php/logout.php">Logout</a>
-                        </div>
+                    <a href="profile.php">My Profile</a>
+                    <a href="my-collections.php">My Collections</a>
+                    <a href="my_favorites.php">My Favorites</a>
+                    <a href="../php/logout.php" style="background-color: #cb5050; !important;">Logout</a>
+                </div>
                     </li>
                 <?php endif; ?>
             </ul>

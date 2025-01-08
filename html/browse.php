@@ -48,7 +48,7 @@ $result = $stmt->get_result();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/css.css?v=4">
+    <link rel="stylesheet" href="../css/css.css?v=7">
     <link rel="stylesheet" href="../css/collections.css?v=7">
     <link rel="stylesheet" href="../css/auctions.css">
     <title><?php echo htmlspecialchars($collection_name); ?> - Collections</title>

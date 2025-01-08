@@ -146,7 +146,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Collections</title>
-    <link rel="stylesheet" href="../css/css.css?v5">
+    <link rel="stylesheet" href="../css/css.css?v7">
     <link rel="stylesheet" href="../css/collections.css?v5">
 </head>
 <body>

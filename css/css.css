@@ -293,6 +293,7 @@ header div {
     /* Smooth transition for visibility and position */
     display: flex;
     flex-direction: column;
+    height: auto;
 }
 
 .dropdown-content a {

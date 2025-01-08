@@ -27,7 +27,7 @@ while ($row = $result->fetch_assoc()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/css.css?v=3">
+    <link rel="stylesheet" href="../css/css.css?v=7">
     <link rel="stylesheet" href="../css/collections.css?v=6">
     <link rel="stylesheet" href="../css/my_favorites.css?v=1">
     <link rel="stylesheet" href="../css/auctions.css?v=6">
@@ -58,6 +58,7 @@ while ($row = $result->fetch_assoc()) {
                 <div class="dropdown-content">
                     <a href="profile.php">My Profile</a>
                     <a href="my-collections.php">My Collections</a>
+                    <a href="my_favorites.php">My Favorites</a>
                     <a href="../php/logout.php" style="background-color: #cb5050; !important;">Logout</a>
                 </div>
             </li>

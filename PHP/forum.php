@@ -70,3 +70,4 @@ if ($action === 'addThread') {
 
 $conn->close();
 ?>
+

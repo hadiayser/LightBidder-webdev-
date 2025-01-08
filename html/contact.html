@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us Page</title>
+    <link rel="stylesheet" href="../css/css.css" />
+  </head>
+  <body id="body_contact">
+    <header>
+      <div>
+        <div class="nav-logo">
+          <a href="#" class="logo"
+            ><img src="../img/logo-no-background.png" alt=""
+          /></a>
+        </div>
+        <ul id="homepageNav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="artworks.html">Artwork</a></li>
+          <li><a href="index.html">Collections</a></li>
+          <li><a href="index.html">Exhibitions</a></li>
+          <li><a href="forum.html">Forum</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="web.html">Login/Signup</a></li>
+        </ul>
+      </div>
+    </header>
+    <div class="container">
+      <form>
+        <h1>Please let us know what's wrong</h1>
+        <label for="fname">First Name</label>
+        <input
+          type="text"
+          id="fname"
+          name="firstname"
+          placeholder="Your name.."
+        />
+
+        <label for="lname">Last Name</label>
+        <input
+          type="text"
+          id="lname"
+          name="lastname"
+          placeholder="Your last name.."
+        />
+        <label for="fname">Email</label>
+        <input type="text" id="email" name="email" placeholder="Your email.." />
+
+        <label for="title_subject">Subject</label>
+        <select id="question_field" name="question_field">
+          <option value="questions">General Questions</option>
+          <option value="art">Art</option>
+          <option value="refund">Refund</option>
+        </select>
+
+        <label for="subject">Write here</label>
+        <textarea
+          id="subject"
+          name="subject"
+          placeholder="Write something.."
+          style="height: 200px"
+        ></textarea>
+
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+  </body>
+</html>

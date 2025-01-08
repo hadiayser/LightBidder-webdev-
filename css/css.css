@@ -1,74 +1,136 @@
-/* *{
-    padding-left: 0.5rem;
-} */
-body{
+/* General Body Styling */
+
+body {
     background-color: whitesmoke;
     margin: 0;
-}
-.nav-logo img{
-    margin-top: 20px;
-    width: 80px;
-    height: 90px;
+    margin-top: 80px;
 }
 
+
+/* Logo Styling */
+
+.nav-logo img {
+    margin-top: 10px;
+    width: 60px;
+    height: 70px;
+}
+
+
+/* Header Styling */
+
+header {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background-image: linear-gradient(to top, #dad4ec 0%, #f3e7e9 100%);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Header Inner Container */
 
 header div {
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between; 
-    background: linear-gradient(to bottom, silver 0%, silver 70%, whitesmoke 100%);
-    padding-left: 0.5rem;
-
-
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 80px;
+    box-sizing: border-box;
 }
 
-header h1{
-    font-size: medium;
-}
+
+/* Navigation List Styling */
 
 #homepageNav {
-    margin: 0; 
-    padding: 2rem; 
-    list-style: none; 
-    display: flex; 
-    gap: 2rem; 
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+
+/* Navigation Items */
+
+#homepageNav li {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+
+/* Navigation Links */
+
+#homepageNav a {
+    color: #000;
     text-decoration: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
 }
-#homepageNav a:link { 
-    text-decoration: none; 
-    /* color: white; */
 
-  } 
-  a{
-    color: black;
-  }
-#homepageNav a:hover { 
-    text-decoration: underline;
-    text-decoration-thickness: 5px;
-  } 
 
-#ads{
+/* Hover Effect for Links */
+
+#homepageNav a:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
+}
+
+
+/* Active Link Styling */
+
+#homepageNav a:active {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+
+/* Responsive Design for Smaller Screens */
+
+@media (max-width: 768px) {
+    header div {
+        flex-direction: column;
+        padding: 1rem;
+    }
+    #homepageNav {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+
+/* Section Styling */
+
+#ads {
     padding-left: 0.5rem;
-
+    margin-top: 100px;
 }
 
-#ads h1{
+#ads h1 {
     font-size: 3rem;
 }
-#imagesArtwork{
-  justify-content: space-evely; 
-  gap: 2rem;
-  padding: 3rem;
-  flex: 2;
-}
-#imagesArtwork img{
-  height: 100%;
-  width:20rem; 
-  margin-bottom: 1rem;
-  object-fit: cover;
+
+#imagesArtwork {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 2rem;
+    padding: 3rem;
 }
 
-#Discover{
+#imagesArtwork img {
+    height: 100%;
+    width: 20rem;
+    margin-bottom: 1rem;
+    object-fit: cover;
+}
+
+#Discover,
+#shopNow {
     background: white;
     font-size: 1rem;
     color: black;
@@ -77,13 +139,41 @@ header h1{
     text-decoration: none;
     border: 2px solid black;
     margin: 0.5rem;
-
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
-#Discover:hover{
+
+#Discover:hover,
+#shopNow:hover {
     background: lightgray;
 }
 
-#shopNow{
+
+/* Text Section */
+
+#text {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5rem;
+}
+
+.pair {
+    padding: 1rem;
+}
+
+.FeaturedArtworks {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5rem;
+}
+
+#text2 {
+    width: 50%;
+}
+
+.bidButton {
     background: white;
     font-size: 1rem;
     color: black;
@@ -91,214 +181,328 @@ header h1{
     padding: 0.5rem;
     text-decoration: none;
     border: 2px solid black;
+    width: 90%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-#shopNow:hover{
-    background: lightgray;
-}
-
-#text{
+#imagesArtwork .artwork {
     display: flex;
-    align-items: center; 
-    justify-content: space-between; 
-    padding: 5rem;
-}
-.pair{
-    padding:1rem;
-}
-.FeaturedArtworks{
-    display: flex;
-    align-items: center; 
-    justify-content: space-between; 
-    padding: 5rem;
-}
-#text2{
+    flex-direction: column;
+    align-items: center;
     width: 50%;
 }
-#shopNow{
-    padding: 15px 5rem;
-    line-height: 3rem;
-}
 
-.bidButton{
-    background: white;
-    font-size: 1rem;
-    color: black;
-    text-align: center;
-    padding: 0.5rem;
-    text-decoration: none;
-    border: 2px solid black; 
-    width: 90%;
-
-}
-
-#imagesArtwork {
-    display: flex;
-    justify-content: space-evely; 
-    gap: 2rem;
-    padding: 3rem;
-    flex: 2;
-}
-
-.artwork {
-    display: flex;
-    flex-direction: column; 
-    align-items: center; 
-    width: 50%; 
-}
-
-.artwork img {
+#imagesArtwork .artwork img {
     height: 100%;
-    width: 100%; 
+    width: 100%;
     margin-bottom: 1rem;
     object-fit: cover;
 }
 
+
+/* Collections Section */
+
 #collections {
     padding: 20px;
     text-align: center;
-  }
-  
-  .categories {
+}
+
+.categories {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-  }
-  
-  .category {
+}
+
+.category {
     width: 30%;
     margin: 15px;
     border: 1px solid #ddd;
     padding: 15px;
     box-sizing: border-box;
-  }
-  
-  .category h3 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-  }
-  .artwork img {
-    width: 100%;
-    height: auto;
-    
 }
 
-#create-thread {
-    background: whitesmoke;
-    padding: 15px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    /* height: 40vh;
-    width: 100vw;
-    background-size: cover;
-    background-position: cover cover;
-    background-image: url('https://wallpapers.com/images/featured/art-dajgwkpkb3im2q3u.jpg'); */
-  }
-  
-  #create-thread input, 
-  #create-thread textarea {
+.category h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.artwork img {
+    width: 100%;
+    height: auto;
+}
+
+
+/* Dropdown Menu */
+
+.nav-item.dropdown {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.dropbtn {
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    background: none;
+    color: black;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.dropbtn span {
+    font-weight: 500;
+}
+
+.arrow {
+    border: solid black;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    margin-left: 2px;
+    transform: rotate(45deg);
+    transition: transform 0.3s ease;
+}
+
+.dropdown-content {
+    visibility: hidden;
+    /* Hidden by default */
+    opacity: 0;
+    /* Fully transparent initially */
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background: linear-gradient(135deg, #ffffff, #f7f7f7);
+    /* Subtle gradient background */
+    min-width: 180px;
+    /* Slightly larger for better usability */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    /* Enhanced shadow for depth */
+    border-radius: 10px;
+    /* Rounded corners */
+    overflow: hidden;
+    z-index: 1000;
+    transform: translateY(-10px);
+    /* Slightly above initial position */
+    transition: all 0.3s ease-in-out;
+    /* Smooth transition for visibility and position */
+    display: flex;
+    flex-direction: column;
+    height: auto;
+}
+
+.dropdown-content a {
+    color: #333;
+    /* Neutral text color */
+    padding: 12px 16px;
+    /* Comfortable padding */
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    /* Readable font size */
+    font-weight: 500;
+    /* Slightly bold for better readability */
+    transition: all 0.2s ease;
+    /* Smooth hover effect */
+    white-space: nowrap;
+    /* Prevent text wrapping */
+    background: transparent;
+    /* Transparent by default */
+}
+
+.dropdown-content a:hover {
+    background: linear-gradient(135deg, #e6e6e6, #dcdcdc);
+    /* Gradient on hover */
+    color: #5682bc;
+    /* Accent color for hover */
+    padding-left: 20px;
+    /* Subtle slide effect */
+    box-shadow: inset 4px 0 0 #577bab;
+    /* Accent bar effect on hover */
+}
+
+.dropdown:hover .dropdown-content {
+    visibility: visible;
+    /* Show dropdown */
+    opacity: 1;
+    /* Fully visible */
+    transform: translateY(0);
+    /* Slide into place */
+}
+
+
+/* Optional: Add a subtle divider between dropdown items */
+
+.dropdown-content a+a {
+    border-top: 1px solid #eaeaea;
+    /* Thin divider between links */
+}
+
+
+/* Optional: Add a small arrow indicator for the dropdown */
+
+.dropdown-divider {
+    height: 1px;
+    background-color: #e9ecef;
+    margin: 0;
+    width: 100%;
+}
+
+.nav-item.dropdown.active .dropdown-content {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.nav-item.dropdown.active .arrow {
+    transform: rotate(-135deg);
+    margin-top: 3px;
+}
+
+
+/* Profile Styling */
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.profile-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+}
+
+
+/* Form Styling */
+
+input[type=text],
+select,
+textarea {
     width: 100%;
     margin-bottom: 10px;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
-  }
-  
-  #create-thread button {
-    background-color: #4169E1
-    ;
+}
+
+#create-thread button {
+    background-color: #4169E1;
     color: white;
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
-  }
-  
-  #create-thread button:hover {
+}
+
+#create-thread button:hover {
     background-color: #005fa3;
     cursor: pointer;
-  }
-  
-  /* Forum Threads */
-  #forum-threads {
+}
+
+
+/* Forum Threads */
+
+#forum-threads {
     margin-top: 20px;
-  }
-  
-  #threads-container {
+}
+
+#threads-container {
     display: flex;
     flex-direction: column;
     gap: 15px;
-  }
-  
-  .thread {
+}
+
+.thread {
     background: whitesmoke;
     border: 1px solid #ddd;
     border-radius: 5px;
     padding: 15px;
-  }
-  
-  .thread h3 {
+}
+
+.thread h3 {
     margin: 0;
     color: black;
-  }
-  
-  .thread p {
+}
+
+.thread p {
     margin: 10px 0;
-  }
-  
-  .thread button {
+}
+
+.thread button {
     background-color: #780606;
     color: white;
     border: none;
     padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
-  }
-  
-  .thread button:hover {
+}
+
+.thread button:hover {
     background-color: #cc0000;
-  }
-
-  /* Style inputs with type="text", select elements and textareas */
-input[type=text], select, textarea {
-  width: 100%; /* Full width */
-  background-color: #232b2b;
-  padding: 12px; /* Some padding */ 
-  border: 1px solid #ccc; /* Gray border */
-  border-radius: 4px; /* Rounded borders */
-  box-sizing: border-box; /* Make sure that padding and width stays in place */
-  margin-top: 6px; /* Add a top margin */
-  margin-bottom: 16px; /* Bottom margin */
-  resize: vertical; /* Allow the user to vertically resize the textarea (not horizontally) */
-  color: grey;
 }
 
-/* Style the submit button with a specific background color etc */
+
+/* Style inputs with type="text", select elements and textareas */
+
+input[type=text],
+select,
+textarea {
+    width: 100%;
+    /* Full width */
+    background-color: #ffffff;
+    padding: 12px;
+    /* Some padding */
+    border: 1px solid #ccc;
+    /* Gray border */
+    border-radius: 4px;
+    /* Rounded borders */
+    box-sizing: border-box;
+    /* Make sure that padding and width stays in place */
+    margin-top: 6px;
+    /* Add a top margin */
+    margin-bottom: 16px;
+    /* Bottom margin */
+    resize: vertical;
+    /* Allow the user to vertically resize the textarea (not horizontally) */
+    color: grey;
+}
+
 input[type=submit] {
-  background-color: #04AA6D;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+    background-color: #04AA6D;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-/* When moving the mouse over the submit button, add a darker green color */
 input[type=submit]:hover {
-  background-color: #45a049;
+    background-color: #45a049;
 }
 
-/* Add a background color and some padding around the form */
 .container {
-  border-radius: 5px;
-  background-color: #0e1111;
-  padding: 20px;
-  color: white;
-  width: 30%;
-  float: right;
+    border-radius: 5px;
+    background-color: #545a5a73;
+    padding: 20px;
+    color: white;
+    width: 30%;
+    float: right;
 }
-#body_contact{
-  background-image: url("https://wallpapercat.com/w/full/c/1/f/847607-1920x1080-desktop-full-hd-mona-lisa-leonardo-da-vinci-wallpaper.jpg");
-  background-size: cover;
-  background-repeat: no-repeat; 
-  background-position: center center;
-  }
+
+
+/* Contact Page Background */
+
+#body_contact {
+    background-image: url("https://wallpapercat.com/w/full/c/1/f/847607-1920x1080-desktop-full-hd-mona-lisa-leonardo-da-vinci-wallpaper.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}

@@ -1,0 +1,37 @@
+/* Popup styles */
+.popup {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
+    justify-content: center; /* Center the content */
+    align-items: center; /* Center the content */
+}
+
+.popup-image {
+    max-width: 80%; /* Responsive image */
+    max-height: 70%; /* Responsive image */
+    margin: auto; /* Center the image */
+    display: block; /* Block element */
+}
+
+.popup-details {
+    color: white; /* Text color */
+    text-align: center; /* Center text */
+    margin-top: 20px; /* Space above details */
+}
+
+.close {
+    position: absolute; /* Position the close button */
+    top: 20px; /* Position from the top */
+    right: 30px; /* Position from the right */
+    color: white; /* Close button color */
+    font-size: 40px; /* Close button size */
+    font-weight: bold; /* Close button weight */
+    cursor: pointer; /* Pointer cursor on hover */
+} 

@@ -8,23 +8,30 @@ document.addEventListener("DOMContentLoaded", async () => {
     const threads = await response.json();
 
     threadsContainer.innerHTML = ""; // Clear container before rendering
-    const threadElements = threads.map((thread) => {
-        const threadElement = document.createElement("div");
-        threadElement.className = "thread";
-        threadElement.dataset.id = thread.id; // Store thread ID for comments
+
+    threads.forEach((thread) => {
+      const threadElement = document.createElement("div");
+      threadElement.className = "thread";
+      threadElement.dataset.id = thread.id; // Store thread ID for comments
+
+      // Render thread details
       threadElement.innerHTML = `
-    <h3>${thread.title}</h3>
-    <p>${thread.content}</p>
-    <div class="comments">
-        <input type="text" class="comment-input" placeholder="Write a comment..." />
-        <button class="add-comment">Add Comment</button>
-        <ul class="comments-list">
-      ${thread.comments
-        .map((comment) => `<li>${comment.text}</li>`)
-        .join("")}
-    </ul>
-  </div>
-`;
+          <h3>${thread.title}</h3>
+          <p>${thread.content}</p>
+          <p><strong>Posted by:</strong> ${thread.firstname} ${thread.lastname}</p>
+          <div class="comments">
+              <input type="text" class="comment-input" placeholder="Write a comment..." />
+              <button class="add-comment">Add Comment</button>
+              <ul class="comments-list">
+                  ${thread.comments
+                    .map(
+                      (comment) =>
+                        `<li><strong>${comment.firstname} ${comment.lastname}:</strong> ${comment.text}</li>`
+                    )
+                    .join("")}
+              </ul>
+          </div>
+      `;
 
       threadsContainer.appendChild(threadElement);
     });
@@ -33,14 +40,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Add a new thread
   postThreadBtn.addEventListener("click", async () => {
     const title = document.getElementById("thread-title").value.trim();
-    const content = document
-      .getElementById("thread-content")
-      .value.trim();
+    const content = document.getElementById("thread-content").value.trim();
 
-    // if (!title || !content) {
-    //   alert("Please fill in both the title and content!");
-    //   return;
-    // }
+    if (!title || !content) {
+      alert("Please fill in both the title and content!");
+      return;
+    }
 
     const response = await fetch("../PHP/forum.php?action=addThread", {
       method: "POST",
@@ -69,7 +74,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
       }
 
-      const threadId = thread.dataset.id;
+      const threadId = thread.dataset.id; // Get the thread ID
 
       const response = await fetch("../PHP/forum.php?action=addComment", {
         method: "POST",
@@ -81,7 +86,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       const data = await response.json();
       if (data.success) {
-        await fetchThreads(); 
+        await fetchThreads(); // Reload threads and comments after adding a comment
       } else {
         alert("Error adding comment: " + data.error);
       }

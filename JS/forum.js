@@ -9,12 +9,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     threadsContainer.innerHTML = ""; // Clear container before rendering
 
+        // Loop through each thread and render it on the page
     threads.forEach((thread) => {
       const threadElement = document.createElement("div");
       threadElement.className = "thread";
       threadElement.dataset.id = thread.id; // Store thread ID for comments
 
-      // Render thread details
+      // Render thread details and comments
       threadElement.innerHTML = `
           <h3>${thread.title}</h3>
           <p>${thread.content}</p>
@@ -32,12 +33,12 @@ document.addEventListener("DOMContentLoaded", async () => {
               </ul>
           </div>
       `;
-
+      // Append the thread element to the threads container
       threadsContainer.appendChild(threadElement);
     });
   }
 
-  // Add a new thread
+  // Add an event listener to the "post-thread" button for creating new threads
   postThreadBtn.addEventListener("click", async () => {
     const title = document.getElementById("thread-title").value.trim();
     const content = document.getElementById("thread-content").value.trim();
@@ -46,7 +47,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       alert("Please fill in both the title and content!");
       return;
     }
-
+    // Send a request to the server to add the new thread
     const response = await fetch("../PHP/forum.php?action=addThread", {
       method: "POST",
       body: new URLSearchParams({ title, content }),

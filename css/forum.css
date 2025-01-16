@@ -1,0 +1,430 @@
+/* General Styles */
+body {
+    font-family: 'Georgia', serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f6f4;
+    color: #3d3d3d;
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  section {
+    margin: 20px auto;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    max-width: 1000px;
+    background-color: #ffffff;
+    border: 1px solid #ded7d1;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  section:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    font-family: 'Times New Roman', serif;
+    color: #5a3e36;
+    text-align: center;
+    border-bottom: 3px solid #e6c5b8;
+    padding-bottom: 10px;
+    font-size: 1.8rem;
+  }
+  
+  .nav-logo img {
+    margin-top: 10px;
+    width: 60px;
+    height: 70px;
+  }
+  
+  /* Header Styling */
+
+header {
+    width: 100%;
+    position:relative;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background-image: linear-gradient(to top, #dad4ec 0%, #f3e7e9 100%);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Header Inner Container */
+
+header div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 80px;
+    box-sizing: border-box;
+}
+
+
+/* Navigation List Styling */
+
+#homepageNav {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+
+/* Navigation Items */
+
+#homepageNav li {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+
+/* Navigation Links */
+
+#homepageNav a {
+    color: #000;
+    text-decoration: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+
+/* Hover Effect for Links */
+
+#homepageNav a:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
+}
+
+/* Dropdown Menu */
+
+.nav-item.dropdown {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.dropbtn {
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    background: none;
+    color: black;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.dropbtn span {
+    font-weight: 500;
+}
+
+.arrow {
+    border: solid black;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    margin-left: 2px;
+    transform: rotate(45deg);
+    transition: transform 0.3s ease;
+}
+
+.dropdown-content {
+    visibility: hidden;
+    /* Hidden by default */
+    opacity: 0;
+    /* Fully transparent initially */
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background: linear-gradient(135deg, #ffffff, #f7f7f7);
+    /* Subtle gradient background */
+    min-width: 180px;
+    /* Slightly larger for better usability */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    /* Enhanced shadow for depth */
+    border-radius: 10px;
+    /* Rounded corners */
+    overflow: hidden;
+    z-index: 1000;
+    transform: translateY(-10px);
+    /* Slightly above initial position */
+    transition: all 0.3s ease-in-out;
+    /* Smooth transition for visibility and position */
+    display: flex;
+    flex-direction: column;
+    height: auto;
+}
+
+.dropdown-content a {
+    color: #333;
+    /* Neutral text color */
+    padding: 12px 16px;
+    /* Comfortable padding */
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    /* Readable font size */
+    font-weight: 500;
+    /* Slightly bold for better readability */
+    transition: all 0.2s ease;
+    /* Smooth hover effect */
+    white-space: nowrap;
+    /* Prevent text wrapping */
+    background: transparent;
+    /* Transparent by default */
+}
+
+.dropdown-content a:hover {
+    background: linear-gradient(135deg, #e6e6e6, #dcdcdc);
+    /* Gradient on hover */
+    color: #5682bc;
+    /* Accent color for hover */
+    padding-left: 20px;
+    /* Subtle slide effect */
+    box-shadow: inset 4px 0 0 #577bab;
+    /* Accent bar effect on hover */
+}
+
+.dropdown:hover .dropdown-content {
+    visibility: visible;
+    /* Show dropdown */
+    opacity: 1;
+    /* Fully visible */
+    transform: translateY(0);
+    /* Slide into place */
+}
+
+
+/* Optional: Add a subtle divider between dropdown items */
+
+.dropdown-content a+a {
+    border-top: 1px solid #eaeaea;
+    /* Thin divider between links */
+}
+
+
+/* Optional: Add a small arrow indicator for the dropdown */
+
+.dropdown-divider {
+    height: 1px;
+    background-color: #e9ecef;
+    margin: 0;
+    width: 100%;
+}
+
+.nav-item.dropdown.active .dropdown-content {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.nav-item.dropdown.active .arrow {
+    transform: rotate(-135deg);
+    margin-top: 3px;
+}
+
+
+/* Profile Styling */
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.profile-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+}
+  
+  /* Create Thread Section */
+  #create-thread {
+    background-color: #fbf9f8;
+    border: 1px solid #e6c5b8;
+    border-radius: 12px;
+  }
+  
+  #create-thread input[type="text"],
+  #create-thread textarea {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #c4b8b3;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-family: 'Georgia', serif;
+    background-color: #fffdfa;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  
+  #create-thread input[type="text"]:focus,
+  #create-thread textarea:focus {
+    border-color: #b08a74;
+    box-shadow: 0 0 8px rgba(176, 138, 116, 0.5);
+    outline: none;
+  }
+  
+  #create-thread textarea {
+    height: 150px;
+    resize: vertical;
+  }
+  
+  #create-thread button {
+    background-color: #b08a74;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 30px;
+    font-size: 16px;
+    font-family: 'Georgia', serif;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  #create-thread button:hover {
+    background-color: #8c6c59;
+    transform: translateY(-3px);
+  }
+  
+  /* Forum Threads Section */
+  #forum-threads {
+    background-color: #fbf9f8;
+    border: 1px solid #e6c5b8;
+    border-radius: 12px;
+  }
+  
+  #threads-container {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+  
+  #threads-container > div {
+    padding: 25px;
+    border: 1px solid #c4b8b3;
+    border-radius: 12px;
+    background-color: #ffffff;
+    transition: box-shadow 0.3s, transform 0.2s;
+  }
+  
+  #threads-container > div:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
+  }
+  
+  /* Comments Section */
+  .comments {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #ded7d1;
+  }
+  
+  .comments input.comment-input {
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border: 1px solid #c4b8b3;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 14px;
+    font-family: 'Georgia', serif;
+    background-color: #fbf9f8;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  
+  .comments input.comment-input:focus {
+    border-color: #b08a74;
+    box-shadow: 0 0 6px rgba(176, 138, 116, 0.5);
+    outline: none;
+  }
+  
+  .comments button.add-comment {
+    background-color: #b08a74;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-family: 'Georgia', serif;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+  }
+  
+  .comments button.add-comment:hover {
+    background-color: #8c6c59;
+    transform: translateY(-2px);
+  }
+  
+  .comments-list {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0 0;
+  }
+  
+  .comments-list li {
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    border: 1px solid #c4b8b3;
+    border-radius: 8px;
+    background-color: #ffffff;
+    font-size: 14px;
+    font-family: 'Georgia', serif;
+    color: #3d3d3d;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .comments-list li strong {
+    color: #5a3e36;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 600px) {
+    section {
+      padding: 15px;
+    }
+  
+    #create-thread input[type="text"],
+    #create-thread textarea {
+      font-size: 14px;
+    }
+  
+    #create-thread button {
+      font-size: 14px;
+      padding: 10px 20px;
+    }
+  
+    .comments input.comment-input {
+      font-size: 13px;
+      padding: 8px 12px;
+    }
+  
+    .comments button.add-comment {
+      font-size: 13px;
+      padding: 8px 15px;
+    }
+  
+    .comments-list li {
+      font-size: 13px;
+      padding: 8px 12px;
+    }
+  }
+ 

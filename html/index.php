@@ -7,7 +7,7 @@ session_start();
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../css/css.css?v7" />
+    <link rel="stylesheet" href="../css/css.css?v=<?php echo time(); ?>" />
     <title>Homepage</title>
   </head>
   <body>
@@ -24,6 +24,7 @@ session_start();
           <li><a href="auctions.php">Auctions</a></li>
           <li><a href="contact.php">Contact</a></li>
           <li><a href="forum.php">Forum</a></li>
+          <li><a href="faq.html">FAQ</a></li>
           <?php if (isset($_SESSION['user_id'])): ?>
             <li class="nav-item dropdown">
                 <button class="dropbtn">
@@ -46,6 +47,7 @@ session_start();
         </ul>
       </div>
     </header>
+    <main>
     <div id="ads">
       <h1>
         Discover unique <br />
@@ -62,7 +64,7 @@ session_start();
 
         // Check if there are any results
         if ($result->num_rows > 0) {
-            echo '<div id="imagesArtwork">';
+            echo '<div class="imagesArtwork">';
             while ($row = $result->fetch_assoc()) {
                 echo '<div class="artwork">';
                 echo '<img src="' . $row['image_url'] . '" alt="' . htmlspecialchars($row['title']) . '">';
@@ -76,52 +78,87 @@ session_start();
         }
         ?>
 
-      <div id="text">
-        <div class="pair">
-          <h3>Discover Unique Artworks</h3>
-      <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-        </div>
-        <div class="pair">
-          <h3>Bid or Buy Instantly</h3>
-      <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-  </div>
+<div id="text">
+    <div class="pair">
+        <h3>Discover One-of-a-Kind Masterpieces</h3>
+        <p>From timeless classics to avant-garde creations—find art that speaks to you, only on Bidder.</p>
+    </div>
+    <div class="pair">
+        <h3>Bid, Buy & Own a Piece of History</h3>
+        <p>Engage in thrilling auctions or secure your favorite artwork instantly. The world of art is yours to explore.</p>
+    </div>
+    <div>
+        <h3>Empower Artists, Elevate Creativity</h3>
+        <p>Support legendary artists and rising stars alike. Every bid fuels artistic passion and innovation.</p>
+    </div>
+</div>
 
-  <div>
-      <h3>Support artists</h3>
-      <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-    </div>
-  </div>
-    </div>
     <div class="FeaturedArtworks">
       <div id="text2">
       <h2>Featured <br> Artworks</h2>
-      <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. "</p>
+      <p>Look at our featured artwork by pressing the button!</p>
       <a href="auctions.php" id="shopNow">Shop now</a>
    
     </div>
-    <div id="imagesArtwork">
-      <div class="artwork">
-        <img
-          src="https://i.ebayimg.com/images/g/pi0AAOSwZBhhjSMC/s-l1200.jpg"
-          alt=""
-        />
-      </div>
+    <div class="imagesArtwork">
+    <?php
+        include '../php/conn.php';
 
-      <div class="artwork">
-        <img
-          src="https://m.media-amazon.com/images/I/91ZTNUjqClL._AC_UF894,1000_QL80_.jpg"
-          alt=""
-        />
-      </div>
+        // Fetch artworks with specific IDs from the database
+        $sql = "SELECT title, description, image_url FROM artworks WHERE artwork_id IN (1, 2, 3)";
+        $result = $conn->query($sql);
 
-      <div class="artwork">
-        <img
-          src="https://paintings.pinotspalette.com/van-goghs-starry-night---halloween-ii-tv.jpeg?v=10027528"
-          alt=""
-        />
-      </div>
-    </div>
+        // Check if there are any results
+        if ($result->num_rows > 0) {
+            echo '<div class="imagesArtwork">';
+            while ($row = $result->fetch_assoc()) {
+                echo '<div class="artwork">';
+                echo '<img src="' . $row['image_url'] . '" alt="' . htmlspecialchars($row['title']) . '">';
+                echo '<h3>' . htmlspecialchars($row['title']) . '</h3>';
+                echo '</div>';
+            }
+            echo '</div>';
+        } else {
+            echo '<p>No artworks found.</p>';
+        }
+        ?>
   </div>
+      </main>
+
+  <footer class="footer">
+    <div class="footer-container">
+        <div class="footer-section">
+            <h4>About Us</h4>
+            <p>Bidder is your go-to marketplace for discovering, bidding on, and collecting unique artworks from around the world.</p>
+        </div>
+
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="collections.php">Collections</a></li>
+                <li><a href="artists.php">Artists</a></li>
+                <li><a href="auctions.php">Auctions</a></li>
+                <li><a href="contact.php">Contact</a></li>
+                <li><a href="faq.php">FAQ</a></li>
+                <li><a href="terms.html">Terms & Conditions</a></li>
+                <li><a href="legal.html">Legal</a></li>
+
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4>Contact Us</h4>
+            <p>Email: <a href="mailto:support@bidder.com">support@bidder.com</a></p>
+            <p>Phone: +1 (555) 123-4567</p>
+            <p>Location: 123 Art Street, New York, NY</p>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; <?php echo date("Y"); ?> Bidder. All Rights Reserved.</p>
+    </div>
+      </footer>
   <script>
 document.addEventListener('DOMContentLoaded', function() {
     const dropdown = document.querySelector('.nav-item.dropdown');

@@ -8,6 +8,7 @@ session_start();
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/css.css?v=<?php echo time(); ?>" />
+    <script src="https://kit.fontawesome.com/00b227d73b.js" crossorigin="anonymous"></script>
     <title>Homepage</title>
   </head>
   <body>
@@ -80,14 +81,17 @@ session_start();
 
 <div id="text">
     <div class="pair">
+    <i class="fa-solid fa-palette fa-2x"></i>
         <h3>Discover One-of-a-Kind Masterpieces</h3>
         <p>From timeless classics to avant-garde creations—find art that speaks to you, only on Bidder.</p>
     </div>
     <div class="pair">
-        <h3>Bid, Buy & Own a Piece of History</h3>
+    <i class="fa-solid fa-eye fa-2x"></i>
+      <h3>Bid, Buy & Own a Piece of History</h3>
         <p>Engage in thrilling auctions or secure your favorite artwork instantly. The world of art is yours to explore.</p>
     </div>
     <div>
+    <i class="fa-solid fa-brush fa-2x"></i>
         <h3>Empower Artists, Elevate Creativity</h3>
         <p>Support legendary artists and rising stars alike. Every bid fuels artistic passion and innovation.</p>
     </div>
@@ -150,13 +154,13 @@ session_start();
         <div class="footer-section">
             <h4>Contact Us</h4>
             <p>Email: <a href="mailto:support@bidder.com">support@bidder.com</a></p>
-            <p>Phone: +1 (555) 123-4567</p>
-            <p>Location: 123 Art Street, New York, NY</p>
+            <p>Phone: +1 (111) 111-111</p>
+            <p>Location: Paris, France</p>
         </div>
     </div>
 
     <div class="footer-bottom">
-        <p>&copy; <?php echo date("Y"); ?> Bidder. All Rights Reserved.</p>
+        <p>&copy; <?php echo date("M, Y"); ?> Bidder. All Rights Reserved.</p>
     </div>
       </footer>
   <script>

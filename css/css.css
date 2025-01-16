@@ -569,8 +569,8 @@ input[type=submit]:hover {
 .footer-container {
     display: flex;
     margin: 0 auto;
-    min-height: 100vh;    
-    flex-direction: column;
+    min-height: 10vh;    
+    flex-direction: row;
     justify-content: space-around;
     flex-wrap: wrap;
     max-width: 1200px;
@@ -655,4 +655,8 @@ input[type=submit]:hover {
     .footer-bottom {
         font-size: 10px;
     }
+}
+.fa-solid {
+    display: flex;
+    justify-content: center
 }

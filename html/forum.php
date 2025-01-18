@@ -7,8 +7,9 @@ session_start();
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../css/forum.css" />
+    <link rel="stylesheet" href="../css/forum.css?v=<?php echo time(); ?>" />
     <script src="../JS/forum.js"></script>
+    <script src="../JS/hamburger.js"></script>
     <title>Homepage</title>
   </head>
   <body>
@@ -17,6 +18,11 @@ session_start();
         <div class="nav-logo">
           <a href="index.php" class="logo"><img src="../img/bidder-high-resolution-logo-black-transparent.png" alt=""></a>
         </div>
+        <button class="hamburger" aria-label="Toggle navigation">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
         <ul id="homepageNav">
         <li><a href="index.php">Home</a></li>
           <!-- <li><a href="artworks.html">Artwork</a></li> -->

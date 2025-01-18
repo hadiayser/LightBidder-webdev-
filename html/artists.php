@@ -20,9 +20,11 @@ $result = $stmt->get_result();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/css.css?v=7"> <!-- Main CSS -->
+    <link rel="stylesheet" href="../css/css.css?v=v=<?php echo time(); ?>"> <!-- Main CSS -->
     <link rel="stylesheet" href="../css/collections.css?v=7"> <!-- Collections CSS -->
     <link rel="stylesheet" href="../css/auctions.css"> <!-- Auctions CSS -->
+    <script src="../js/hamburger.js"></script>
+
     <title>Artists</title>
     <style>
         /* Add any additional styles here if needed */
@@ -156,6 +158,11 @@ body {
         <div class="nav-logo">
           <a href="#" class="logo"><img src="../img/bidder-high-resolution-logo-black-transparent.png" alt=""></a>
         </div>
+        <button class="hamburger" aria-label="Toggle navigation">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
         <ul id="homepageNav">
         <li><a href="index.php">Home</a></li>
           <!-- <li><a href="artworks.html">Artwork</a></li> -->

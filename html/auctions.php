@@ -25,10 +25,12 @@ while ($auction = mysqli_fetch_assoc($result)) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/css.css?v=7">
+    <link rel="stylesheet" href="../css/css.css?v=v=<?php echo time(); ?>">
     <link rel="stylesheet" href="../css/dropdown.css?v=3">
     <link rel="stylesheet" href="../css/collections.css?v=3">
     <link rel="stylesheet" href="../css/auctions.css?v=4">
+    <script src="../js/hamburger.js"></script>
+
     <title>All Auctions</title>
     <style>
         /* Background styling */
@@ -102,6 +104,11 @@ while ($auction = mysqli_fetch_assoc($result)) {
                         <img src="../img/bidder-high-resolution-logo-black-transparent.png" alt="Logo">
                     </a>
                 </div>
+                <button class="hamburger" aria-label="Toggle navigation">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
                 <nav>
                     <ul id="homepageNav">
                     <li><a href="index.php">Home</a></li>

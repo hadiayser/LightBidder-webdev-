@@ -29,7 +29,8 @@ $conn->close();
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contact Us Page</title>
-    <link rel="stylesheet" href="../css/css.css?v7" />
+    <link rel="stylesheet" href="../css/css.css?v=<?php echo time(); ?>" />
+    <script src="../js/hamburger.js"></script>
   </head>
   <body id="body_contact">
     <header>
@@ -37,6 +38,11 @@ $conn->close();
         <div class="nav-logo">
           <a href="#" class="logo"><img src="../img/bidder-high-resolution-logo-black-transparent.png" alt=""></a>
         </div>
+        <button class="hamburger" aria-label="Toggle navigation">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
         <ul id="homepageNav">
         <li><a href="index.php">Home</a></li>
           <!-- <li><a href="artworks.html">Artwork</a></li> -->

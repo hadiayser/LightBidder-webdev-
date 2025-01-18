@@ -11,7 +11,7 @@ require_once('admin_auth.php');
 </head>
 <body>
   <header>
-    <h1>Admin Dashboard</h1>
+    <h1>Admin Dashms-appid:W~C:\xampp\xampp-control.exeboard</h1>
   </header>
   <div class="wrapper">
     <nav class="sidebar">

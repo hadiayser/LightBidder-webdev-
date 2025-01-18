@@ -41,6 +41,8 @@ echo "<!-- Debug: Query executed = $query -->";
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/css.css?v=<?php echo time(); ?>" />
 <link rel="stylesheet" href="../css/collections.css?v=<?php echo time(); ?>" />
+<script src="../js/hamburger.js"></script>
+
 
     <link rel="stylesheet" href="../css/auctions.css" />
 
@@ -53,6 +55,11 @@ echo "<!-- Debug: Query executed = $query -->";
         <div class="nav-logo">
             <a href="#" class="logo"><img src="../img/bidder-high-resolution-logo-black-transparent.png" alt=""></a>
         </div>
+        <button class="hamburger" aria-label="Toggle navigation">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
         <ul id="homepageNav">
             <li><a href="index.php">Home</a></li>
             <li><a href="collections.php">Collections</a></li>

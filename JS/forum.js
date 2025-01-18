@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     threadsContainer.innerHTML = ""; // Clear container before rendering
 
-        // Loop through each thread and render it on the page
+    // Loop through each thread and render it on the page
     threads.forEach((thread) => {
       const threadElement = document.createElement("div");
       threadElement.className = "thread";

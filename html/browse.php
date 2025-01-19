@@ -54,120 +54,118 @@ $result = $stmt->get_result();
     <title><?php echo htmlspecialchars($collection_name); ?> - Collections</title>
     <style>
         /* Popup styling */
-       /* General Popup Styling */
-.popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    visibility: hidden;
-    opacity: 0;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
 
-.popup:not(.hidden) {
-    visibility: visible;
-    opacity: 1;
-}
+        .popup:not(.hidden) {
+            visibility: visible;
+            opacity: 1;
+        }
 
-/* Overlay for closing the popup */
-.popup-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: transparent;
-    cursor: pointer;
-}
+        .popup-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            cursor: pointer;
+        }
 
-/* Popup Content Box */
-.popup-content {
-    position: relative;
-    background: #fff;
-    padding: 20px;
-    border-radius: 12px;
-    max-width: 800px;
-    width: 90%;
-    display: flex;
-    gap: 20px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    animation: slideIn 0.4s ease;
-}
+        .popup-content {
+            position: relative;
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 800px;
+            width: 90%;
+            display: flex;
+            gap: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.4s ease;
+        }
 
-/* Image Styling */
-.popup-image img {
-    max-width: 250px;
-    height: auto;
-    border-radius: 8px;
-    object-fit: cover;
-}
+        .popup-image img {
+            max-width: 250px;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+            cursor: zoom-in;
+        }
+        .popup-image img.zoomed {
+            transform: scale(2);
+            cursor: zoom-out;
+        }
 
-/* Popup Details Styling */
-.popup-details {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
+        .popup-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
 
-.popup-details h3 {
-    margin: 0 0 10px;
-    font-size: 26px;
-    color: #333;
-}
+        .popup-details h3 {
+            margin: 0 0 10px;
+            font-size: 26px;
+            color: #333;
+        }
 
-.popup-details p {
-    margin: 5px 0;
-    color: #555;
-    font-size: 16px;
-}
+        .popup-details p {
+            margin: 5px 0;
+            color: #555;
+            font-size: 16px;
+        }
 
-.popup-artist {
-    font-weight: bold;
-    color: #222;
-}
+        .popup-artist {
+            font-weight: bold;
+            color: #222;
+        }
 
-.popup-description,
-.popup-biography {
-    line-height: 1.6;
-}
+        .popup-description,
+        .popup-biography {
+            line-height: 1.6;
+        }
 
-/* Close Button */
-.close-button {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 28px;
-    color: #333;
-    background: none;
-    border: none;
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 28px;
+            color: #333;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
 
-.close-button:hover {
-    color: #e74c3c;
-}
+        .close-button:hover {
+            color: #e74c3c;
+        }
 
-/* Animation */
-@keyframes slideIn {
-    from {
-        transform: translateY(-20px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
-}
-
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body>
@@ -206,37 +204,36 @@ $result = $stmt->get_result();
           <?php endif; ?>
         </ul>
       </div>
-    </header>
-    <div class="browse-container">
+</header>
+<div class="browse-container">
     <h2 class="browse-title"><?php echo htmlspecialchars($collection_name); ?></h2>
     <p class="browse-description"><?php echo nl2br(htmlspecialchars($collection_description)); ?></p>
         
-        <div class="browse-grid">
-            <?php
-            // Display artworks
-            if ($result->num_rows > 0):
-                while ($artwork = $result->fetch_assoc()): ?>
-                    <div class="artwork" 
-                         onclick="showPopup(
-                             '<?php echo htmlspecialchars($artwork['image_url'] ?? ''); ?>',
-                             '<?php echo htmlspecialchars($artwork['title'] ?? 'Untitled'); ?>',
-                             '<?php echo htmlspecialchars($artwork['artist_name'] ?? 'Unknown Artist'); ?>',
-                             '<?php echo htmlspecialchars($artwork['artist_description'] ?? 'No description available.'); ?>',
-                            '<?php echo htmlspecialchars($artwork['artwork_description'] ?? 'No description available.'); ?>'
-                         )">
-                        <img src="<?php echo htmlspecialchars($artwork['image_url'] ?? ''); ?>" alt="<?php echo htmlspecialchars($artwork['title'] ?? ''); ?>">
-                        <h4><?php echo htmlspecialchars($artwork['title'] ?? ''); ?></h4>
-                    </div>
-                <?php endwhile;
-            else:
-                echo '<p>No artworks found in this collection.</p>';
-            endif;
-            ?>
-        </div>
+    <div class="browse-grid">
+        <?php
+        // Display artworks
+        if ($result->num_rows > 0):
+            while ($artwork = $result->fetch_assoc()): ?>
+                <div class="artwork" 
+                     onclick="showPopup(
+                         '<?php echo htmlspecialchars($artwork['image_url'] ?? ''); ?>',
+                         '<?php echo htmlspecialchars($artwork['title'] ?? 'Untitled'); ?>',
+                         '<?php echo htmlspecialchars($artwork['artist_name'] ?? 'Unknown Artist'); ?>',
+                         '<?php echo htmlspecialchars($artwork['artist_description'] ?? 'No description available.'); ?>',
+                         '<?php echo htmlspecialchars($artwork['artwork_description'] ?? 'No description available.'); ?>'
+                     )">
+                    <img src="<?php echo htmlspecialchars($artwork['image_url'] ?? ''); ?>" alt="<?php echo htmlspecialchars($artwork['title'] ?? ''); ?>">
+                    <h4><?php echo htmlspecialchars($artwork['title'] ?? ''); ?></h4>
+                </div>
+            <?php endwhile;
+        else:
+            echo '<p>No artworks found in this collection.</p>';
+        endif;
+        ?>
     </div>
+</div>
 
-    <!-- Popup Modal -->
-  <!-- Popup Modal -->
+<!-- Popup Modal -->
 <div id="artworkPopup" class="popup hidden">
     <div class="popup-overlay" onclick="closePopup()"></div>
     <div class="popup-content">
@@ -252,30 +249,40 @@ $result = $stmt->get_result();
         </div>
     </div>
 </div>
+
 </div>
 
-    <script>
-        // Function to show the popup with artwork details
-        function showPopup(imageUrl, title, artistName, description, artworkDescription) {
-            console.log('Popup Data:', { imageUrl, title, artistName, description, artworkDescription });
+<script>
+    // Function to show the popup with artwork details and enable zoom
+    function showPopup(imageUrl, title, artistName, description, artworkDescription) {
+        console.log('Popup Data:', { imageUrl, title, artistName, description, artworkDescription });
 
-            // Update the popup content
-            document.getElementById('popupImage').src = imageUrl || 'placeholder.jpg';
-            document.getElementById('popupTitle').textContent = title || 'Untitled';
-            document.getElementById('popupArtist').textContent = artistName || 'Unknown Artist';
-            document.getElementById('popupBiography').textContent = description || 'No description available.';
-            document.getElementById('popupArtworkDescription').textContent = artworkDescription || 'No description available.';
+        // Update the popup content
+        const popupImage = document.getElementById('popupImage');
+        popupImage.src = imageUrl || 'placeholder.jpg';
+        document.getElementById('popupTitle').textContent = title || 'Untitled';
+        document.getElementById('popupArtist').textContent = artistName || 'Unknown Artist';
+        document.getElementById('popupBiography').textContent = description || 'No description available.';
+        document.getElementById('popupArtworkDescription').textContent = artworkDescription || 'No description available.';
 
-            // Show the popup
-            const popup = document.getElementById('artworkPopup');
-            popup.classList.remove('hidden');
-        }
+        // Remove zoom class if previously applied
+        popupImage.classList.remove('zoomed');
 
-        // Function to close the popup
-        function closePopup() {
-            const popup = document.getElementById('artworkPopup');
-            popup.classList.add('hidden');
-        }
-    </script>
+        // Add click handler to toggle zoom
+        popupImage.onclick = function() {
+            this.classList.toggle('zoomed');
+        };
+
+        // Show the popup
+        const popup = document.getElementById('artworkPopup');
+        popup.classList.remove('hidden');
+    }
+
+    // Function to close the popup
+    function closePopup() {
+        const popup = document.getElementById('artworkPopup');
+        popup.classList.add('hidden');
+    }
+</script>
 </body>
 </html>

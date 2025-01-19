@@ -52,6 +52,7 @@ while($row = $result->fetch_assoc()) {
             <td><?= htmlspecialchars($doc['effective_date']); ?></td>
             <td>
               <a href="edit_terms.php?id=<?= htmlspecialchars($doc['id']) ?>">Edit</a>
+              <a href="delete_terms.php?id=<?= htmlspecialchars($doc['id']) ?>" onclick="return confirm('Delete this document?');">Delete</a>
             </td>
           </tr>
           <?php endforeach; ?>

@@ -201,6 +201,23 @@
     margin-bottom: 20px;
     border-radius: 4px;
   }
+  .sidebar ul li a.return-site {
+    display: block;
+    margin-top: 20px;
+    color: #FFD700;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: 1px solid #FFD700;
+    border-radius: 4px;
+    transition: background 0.3s, color 0.3s;
+  }
+  
+  .sidebar ul li a.return-site:hover {
+    background: #FFD700;
+    color: #000;
+  }
+  
   
   /* Responsive Adjustments */
   @media (max-width: 768px) {

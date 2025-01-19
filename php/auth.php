@@ -38,9 +38,14 @@ if (isset($_POST['login'])) {
             // Debug: Ensure the session variables are set
             error_log("Login successful for " . $_SESSION['username']);
 
-            // Redirect to index page
-            error_log("Redirecting to index.php");
-            header("Location: ../html/index.php");
+            // Redirect based on user role
+            if ($user['role'] === 'admin') {
+                error_log("Redirecting to admin dashboard");
+                header("Location: ../admin/dashboard.php");
+            } else {
+                error_log("Redirecting to index.php");
+                header("Location: ../html/index.php");
+            }
             exit();
 
         } else {
@@ -125,5 +130,4 @@ if (isset($_POST['register'])) {
         }
     }
 }
-
 ?>

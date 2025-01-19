@@ -6,12 +6,12 @@ require_once('admin_auth.php');
 <head>
   <meta charset="UTF-8" />
   <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="../css/admin.css" />
+  <link rel="stylesheet" href="../css/admin.css?v=<?php echo time(); ?> " />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <body>
   <header>
-    <h1>Admin Dashms-appid:W~C:\xampp\xampp-control.exeboard</h1>
+    <h1>Admin Dashboard</h1>
   </header>
   <div class="wrapper">
     <nav class="sidebar">
@@ -21,6 +21,7 @@ require_once('admin_auth.php');
         <li><a href="manage_faq.php">Manage FAQs</a></li>
         <li><a href="manage_terms.php">Manage Terms &amp; Conditions</a></li>
         <li><a href="manage_legal.php">Manage Legal Notices</a></li>
+        <li><a href="../html/index.php" class="return-site">Return to Site</a></li>
         <!-- Add more navigation links as needed -->
       </ul>
     </nav>

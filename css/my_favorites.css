@@ -1,110 +1,153 @@
-/* General Styles for My Favorites */
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f9f9f9;
-    color: #333;
-}
+ /*********************************************
+     1. Global & Body Styling
+    *********************************************/
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+        color: #333; /* Base text color */
+    }
 
-#favorites {
-    padding: 40px 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    background-image: linear-gradient(to top, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 100px;
-}
+    /*********************************************
+     2. Main Favorites Container
+    *********************************************/
+    #favorites {
+        padding: 40px 20px;
+        max-width: 1200px;
+        margin: 100px auto 0 auto; /* Center and add top margin for header space */
+        background: linear-gradient(to top, #dad4ec 0%, #dad4ec 1%, #f3e7e9 100%);
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
 
-#favorites h2 {
-    text-align: center;
-    margin-bottom: 40px;
-    font-size: 2.5em;
-    color: #2c3e50;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
+    #favorites h2 {
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 2.5em;
+        color: #2c3e50;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
 
-.favorites-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-}
+    /*********************************************
+     3. Favorites Grid & Auction Cards
+    *********************************************/
+    .favorites-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px; /* Some spacing at bottom */
+    }
 
-.auction-card {
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
-}
+    .auction-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 10px;
+        padding: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+    }
 
-.auction-card:hover {
-    transform: translateY(-5px);
-}
+    .auction-card:hover {
+        transform: translateY(-5px);
+    }
 
-.auction-card img {
-    width: 100%;
-    height: 200px; /* Adjust height as needed */
-    object-fit: cover;
-    border-radius: 8px;
-}
+    .auction-card img {
+        width: 100%;
+        height: 200px; /* Adjust as needed */
+        object-fit: cover;
+        border-radius: 8px;
+    }
 
-.auction-card h3 {
-    font-size: 1.5em;
-    color: #333;
-    margin: 10px 0;
-}
+    .auction-card h3 {
+        font-size: 1.5em;
+        color: #333;
+        margin: 10px 0;
+    }
 
-.auction-card p {
-    color: #666;
-    margin: 5px 0;
-}
+    .auction-card p {
+        color: #666;
+        margin: 5px 0;
+    }
 
-.remove-favorite-button {
-    background-color: #cb5050;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+    /* Modern Remove Button */
+    .remove-favorite-button {
+        background: linear-gradient(to right, #ff5f6d, #ffc371);
+        color: #fff;
+        border: none;
+        border-radius: 25px;
+        padding: 10px 20px;
+        font-size: 0.95rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        outline: none;
+    }
 
-.remove-favorite-button:hover {
-    background-color: #a94442;
-} 
+    .remove-favorite-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(255, 95, 109, 0.3);
+    }
 
-/* Notification Styles */
-.notification {
-    position: fixed;
-    top: 150px; /* Adjust this value to position it lower */
-    right: 20px; /* Keep this value to position it to the right */
-    background-color: #3f7dc0;
-    color: white;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    opacity: 0;
-    transform: translateY(-20px);
-}
+    /*********************************************
+     4. Notification Popup
+    *********************************************/
+    .notification {
+        position: fixed;
+        top: 80px; 
+        right: 20px;
+        width: 280px;
+        background-color: #f0f0f0;
+        border-left: 5px solid #2196F3;
+        padding: 15px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        border-radius: 10px;
+        opacity: 0;
+        transition: opacity 0.4s ease, transform 0.4s ease;
+        transform: translateY(-20px);
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
 
-.notification-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    .notification.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
 
-.hidden {
-    display: none;
-}
+    .notification-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 
-.notification.show {
-    display: flex;
-    opacity: 1;
-    transform: translateY(0);
-}
+    .notification-content #remove-notification-message {
+        margin-right: 10px;
+        font-size: 0.95rem;
+        color: #333;
+    }
+
+    /* Modern Close Button */
+    #close-remove-notification {
+        background: none;
+        border: none;
+        color: #333;
+        font-weight: bold;
+        cursor: pointer;
+        font-size: 1rem;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        transition: background-color 0.2s, color 0.2s;
+    }
+
+    #close-remove-notification:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .hidden {
+        display: none;
+    }

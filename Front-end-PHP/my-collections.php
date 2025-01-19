@@ -25,20 +25,85 @@ if ($artist_result->num_rows === 0) {
 $artist = $artist_result->fetch_assoc();
 $artist_id = $artist['artist_id'];
 
-// Now fetch artworks using artist_id instead of user_id
+/**
+ * Handles artwork image uploads.
+ *
+ * @param array $file The uploaded file from $_FILES.
+ * @return string|false A relative path (e.g. 'uploads/artworks/filename.jpg') or false on failure.
+ */
+function handleImageUpload($file) {
+    $maxSize = 20 * 1024 * 1024; // 20MB
+    if ($file['size'] > $maxSize) {
+        return false; 
+    }
+
+    // Allowed file extensions and MIME types
+    $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+    $allowedMimeTypes  = ['image/jpeg', 'image/png', 'image/gif'];
+
+    $tempPath      = $file['tmp_name'];
+    $originalName  = $file['name'];
+    $fileExtension = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
+
+    // Validate extension
+    if (!in_array($fileExtension, $allowedExtensions)) {
+        return false;
+    }
+
+    // Validate MIME type using finfo
+    $finfo    = finfo_open(FILEINFO_MIME_TYPE);
+    $mimeType = finfo_file($finfo, $tempPath);
+    finfo_close($finfo);
+
+    if (!in_array($mimeType, $allowedMimeTypes)) {
+        return false;
+    }
+
+    // Generate a unique filename
+    $newFilename = uniqid('artwork_') . '.' . $fileExtension;
+
+    // Define upload directory (ensure it's writable)
+    $uploadDir = '../uploads/artworks/';
+    if (!is_dir($uploadDir)) {
+        mkdir($uploadDir, 0755, true);
+    }
+
+    // Final path on the server
+    $destination = $uploadDir . $newFilename;
+
+    // Move the uploaded file
+    if (move_uploaded_file($tempPath, $destination)) {
+        // Return the relative path to store in the 'imagepath' column
+        return 'uploads/artworks/' . $newFilename;
+    }
+    return false;
+}
+
+// Now fetch artworks (including 'imagepath')
 $artworks_query = "
     SELECT 
-        a.*,
+        a.artwork_id,
+        a.artist_id,
+        a.title,
+        a.medium,
+        a.style,
+        a.description,
+        a.dimensions,
+        a.year_created,
+        a.starting_price,
+        a.image_url,
+        a.imagepath,  /* new column for local path */
         c.name as collection_name,
         c.description as collection_description
     FROM artworks a
     LEFT JOIN collections c ON a.collection_id = c.collection_id
     WHERE a.artist_id = ?
-    ORDER BY a.artwork_id DESC";
+    ORDER BY a.artwork_id DESC
+";
 
 try {
     $stmt = $conn->prepare($artworks_query);
-    $stmt->bind_param("i", $artist_id);  // Use artist_id instead of user_id
+    $stmt->bind_param("i", $artist_id);
     $stmt->execute();
     $artworks = $stmt->get_result();
     
@@ -50,64 +115,149 @@ try {
     $artworks = false;
 }
 
-// Fetch collections for the dropdown in the add artwork form
+// Fetch collections for the dropdown
 $collections_query = "SELECT collection_id, name FROM collections";
 $collections = $conn->query($collections_query);
 
-// Handle artwork creation
+// Handle POST requests
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Creating a new artwork
     if (isset($_POST['action']) && $_POST['action'] === 'create_artwork') {
-        $title = $_POST['title'];
-        $medium = $_POST['medium'];
-        $style = $_POST['style'];
-        $description = $_POST['description'];
-        $dimensions = $_POST['dimensions'];
-        $year_created = $_POST['year_created'];
+        $title          = $_POST['title'];
+        $medium         = $_POST['medium'];
+        $style          = $_POST['style'];
+        $description    = $_POST['description'];
+        $dimensions     = $_POST['dimensions'];
+        $year_created   = $_POST['year_created'];
         $starting_price = $_POST['starting_price'];
-        $collection_id = $_POST['collection_id'];
-        $image_url = $_POST['image_url'];  // Get image URL directly
+        $collection_id  = $_POST['collection_id'];
 
-        $insert_query = "INSERT INTO artworks (artist_id, title, medium, style, description, dimensions, 
-                        year_created, starting_price, image_url, collection_id) 
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        
-        $stmt = $conn->prepare($insert_query);
-        $stmt->bind_param("issssssdsi", $artist_id, $title, $medium, $style, $description, 
-                         $dimensions, $year_created, $starting_price, $image_url, $collection_id);
-        
-        if ($stmt->execute()) {
-            $success_message = "Artwork added successfully!";
-            header("Location: " . $_SERVER['PHP_SELF']);
-            exit();
-        } else {
-            $error_message = "Error adding artwork.";
+        // Handle file upload if provided
+        $uploadedPath = '';
+        if (isset($_FILES['artwork_image']) && $_FILES['artwork_image']['error'] === UPLOAD_ERR_OK) {
+            $uploadedPath = handleImageUpload($_FILES['artwork_image']);
+            if (!$uploadedPath) {
+                $error_message = "Error uploading image (invalid file type or too large).";
+            }
+        }
+
+        // If no file uploaded or error, optionally set a placeholder or keep blank
+        if (empty($uploadedPath)) {
+            $uploadedPath = '../img/placeholder.jpg'; 
+        }
+
+        if (!isset($error_message)) {
+            // Insert into the new 'imagepath' column 
+            $insert_query = "INSERT INTO artworks (
+                artist_id, title, medium, style, description, dimensions, 
+                year_created, starting_price, image_url, imagepath, collection_id
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            $stmt = $conn->prepare($insert_query);
+            $stmt->bind_param(
+                "issssssdssi",
+                $artist_id, 
+                $title, 
+                $medium, 
+                $style, 
+                $description, 
+                $dimensions, 
+                $year_created, 
+                $starting_price,
+                $uploadedPath,  /* reusing this for 'image_url' if you want, or '' if not needed */
+                $uploadedPath,  /* storing local path in 'imagepath' */
+                $collection_id
+            );
+
+            if ($stmt->execute()) {
+                $success_message = "Artwork added successfully!";
+                header("Location: " . $_SERVER['PHP_SELF']);
+                exit();
+            } else {
+                $error_message = "Error adding artwork.";
+            }
         }
     }
 
-    if (isset($_POST['action'])) {
-        if ($_POST['action'] === 'edit_artwork') {
-            $artwork_id = $_POST['artwork_id'];
-            $title = $_POST['title'];
-            $medium = $_POST['medium'];
-            $style = $_POST['style'];
-            $description = $_POST['description'];
-            $dimensions = $_POST['dimensions'];
-            $year_created = $_POST['year_created'];
-            $starting_price = $_POST['starting_price'];
-            $collection_id = $_POST['collection_id'];
-            $image_url = $_POST['image_url'];
+    // Editing an existing artwork
+    if (isset($_POST['action']) && $_POST['action'] === 'edit_artwork') {
+        $artwork_id     = $_POST['artwork_id'];
+        $title          = $_POST['title'];
+        $medium         = $_POST['medium'];
+        $style          = $_POST['style'];
+        $description    = $_POST['description'];
+        $dimensions     = $_POST['dimensions'];
+        $year_created   = $_POST['year_created'];
+        $starting_price = $_POST['starting_price'];
+        $collection_id  = $_POST['collection_id'];
 
-            $update_query = "UPDATE artworks SET 
-                title = ?, medium = ?, style = ?, description = ?, 
-                dimensions = ?, year_created = ?, starting_price = ?, 
-                image_url = ?, collection_id = ?
-                WHERE artwork_id = ? AND artist_id = ?";
-            
-            $stmt = $conn->prepare($update_query);
-            $stmt->bind_param("ssssssdssii", $title, $medium, $style, $description, 
-                            $dimensions, $year_created, $starting_price, 
-                            $image_url, $collection_id, $artwork_id, $artist_id);
-            
+        // Check if user uploaded a new file
+        $newPath = false;
+        if (isset($_FILES['artwork_image']) && $_FILES['artwork_image']['error'] === UPLOAD_ERR_OK) {
+            $newPath = handleImageUpload($_FILES['artwork_image']);
+            if (!$newPath) {
+                $error_message = "Error uploading new image (invalid file type or too large).";
+            }
+        }
+
+        // Build the update query, optionally setting image_url or imagepath only if there's a new file
+        $update_query = "
+            UPDATE artworks SET
+                title = ?, 
+                medium = ?, 
+                style = ?, 
+                description = ?, 
+                dimensions = ?, 
+                year_created = ?, 
+                starting_price = ?, 
+        ";
+
+        if ($newPath) {
+            // If a new file is uploaded, update both 'image_url' & 'imagepath'
+            $update_query .= " image_url = ?, imagepath = ?, ";
+        }
+
+        $update_query .= "
+                collection_id = ?
+            WHERE artwork_id = ? AND artist_id = ?
+        ";
+
+        $stmt = $conn->prepare($update_query);
+
+        if ($newPath) {
+            $stmt->bind_param(
+                "ssssssdsssii",
+                $title, 
+                $medium, 
+                $style, 
+                $description, 
+                $dimensions, 
+                $year_created, 
+                $starting_price,
+                $newPath,       // setting 'image_url'
+                $newPath,       // setting 'imagepath'
+                $collection_id, 
+                $artwork_id, 
+                $artist_id
+            );
+        } else {
+            // If no new image, skip 'image_url' and 'imagepath' updates
+            $stmt->bind_param(
+                "ssssssdssii",
+                $title, 
+                $medium, 
+                $style, 
+                $description, 
+                $dimensions, 
+                $year_created, 
+                $starting_price,
+                $collection_id, 
+                $artwork_id, 
+                $artist_id
+            );
+        }
+
+        if (!isset($error_message)) {
             if ($stmt->execute()) {
                 $success_message = "Artwork updated successfully!";
                 header("Location: " . $_SERVER['PHP_SELF']);
@@ -117,13 +267,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     }
-}
-// Handle artwork deletion
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    // Deleting an artwork
     if (isset($_POST['action']) && $_POST['action'] === 'delete_artwork') {
         $artwork_id = $_POST['artwork_id'];
 
-        // Delete artwork from the database
+        // Delete from database
         $delete_query = "DELETE FROM artworks WHERE artwork_id = ? AND artist_id = ?";
         $stmt = $conn->prepare($delete_query);
         $stmt->bind_param("ii", $artwork_id, $artist_id);
@@ -137,7 +286,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -146,7 +294,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Collections</title>
-    <link rel="stylesheet" href="../css/css.css?v7">
+    <!-- Use a dynamic query param for cache-busting or a version constant in production -->
+    <link rel="stylesheet" href="../css/css.css?v=<?php echo filemtime(__DIR__ . '/../css/css.css'); ?>">
     <link rel="stylesheet" href="../css/collections.css?v5">
 </head>
 <body>
@@ -156,7 +305,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           <a href="#" class="logo"><img src="../img/bidder-high-resolution-logo-black-transparent.png" alt=""></a>
         </div>
         <ul id="homepageNav">
-        <li><a href="index.php">Home</a></li>
+          <li><a href="index.php">Home</a></li>
           <!-- <li><a href="artworks.html">Artwork</a></li> -->
           <li><a href="collections.php">Collections</a></li>
           <li><a href="artists.php">Artists</a></li>
@@ -185,6 +334,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </ul>
       </div>
     </header>
+
     <div class="collections-container">
         <div class="collections-header">
             <h1>My Artworks</h1>
@@ -204,12 +354,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="artworks-grid">
             <?php if ($artworks && $artworks->num_rows > 0): ?>
                 <?php while ($artwork = $artworks->fetch_assoc()): ?>
+                    <?php
+                        // If 'imagepath' is not empty, prepend '../' to find the file,
+                        // otherwise fallback to old 'image_url'.
+                        $displayImage = $artwork['imagepath'];
+                        
+                        if (!empty($displayImage)) {
+                            // The DB might store 'uploads/artworks/filename.jpg',
+                            // so we go up one directory: '../uploads/artworks/filename.jpg'
+                            $displayImage = '../' . $displayImage;
+                        } else {
+                            // fallback to image_url if imagepath is empty
+                            $displayImage = $artwork['image_url'];
+                            
+                            // If also empty, final fallback is placeholder
+                            if (empty($displayImage)) {
+                                $displayImage = '../img/placeholder.jpg';
+                            }
+                        }
+                    ?>
                     <div class="artwork-card">
                         <div class="artwork-preview">
-                            <img src="<?php echo !empty($artwork['image_url']) ? 
-                                htmlspecialchars($artwork['image_url']) : 
-                                '../img/placeholder.jpg'; ?>" 
-                                alt="<?php echo htmlspecialchars($artwork['title']); ?>">
+                            <img src="<?php echo htmlspecialchars($displayImage); ?>" 
+                                 alt="<?php echo htmlspecialchars($artwork['title']); ?>">
                             <?php if (!empty($artwork['collection_name'])): ?>
                                 <div class="artwork-collection">
                                     <?php echo htmlspecialchars($artwork['collection_name']); ?>
@@ -234,7 +401,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <form method="POST" style="display:inline;">
                                     <input type="hidden" name="action" value="delete_artwork">
                                     <input type="hidden" name="artwork_id" value="<?php echo $artwork['artwork_id']; ?>">
-                                    <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this artwork?');">Delete</button>
+                                    <button type="submit" class="delete-btn" 
+                                            onclick="return confirm('Are you sure you want to delete this artwork?');">
+                                        Delete
+                                    </button>
                                 </form>
                             </div>
                         </div>
@@ -256,10 +426,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <form method="POST" class="artwork-form" enctype="multipart/form-data">
                 <input type="hidden" name="action" value="create_artwork">
                 
+                <!-- Artwork Image File -->
                 <div class="form-group">
-                    <label for="artwork_image">Artwork Image URL</label>
-                    <input type="url" id="artwork_image" name="image_url" 
-                           placeholder="https://example.com/image.jpg" required>
+                    <label for="artwork_image">Artwork Image</label>
+                    <input type="file" id="artwork_image" name="artwork_image" accept="image/*">
                 </div>
 
                 <div class="form-row">
@@ -271,7 +441,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <label for="collection_id">Collection</label>
                         <select id="collection_id" name="collection_id">
                             <option value="">No Collection</option>
-                            <?php while ($collection = $collections->fetch_assoc()): ?>
+                            <?php
+                              // Rewind collections pointer
+                              $collections->data_seek(0);
+                              while ($collection = $collections->fetch_assoc()):
+                            ?>
                                 <option value="<?php echo $collection['collection_id']; ?>">
                                     <?php echo htmlspecialchars($collection['name']); ?>
                                 </option>
@@ -344,14 +518,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="modal-content">
             <span class="close" onclick="closeEditModal()">&times;</span>
             <h2>Edit Artwork</h2>
-            <form method="POST" class="artwork-form" id="editArtworkForm">
+            <form method="POST" class="artwork-form" id="editArtworkForm" enctype="multipart/form-data">
                 <input type="hidden" name="action" value="edit_artwork">
                 <input type="hidden" name="artwork_id" id="edit_artwork_id">
                 
+                <!-- Artwork Image File -->
                 <div class="form-group">
-                    <label for="edit_image_url">Artwork Image URL</label>
-                    <input type="url" id="edit_image_url" name="image_url" 
-                           placeholder="https://example.com/image.jpg" required>
+                    <label for="edit_artwork_image">Artwork Image (Optional)</label>
+                    <input type="file" id="edit_artwork_image" name="artwork_image" accept="image/*">
                 </div>
 
                 <div class="form-row">
@@ -363,10 +537,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <label for="edit_collection_id">Collection</label>
                         <select id="edit_collection_id" name="collection_id">
                             <option value="">No Collection</option>
-                            <?php 
-                            // Reset the collections result pointer
+                            <?php
+                            // Reset the pointer for the edit form
                             $collections->data_seek(0);
-                            while ($collection = $collections->fetch_assoc()): 
+                            while ($collection = $collections->fetch_assoc()):
                             ?>
                                 <option value="<?php echo $collection['collection_id']; ?>">
                                     <?php echo htmlspecialchars($collection['name']); ?>
@@ -434,6 +608,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </div>
     </div>
+
     <script src="../JS/dropdown.js"></script>
     <script>
         function showNewArtworkForm() {
@@ -451,7 +626,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     
                     // Populate the edit form
                     document.getElementById('edit_artwork_id').value = artwork.artwork_id;
-                    document.getElementById('edit_image_url').value = artwork.image_url;
                     document.getElementById('edit_title').value = artwork.title;
                     document.getElementById('edit_collection_id').value = artwork.collection_id;
                     document.getElementById('edit_medium').value = artwork.medium;
@@ -492,13 +666,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 this.closest('.modal').style.display = 'none';
             }
         });
-
-        function deleteArtwork(artworkId) {
-            if (confirm('Are you sure you want to delete this artwork?')) {
-                // Implement delete functionality
-                console.log('Delete artwork:', artworkId);
-            }
-        }
     </script>
 </body>
-</html> 
+</html>

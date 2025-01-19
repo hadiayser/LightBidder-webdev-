@@ -9,14 +9,14 @@ document.addEventListener('DOMContentLoaded', function() {
             dropdown.classList.toggle('active');
         });
 
-        // Close dropdown when clicking outside
+        // Close dropdown 
         document.addEventListener('click', function(e) {
             if (!dropdown.contains(e.target)) {
                 dropdown.classList.remove('active');
             }
         });
 
-        // Prevent dropdown from closing when clicking inside
+        // Prevent dropdown from closing
         dropdown.querySelector('.dropdown-content').addEventListener('click', function(e) {
             e.stopPropagation();
         });

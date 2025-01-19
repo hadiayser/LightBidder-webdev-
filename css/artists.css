@@ -1,0 +1,508 @@
+/*******************************************************
+  1. Global Reset & Basic Body
+*******************************************************/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    margin-top: 80px; /* Leaves space for the fixed header */
+    background-color: whitesmoke;
+    color: #333;
+  }
+  
+  /*******************************************************
+    2. Header & Navigation
+  *******************************************************/
+  header {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background-image: linear-gradient(to top, #dad4ec 0%, #f3e7e9 100%);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  header div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 80px;
+    box-sizing: border-box;
+  }
+  
+  /* Logo Styling */
+  .nav-logo img {
+    margin-top: 10px;
+    width: 60px;
+    height: 70px;
+  }
+  
+  /* Navigation List */
+  #homepageNav {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  
+  /* Navigation Items */
+  #homepageNav li {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+  
+  /* Navigation Links */
+  #homepageNav a {
+    color: #000;
+    text-decoration: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  #homepageNav a:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
+  }
+  #homepageNav a:active {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Responsive Navigation */
+  @media (max-width: 768px) {
+    header div {
+      flex-direction: column;
+      padding: 1rem;
+      height: auto;
+    }
+    #homepageNav {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  }
+  
+  /*******************************************************
+    3. Dropdown Menu
+  *******************************************************/
+  .nav-item.dropdown {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  
+  .dropbtn {
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    background: none;
+    color: black;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    gap: 10px;
+    transition: all 0.3s ease;
+  }
+  
+  .dropbtn span {
+    font-weight: 500;
+  }
+  
+  /* Arrow Icon */
+  .arrow {
+    border: solid black;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    margin-left: 2px;
+    transform: rotate(45deg);
+    transition: transform 0.3s ease;
+  }
+  
+  /* Dropdown Content Container */
+  .dropdown-content {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background: linear-gradient(135deg, #ffffff, #f7f7f7);
+    min-width: 180px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 1000;
+    transform: translateY(-10px);
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+  
+  .dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    background: transparent;
+  }
+  
+  /* Hover Effect for Dropdown Links */
+  .dropdown-content a:hover {
+    background: linear-gradient(135deg, #e6e6e6, #dcdcdc);
+    color: #5682bc;
+    padding-left: 20px;
+    box-shadow: inset 4px 0 0 #577bab;
+  }
+  
+  /* Show & Arrow Rotate on Hover or Active */
+  .dropdown:hover .dropdown-content {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .dropdown-content a+a {
+    border-top: 1px solid #eaeaea;
+  }
+  .nav-item.dropdown.active .dropdown-content {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .nav-item.dropdown.active .arrow {
+    transform: rotate(-135deg);
+    margin-top: 3px;
+  }
+  
+  /*******************************************************
+    4. User Profile Icon
+  *******************************************************/
+  .user-profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .profile-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+  }
+  
+  /*******************************************************
+    5. Artists Page Container & Title
+  *******************************************************/
+  .artists-page-container {
+    max-width: 1200px;
+    margin: 100px auto 0 auto;
+    padding: 20px;
+  }
+  .artists-page-container h1 {
+    text-align: center;
+    font-size: 2.7em;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    position: relative;
+  }
+  .artists-page-container h1::after {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 4px;
+    background: #3f7dc0;
+    margin: 15px auto;
+  }
+  
+  /*******************************************************
+    6. Search Bar (Glassy, Modern)
+  *******************************************************/
+  .artist-search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px auto;
+    width: 100%;
+    max-width: 600px;
+    padding: 0 20px;
+  }
+  
+  .search-bar-container {
+    position: relative;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    border-radius: 32px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+  }
+  
+  .search-icon {
+    flex: 0 0 auto;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-size: 1.3em;
+    pointer-events: none;
+  }
+  
+  .search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #333;
+    font-size: 1rem;
+    padding: 14px 20px;
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+  .search-input::placeholder {
+    color: #999;
+  }
+  .search-input:focus {
+    background: rgba(255,255,255,0.1);
+    box-shadow: inset 0 2px 6px rgba(0,0,0,0.15);
+  }
+  .search-bar-container:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+  
+  /*******************************************************
+    7. Artists Grid & Cards (Medium Size)
+  *******************************************************/
+  /* The grid for your articles (cards) with slightly bigger 
+     columns than the "too small" version. 
+  */
+  /* Container for the cards */
+.articles {
+    display: grid;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 22px;
+    justify-items: center;
+    align-items: center;
+  }
+  
+  /* Each card styling */
+  article.artist-card {
+    position: relative;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    cursor: pointer;
+    text-align: center;
+    min-height: 320px;
+  }
+  
+  /* Image styling */
+  .artist-card img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+  
+  /* Centered artist name */
+  .artist-card .article-body {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    padding: 0 10px;
+    z-index: 2;
+  }
+  
+  /* Styling the artist name */
+  .artist-card h2 {
+    font-size: 1.8em;
+    font-weight: bold;
+    margin: 0;
+    color: #eaeaea;
+    text-shadow: 1px 1px 4px rgba(92, 90, 90, 0.558);
+    letter-spacing: 1px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  
+  /* Overlay effect - will now be used for additional info or background blur */
+  .artist-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+  }
+  
+  /* Show the overlay on hover */
+  .artist-card:hover .artist-overlay {
+    opacity: 1;
+  }
+  
+  /* Hover effect for the artist card */
+  .artist-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .artist-card:hover img {
+    transform: scale(1.1);
+  }
+  
+  .artist-card:hover h2 {
+    transform: translateY(-10px);
+  }
+  
+  
+  /*******************************************************
+    8. Popup Modal (Fade In/Out)
+  *******************************************************/
+  .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%; 
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    opacity: 0;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.3s ease;
+  }
+  .popup.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  .popup-content {
+    background-color: #fff;
+    border-radius: 16px;
+    padding: 30px;
+    max-width: 900px;
+    width: 90%;
+    max-height: 85vh;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    overflow-y: auto;
+    position: relative;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #eee;
+    border: none;
+    font-size: 1.2em;
+    color: #444;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 34px;
+    transition: background-color 0.2s, color 0.2s;
+  }
+  .close-button:hover {
+    background-color: #ccc;
+    color: #222;
+  }
+  
+  .popup-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+    max-height: 400px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+  
+  .popup-details {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: space-between;
+    position: relative;
+  }
+  
+  .popup-details h3 {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .popup-biography {
+    font-size: 1em;
+    color: #555;
+    line-height: 1.6;
+    max-height: 300px;
+    overflow-y: auto;
+    border-left: 4px solid #3f7dc0;
+    padding-left: 10px;
+    background: #f8f8f8;
+    border-radius: 4px;
+  }
+  .popup-biography::-webkit-scrollbar {
+    width: 6px;
+  }
+  .popup-biography::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
+  }
+  
+  .portfolio-link {
+    font-size: 1em;
+    color: #0066cc;
+    margin-top: 10px;
+    display: inline-block;
+  }
+  .portfolio-link a {
+    text-decoration: none;
+    color: #3f7dc0;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+  .portfolio-link a:hover {
+    color: #2c5a8f;
+  }
+  
+  /* Responsive Adjustments for the Popup */
+  @media (max-width: 768px) {
+    .popup-content {
+      grid-template-columns: 1fr;
+    }
+  }
+  

@@ -1,4 +1,6 @@
 <?php
+// profile.php
+
 session_start();
 require_once('../php/conn.php');
 
@@ -69,7 +71,7 @@ function handleImageUpload($file) {
 
 // Ensure user is logged in
 if (!isset($_SESSION['user_id'])) {
-    header("Location: web.html");
+    header("Location: web.html"); // Redirect to login page
     exit();
 }
 
@@ -80,44 +82,73 @@ $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $userResult = $stmt->get_result();
 $user = $userResult->fetch_assoc();
+$stmt->close();
 
 // Handle form submissions
+$success_message = '';
+$error_message = '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // 1. Update Personal & Account Info
     if (isset($_POST['firstname'], $_POST['lastname'], $_POST['email'], $_POST['username'])) {
-        $firstname = $_POST['firstname'];
-        $lastname  = $_POST['lastname'];
-        $email     = $_POST['email'];
-        $username  = $_POST['username'];
+        $firstname = trim($_POST['firstname']);
+        $lastname  = trim($_POST['lastname']);
+        $email     = trim($_POST['email']);
+        $username  = trim($_POST['username']);
 
-        $update_stmt = $conn->prepare("UPDATE users 
-            SET firstname = ?, lastname = ?, email = ?, username = ? 
-            WHERE user_id = ?");
-        $update_stmt->bind_param("ssssi", 
-            $firstname, 
-            $lastname, 
-            $email, 
-            $username, 
-            $user_id
-        );
-
-        if ($update_stmt->execute()) {
-            // Also update session info
-            $_SESSION['firstname'] = $firstname;
-            $_SESSION['lastname']  = $lastname;
-            $success_message       = "Profile updated successfully!";
+        // Basic validation (you can enhance this)
+        if (empty($firstname) || empty($lastname) || empty($email) || empty($username)) {
+            $error_message = "All fields are required.";
         } else {
-            $error_message = "Error updating profile.";
+            // Update the database
+            $update_stmt = $conn->prepare("UPDATE users 
+                SET firstname = ?, lastname = ?, email = ?, username = ? 
+                WHERE user_id = ?");
+            $update_stmt->bind_param("ssssi", 
+                $firstname, 
+                $lastname, 
+                $email, 
+                $username, 
+                $user_id
+            );
+
+            if ($update_stmt->execute()) {
+                // Also update session info
+                $_SESSION['firstname'] = $firstname;
+                $_SESSION['lastname']  = $lastname;
+                $success_message       = "Profile updated successfully!";
+                // Refresh user data
+                $user['firstname'] = $firstname;
+                $user['lastname']  = $lastname;
+                $user['email']     = $email;
+                $user['username']  = $username;
+            } else {
+                $error_message = "Error updating profile.";
+            }
+
+            $update_stmt->close();
         }
     }
 
     // 2. Handle role change
     if (isset($_POST['role'])) {
-        $newRole = $_POST['role'];
-        $updateRoleStmt = $conn->prepare("UPDATE users SET role = ? WHERE user_id = ?");
-        $updateRoleStmt->bind_param("si", $newRole, $user_id);
-        $updateRoleStmt->execute();
+        $newRole = trim($_POST['role']);
+        $allowedRoles = ['Artist', 'Bidder', 'Collector', 'Admin']; // Define allowed roles
+
+        if (in_array($newRole, $allowedRoles)) {
+            $updateRoleStmt = $conn->prepare("UPDATE users SET role = ? WHERE user_id = ?");
+            $updateRoleStmt->bind_param("si", $newRole, $user_id);
+            if ($updateRoleStmt->execute()) {
+                $success_message = "User role updated successfully!";
+                $user['role'] = $newRole;
+            } else {
+                $error_message = "Error updating role.";
+            }
+            $updateRoleStmt->close();
+        } else {
+            $error_message = "Invalid role selected.";
+        }
     }
 
     // 3. Change Password
@@ -127,7 +158,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $updatePasswordStmt = $conn->prepare("UPDATE users SET password = ? WHERE user_id = ?");
         $updatePasswordStmt->bind_param("si", $hashedPassword, $user_id);
-        $updatePasswordStmt->execute();
+        if ($updatePasswordStmt->execute()) {
+            $success_message = "Password updated successfully!";
+        } else {
+            $error_message = "Error updating password.";
+        }
+        $updatePasswordStmt->close();
     }
 
     // 4. Profile Picture Upload
@@ -136,7 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $uploadResult = handleImageUpload($_FILES['profile_picture']);
             if ($uploadResult !== false) {
                 // Optionally remove old photo if not default
-                if (!empty($user['profile_picture']) && $user['profile_picture'] !== 'uploads/profile_pictures/default.png') {
+                if (!empty($user['profile_picture']) && $user['profile_picture'] !== 'uploads/profile_pictures/default-avatar.png') {
                     $oldPath = '../' . $user['profile_picture'];
                     if (file_exists($oldPath)) {
                         unlink($oldPath);
@@ -150,14 +186,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if ($picStmt->execute()) {
                     $success_message = "Profile picture updated successfully!";
                     // Refresh user data
-                    $refreshStmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
-                    $refreshStmt->bind_param("i", $user_id);
-                    $refreshStmt->execute();
-                    $newResult = $refreshStmt->get_result();
-                    $user      = $newResult->fetch_assoc();
+                    $user['profile_picture'] = $uploadResult;
                 } else {
                     $error_message = "Database update failed. Please try again.";
                 }
+                $picStmt->close();
             }
         } else {
             $_SESSION['page2_errors']['profile_picture_err'] = 
@@ -171,30 +204,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>My Profile</title>
-    <!-- Link your main CSS -->
-    <link rel="stylesheet" href="../css/css.css?v7">
-    <link rel="stylesheet" href="../css/profile.css?v1">
-    <link rel="stylesheet" href="../css/auctions.css?v5">
+    <!-- Link to CSS files -->
+    <link rel="stylesheet" href="../css/css.css?v7"> <!-- Main CSS (if any) -->
+    <link rel="stylesheet" href="../css/profile.css"> <!-- Profile CSS -->
+    <link rel="stylesheet" href="../css/auctions.css?v5"> <!-- Other CSS (if any) -->
     <style>
-    /* Additional styling when Save Changes is clicked */
-    .success-message {
-        color: green;
-        font-weight: bold;
-        margin: 1rem 0;
-        /* Subtle border or highlight */
-        border: 1px solid #c2e0c6;
-        background-color: #d7ffe0;
-        padding: 10px;
-        border-radius: 5px;
-    }
-    .error-message {
-        color: red;
-        margin: 1rem 0;
-        border: 1px solid #f9c2c2;
-        background-color: #ffe0e0;
-        padding: 10px;
-        border-radius: 5px;
-    }
+    /* Additional inline styles if needed */
     </style>
 </head>
 <body>
@@ -219,7 +234,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="user-profile">
                                 <?php
                                 // For the top-right corner small avatar
-                                $avatarPath = '../img/—Pngtree—user avatar placeholder black_6796227.png';
+                                $avatarPath = '../img/default-avatar.png'; // Ensure this path is correct
                                 if (!empty($user['profile_picture'])) {
                                     $avatarPath = '../' . $user['profile_picture'];
                                 }
@@ -227,7 +242,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <img src="<?php echo htmlspecialchars($avatarPath); ?>" 
                                      alt="Profile" 
                                      class="profile-img">
-                                <span><?php echo htmlspecialchars($_SESSION['firstname']); ?></span>
+                                <span><?php echo htmlspecialchars($user['firstname']); ?></span>
                             </div>
                             <i class="arrow down"></i>
                         </button>
@@ -249,7 +264,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="profile-header">
             <div class="profile-picture-container">
                 <?php
-                $profilePicturePath = '../img/—Pngtree—user avatar placeholder black_6796227.png';
+                $profilePicturePath = '../img/default-avatar.png'; // Default avatar path
                 if (!empty($user['profile_picture'])) {
                     $profilePicturePath = '../' . $user['profile_picture'];
                 }
@@ -269,9 +284,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     enctype="multipart/form-data" 
                     class="profile-pic-form" 
                     id="profilePicForm"
-                    style="display: none;"
+                    aria-labelledby="changePhotoModal"
+                    role="dialog"
                 >
-                    <input type="file" name="profile_picture" accept="image/*" required>
+                    <label for="profile_picture">Select a new profile picture:</label>
+                    <input type="file" name="profile_picture" id="profile_picture" accept="image/*" required onchange="previewImage(event)">
+                    <img id="preview" src="#" alt="Image Preview">
                     <button type="submit" name="upload_picture">Upload</button>
                 </form>
             </div>
@@ -376,7 +394,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
 
         <!-- Edit Form -->
-        <form method="POST" class="edit-form" id="editForm" style="display: none;">
+        <form method="POST" class="edit-form" id="editForm">
             <!-- Edit Personal Information -->
             <div class="profile-section">
                 <h2>Edit Personal Information</h2>
@@ -430,13 +448,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <!-- Role Change -->
             <div class="profile-section role-form">
                 <h2>Role</h2>
-                <label for="role">User Role:</label>
-                <select name="role" id="role">
-                    <option value="Artist"    <?php echo ($user['role'] === 'Artist')    ? 'selected' : ''; ?>>Artist</option>
-                    <option value="Bidder"    <?php echo ($user['role'] === 'Bidder')    ? 'selected' : ''; ?>>Bidder</option>
-                    <option value="Collector" <?php echo ($user['role'] === 'Collector') ? 'selected' : ''; ?>>Collector</option>
-                    <option value="Admin"     <?php echo ($user['role'] === 'Admin')     ? 'selected' : ''; ?>>Admin</option>
-                </select>
+                <div class="form-group">
+                    <label for="role">User Role:</label>
+                    <select name="role" id="role">
+                        <option value="Artist"    <?php echo ($user['role'] === 'Artist')    ? 'selected' : ''; ?>>Artist</option>
+                        <option value="Bidder"    <?php echo ($user['role'] === 'Bidder')    ? 'selected' : ''; ?>>Bidder</option>
+                        <option value="Collector" <?php echo ($user['role'] === 'Collector') ? 'selected' : ''; ?>>Collector</option>
+                        <option value="Admin"     <?php echo ($user['role'] === 'Admin')     ? 'selected' : ''; ?>>Admin</option>
+                    </select>
+                </div>
             </div>
 
             <!-- Change Password -->
@@ -448,6 +468,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         type="password" 
                         name="new_password" 
                         id="new_password"
+                        placeholder="Enter new password"
                     >
                 </div>
             </div>
@@ -459,9 +480,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
     </div>
 
-    <script src="../JS/dropdown.js">
-    </script>
-      <script src="../JS/profile.js">
-    </script>
+    <!-- Include JavaScript files -->
+    <script src="../JS/profile.js"></script>
 </body>
 </html>

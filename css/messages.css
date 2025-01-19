@@ -1,0 +1,379 @@
+/*******************************************************
+   Scoped Header for messages.php
+*******************************************************/
+#messagesHeader {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    background-image: linear-gradient(to top, #dad4ec 0%, #f3e7e9 100%);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#messagesHeader .nav-logo img {
+    margin-top: 10px;
+    width: 60px;
+    height: 70px;
+}
+
+#messagesHeaderNav {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+/* Logo Styling */
+.nav-logo img {
+    margin-top: 10px;
+    width: 60px;
+    height: 70px;
+}
+
+/* Navigation List */
+#homepageNav {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+/* Navigation Items */
+#homepageNav li {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+/* Navigation Links */
+#homepageNav a {
+    color: #000;
+    text-decoration: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Hover Effect for Links */
+#homepageNav a:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: scale(1.1);
+}
+
+/* Active Link Styling */
+#homepageNav a:active {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Navigation */
+@media (max-width: 768px) {
+    header div {
+        flex-direction: column;
+        padding: 1rem;
+        height: auto;
+    }
+    #homepageNav {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+/*******************************************************
+   3. Dropdown Menu
+*******************************************************/
+.nav-item.dropdown {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.dropbtn {
+    padding: 0 15px;
+    display: flex;
+    align-items: center;
+    background: none;
+    color: black;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.dropbtn span {
+    font-weight: 500;
+}
+
+/* Arrow Icon */
+.arrow {
+    border: solid black;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    margin-left: 2px;
+    transform: rotate(45deg);
+    transition: transform 0.3s ease;
+}
+
+/* Dropdown Content Container */
+.dropdown-content {
+    visibility: hidden;             /* Hidden by default */
+    opacity: 0;                     /* Fully transparent initially */
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background: linear-gradient(135deg, #ffffff, #f7f7f7);
+    min-width: 180px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 1000;
+    transform: translateY(-10px);   /* Slightly above initial position */
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    background: transparent;
+}
+
+/* Hover Effect for Dropdown Links */
+.dropdown-content a:hover {
+    background: linear-gradient(135deg, #e6e6e6, #dcdcdc);
+    color: #5682bc;
+    padding-left: 20px;
+    box-shadow: inset 4px 0 0 #577bab;
+}
+
+/* Show Dropdown on Hover */
+.dropdown:hover .dropdown-content {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Divider Between Dropdown Items */
+.dropdown-content a+a {
+    border-top: 1px solid #eaeaea;
+}
+
+/* Rotate Arrow When Active */
+.nav-item.dropdown.active .dropdown-content {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+}
+.nav-item.dropdown.active .arrow {
+    transform: rotate(-135deg);
+    margin-top: 3px;
+}
+
+/*******************************************************
+   4. User Profile Dropdown Icon
+*******************************************************/
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.profile-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid white;
+}
+
+
+/*******************************************************
+   Scoped Messaging Styles
+*******************************************************/
+
+/* Chat Container */
+.chat-container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    height: 80vh;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-top: 100px; /* Accounts for the fixed header */
+}
+
+/* User List */
+.chat-container .user-list {
+    width: 30%;
+    border-right: 1px solid #e0e0e0;
+    background-color: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-container .section-header {
+    padding: 15px;
+    background-color: #007BFF;
+    color: #fff;
+    text-align: center;
+    font-size: 1.2em;
+}
+
+/* Adjust section header images size */
+.chat-container .section-header img {
+    width: 40px;  /* Adjust width */
+    height: 40px; /* Adjust height */
+    object-fit: cover; /* Ensure the aspect ratio is maintained */
+}
+
+.chat-container .user-list ul {
+    list-style: none;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.chat-container .user-item {
+    padding: 15px;
+    border-bottom: 1px solid #e0e0e0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.chat-container .user-item:hover {
+    background-color: #e6f0ff;
+}
+
+.chat-container .user-item.active {
+    background-color: #d0e7ff;
+}
+
+.chat-container .user-item img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+/* Chat Box */
+.chat-container .chat-box {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.chat-container #chatMessages {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #f4f6f8;
+}
+
+.chat-container .message {
+    display: flex;
+    margin-bottom: 15px;
+    /* max-width: 70%; */
+}
+
+/* Align sent messages to the right */
+.chat-container .message.sent {
+    justify-content: flex-end;
+}
+
+/* Align received messages to the left */
+.chat-container .message.received {
+    justify-content: flex-start;
+}
+
+/* Message content */
+.chat-container .message-content {
+    background-color: #e0e0e0;
+    color: #333;
+    border-radius: 20px;
+    padding: 10px 15px;
+}
+
+/* Sent message content */
+.chat-container .message.sent .message-content {
+    background-color: #007BFF;
+    color: #fff;
+}
+
+/* Adjust message avatar size */
+.chat-container .message img {
+    width: 30px;  /* Adjust width */
+    height: 30px; /* Adjust height */
+    border-radius: 50%; /* Keep rounded corners */
+    object-fit: cover; /* Ensure the aspect ratio is maintained */
+}
+
+/* Received message avatar */
+.chat-container .message.received img {
+    margin-right: 10px; /* Space between avatar and message content */
+}
+
+/* Sent message avatar */
+.chat-container .message.sent img {
+    margin-left: 10px; /* Space between avatar and message content */
+}
+
+.chat-container #messageForm {
+    display: flex;
+    padding: 15px;
+    background-color: #fff;
+    border-top: 1px solid #e0e0e0;
+}
+
+.chat-container #messageForm textarea {
+    flex: 1;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    resize: none;
+    font-size: 1em;
+}
+
+.chat-container #messageForm button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    border-radius: 20px;
+    border: none;
+    margin-left: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .chat-container {
+        flex-direction: column;
+    }
+    .chat-container .user-list {
+        width: 100%;
+        height: 200px;
+    }
+    .chat-container .chat-box {
+        width: 100%;
+        height: calc(80vh - 200px);
+    }
+}

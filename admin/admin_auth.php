@@ -4,7 +4,7 @@ require_once('../php/conn.php');
 
 // Check if user is logged in and is admin
 if (!isset($_SESSION['user_id'])) {
-    header("Location: ../web.html");
+    header("Location: ./front-php/HTML/web.html");
     exit();
 }
 
@@ -18,7 +18,7 @@ $user = $result->fetch_assoc();
 
 if (!$user || $user['role'] !== 'admin') {
     // Redirect non-admins away
-    header("Location: ../index.php");
+    header("Location: ./front-php/index.php");
     exit();
 }
 ?>

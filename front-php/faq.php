@@ -1,5 +1,4 @@
 <?php
-// Start the session at the very beginning of the file
 session_start();
 require_once('../php/conn.php'); // Adjust the path if necessary
 
@@ -85,61 +84,15 @@ if (isset($_SESSION['user_id'])) {
 
       <div class="faq">
         <button class="faq-question">
-          What is Bidder? <span class="arrow">▼</span>
+          <?php echo htmlspecialchars($faq['question']); ?> <span class="arrow">▼</span>
         </button>
         <div class="faq-answer">
-          <p>
-            Bidder is an online art marketplace where you can discover, bid on,
-            and buy unique artworks from artists around the world.
-          </p>
+          <p><?php echo nl2br(htmlspecialchars($faq['answer'])); ?></p>
         </div>
       </div>
-
-      <div class="faq">
-        <button class="faq-question">
-          How do I place a bid? <span class="arrow">▼</span>
-        </button>
-        <div class="faq-answer">
-          <p>
-            Simply go to an artwork’s page, enter your bid amount, and click
-            "Place Bid". You’ll be notified if someone outbids you.
-          </p>
-        </div>
-      </div>
-
-      <div class="faq">
-        <button class="faq-question">
-          What payment methods do you accept? <span class="arrow">▼</span>
-        </button>
-        <div class="faq-answer">
-          <p>We accept credit/debit cards, PayPal, and bank transfers.</p>
-        </div>
-      </div>
-
-      <div class="faq">
-        <button class="faq-question">
-          How long does shipping take? <span class="arrow">▼</span>
-        </button>
-        <div class="faq-answer">
-          <p>
-            Shipping times vary but usually take 5-14 business days, depending
-            on the location.
-          </p>
-        </div>
-      </div>
-
-      <div class="faq">
-        <button class="faq-question">
-          How do I contact customer support? <span class="arrow">▼</span>
-        </button>
-        <div class="faq-answer">
-          <p>
-            Reach out via our Contact Page or email us at support@bidder.com.
-          </p>
-        </div>
-      </div>
-    </div>
+    <?php endforeach; ?>
+  </div>
   
-    <script src="../JS/faq.js"></script>
-  </body>
+  <script src="../JS/faq.js"></script>
+</body>
 </html>

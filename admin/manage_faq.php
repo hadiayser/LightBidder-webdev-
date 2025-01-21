@@ -1,15 +1,16 @@
 <?php
-require_once('admin_auth.php');
+require_once('admin_auth.php');  // Ensure only admins can access
 require_once('../php/conn.php');
 
-// Fetch FAQs
-$stmt = $conn->prepare("SELECT id, question, is_active FROM faqs");
+// Fetch all FAQs from the database
+$stmt = $conn->prepare("SELECT * FROM faqs ORDER BY created_at DESC");
 $stmt->execute();
 $result = $stmt->get_result();
 $faqs = [];
 while($row = $result->fetch_assoc()) {
-  $faqs[] = $row;
+    $faqs[] = $row;
 }
+$stmt->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,16 +22,19 @@ while($row = $result->fetch_assoc()) {
 </head>
 <body>
   <header>
+    <!-- Insert your fixed header content here -->
     <h1>Admin Dashboard</h1>
   </header>
   <div class="wrapper">
     <nav class="sidebar">
+      <!-- Insert your sidebar navigation here -->
       <ul>
         <li><a href="dashboard.php">Dashboard</a></li>
         <li><a href="manage_users.php">Manage Users</a></li>
         <li><a href="manage_faq.php">Manage FAQs</a></li>
         <li><a href="manage_terms.php">Manage Terms &amp; Conditions</a></li>
         <li><a href="manage_legal.php">Manage Legal Notices</a></li>
+        <!-- Add more navigation links as needed -->
       </ul>
     </nav>
     <main class="content">
@@ -40,7 +44,7 @@ while($row = $result->fetch_assoc()) {
           <tr>
             <th>ID</th>
             <th>Question</th>
-            <th>Active</th>
+            <th>Answer</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -49,10 +53,10 @@ while($row = $result->fetch_assoc()) {
           <tr>
             <td><?= htmlspecialchars($faq['id']); ?></td>
             <td><?= htmlspecialchars($faq['question']); ?></td>
-            <td><?= $faq['is_active'] ? 'Yes' : 'No'; ?></td>
+            <td><?= htmlspecialchars($faq['answer']); ?></td>
             <td>
-              <a href="edit_faq.php?id=<?= htmlspecialchars($faq['id']) ?>">Edit</a>
-              <a href="delete_faq.php?id=<?= htmlspecialchars($faq['id']) ?>" onclick="return confirm('Delete this FAQ?');">Delete</a>
+              <a href="edit_faq.php?id=<?= htmlspecialchars($faq['id']); ?>">Edit</a>
+              <a href="delete_faq.php?id=<?= htmlspecialchars($faq['id']); ?>" onclick="return confirm('Delete this FAQ?');">Delete</a>
             </td>
           </tr>
           <?php endforeach; ?>

@@ -6,7 +6,7 @@
   <title>Internal Messaging</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link rel="stylesheet" href="../css/messages.css?v=<?php echo time(); ?>" />
-  <!-- <link rel="stylesheet" href="../css/css.css?v=<?php echo time(); ?>" /> -->
+  <link rel="stylesheet" href="../css/css.css?v=<?php echo time(); ?>" />
 </head>
 <body>
 <header id="messagesHeader">
@@ -56,38 +56,36 @@
       </div>
     </header>
 
-  <h2>Internal Messaging</h2>
-
   <!-- Chat Container -->
-  <div class="chat-container">
+<div class="chat-container">
     <!-- User List -->
     <div class="user-list">
-      <header class="section-header">Users</header>
-      <ul id="userList">
-        <!-- Users will be loaded here via AJAX -->
-      </ul>
+        <div class="section-header">Users</div>
+        <ul id="userList">
+            <!-- Users will be loaded here via AJAX -->
+        </ul>
     </div>
 
     <!-- Chat Box -->
     <div class="chat-box">
-      <header class="section-header">
-        <img src="default-avatar.png" alt="User Avatar" id="chatWithAvatar">
-        <div class="chat-with" id="chatWithName">Chat</div>
-      </header>
-      <div id="chatMessages">
-        <p>Select a user to start chatting.</p>
-      </div>
-      
-      <!-- Send Message Form -->
-      <form id="messageForm">
-        <input type="hidden" name="receiver_id" id="receiver_id" value="">
-        <textarea name="message_content" id="message_content" rows="2" placeholder="Type your message here..."></textarea>
-        <button type="submit" id="sendMessageBtn">Send</button>
-      </form>
+        <div class="section-header">
+            <img src="default-avatar.png" alt="User Avatar" id="chatWithAvatar">
+            <div class="chat-with" id="chatWithName">Chat</div>
+        </div>
+        <div id="chatMessages">
+            <p>Select a user to start chatting.</p>
+        </div>
+        
+        <!-- Send Message Form -->
+        <form id="messageForm">
+            <input type="hidden" name="receiver_id" id="receiver_id" value="">
+            <textarea name="message_content" id="message_content" rows="2" placeholder="Type your message here..."></textarea>
+            <button type="submit" id="sendMessageBtn">Send</button>
+        </form>
     </div>
-  </div>
+</div>
 
-  <script>
+<script>
 $(document).ready(function() {
   // Load user list on page load
   loadUserList();

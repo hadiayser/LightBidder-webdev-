@@ -101,75 +101,28 @@ while ($row = $result->fetch_assoc()) {
           $imgUrl     = !empty($artist['image_url']) ? $artist['image_url'] : 'placeholder.jpg';
           $bio        = !empty($artist['biography']) ? $artist['biography'] : 'No biography available.';
           $portfolio  = !empty($artist['portfolio_url']) ? $artist['portfolio_url'] : '';
+          $artistId   = $artist['artist_id'];
         ?>
         
         <article 
-          class="artist-card" 
-          data-artist-name="<?php echo strtolower($artistName); ?>"
-          onclick="showArtistPopup(
-            '<?php echo addslashes($artistName); ?>', 
-            '<?php echo addslashes($bio); ?>', 
-            '<?php echo addslashes($imgUrl); ?>', 
-            '<?php echo addslashes($portfolio); ?>'
-          )"
+          class="artist-card"
         >
-          <figure>
-            <img src="<?php echo htmlspecialchars($imgUrl); ?>" 
-                 alt="<?php echo htmlspecialchars($artistName); ?>">
-          </figure>
-          <div class="article-body">
-            <h2><?php echo htmlspecialchars($artistName); ?></h2>
-            <!-- If you want a short snippet or 'Read more' link, add it here -->
-          </div>
+          <a href="artist-detail.php?id=<?php echo $artistId; ?>">
+            <figure>
+              <img src="<?php echo htmlspecialchars($imgUrl); ?>" 
+                   alt="<?php echo htmlspecialchars($artistName); ?>">
+            </figure>
+            <div class="article-body">
+              <h2><?php echo htmlspecialchars($artistName); ?></h2>
+            </div>
+          </a>
         </article>
       <?php endforeach; ?>
     </div>
 </div>
 
-<!-- Artist Popup Modal -->
-<div id="artistPopup" class="popup">
-  <div class="popup-content">
-      <button class="close-button" onclick="closeArtistPopup()">×</button>
-      <div class="popup-image">
-          <img id="popupArtistImage" src="" alt="Artist Image">
-      </div>
-      <div class="popup-details">
-          <h3 id="popupArtistName">Artist Name</h3>
-          <p id="popupArtistBiography" class="popup-biography">Biography</p>
-          <div class="portfolio-link" id="popupArtistPortfolio"></div>
-      </div>
-  </div>
-</div>
-
 <script src="../JS/dropdown.js"></script>
 <script>
-function showArtistPopup(name, biography, imageUrl, portfolio) {
-  const popupImg       = document.getElementById('popupArtistImage');
-  const popupName      = document.getElementById('popupArtistName');
-  const popupBiography = document.getElementById('popupArtistBiography');
-  const popupPortfolio = document.getElementById('popupArtistPortfolio');
-  const artistPopup    = document.getElementById('artistPopup');
-
-  // Assign or fallback
-  popupImg.src            = imageUrl || 'placeholder.jpg';
-  popupName.textContent   = name || 'Unknown Artist';
-  popupBiography.textContent = biography || 'No biography available.';
-
-  if (portfolio) {
-    popupPortfolio.innerHTML = `<a href="${portfolio}" target="_blank">Visit Portfolio</a>`;
-  } else {
-    popupPortfolio.textContent = 'No portfolio available.';
-  }
-
-  // Show the popup
-  artistPopup.classList.add('show');
-}
-
-function closeArtistPopup() {
-  // Hide the popup
-  document.getElementById('artistPopup').classList.remove('show');
-}
-
 /* Filter function for search (case-insensitive) */
 function filterArtists() {
   const input = document.getElementById('artistSearchInput');
@@ -178,8 +131,8 @@ function filterArtists() {
   const cards = grid.getElementsByTagName('article'); // or 'artist-card' class
 
   for (let i = 0; i < cards.length; i++) {
-    const artistName = cards[i].getAttribute('data-artist-name') || '';
-    if (artistName.includes(filter)) {
+    const artistName = cards[i].getElementsByTagName('h2')[0].textContent || '';
+    if (artistName.toLowerCase().includes(filter)) {
       cards[i].style.display = '';
     } else {
       cards[i].style.display = 'none';

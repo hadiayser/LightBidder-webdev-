@@ -478,10 +478,10 @@ input[type=submit]:hover {
    (We keep the existing rules from above) */
 
 /* Profile Info (Name, Username, Email) */
-.profile-info {
+/* .profile-info {
     flex: 1;
     min-width: 250px;
-}
+} */
 
 .profile-info h1 {
     font-size: 1.8rem;

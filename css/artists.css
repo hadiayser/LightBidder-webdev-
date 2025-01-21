@@ -498,6 +498,8 @@
   .portfolio-link a:hover {
     color: #2c5a8f;
   }
+
+  
   
   /* Responsive Adjustments for the Popup */
   @media (max-width: 768px) {

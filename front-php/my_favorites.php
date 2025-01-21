@@ -57,6 +57,7 @@ while ($row = $result->fetch_assoc()) {
             <li><a href="auctions.php">Auctions</a></li>
             <li><a href="contact.php">Contact</a></li>
             <li><a href="forum.php">Forum</a></li>
+            <li><a href="faq.php">FAQ</a></li>
             <?php if (isset($_SESSION['user_id'])): ?>
                 <li class="nav-item dropdown">
                     <button class="dropbtn">

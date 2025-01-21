@@ -8,47 +8,57 @@ session_start();
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/forum.css?v=<?php echo time(); ?>" />
+    <link 
+  rel="stylesheet" 
+  href="../css/css.css?v=<?php echo time(); ?>" 
+/>
     <script src="../JS/forum.js"></script>
     <script src="../JS/hamburger.js"></script>
     <title>Homepage</title>
   </head>
   <body>
-    <header>
+  <header>
       <div>
         <div class="nav-logo">
-          <a href="index.php" class="logo"><img src="../img/bidder-high-resolution-logo-black-transparent.png" alt=""></a>
+          <a href="index.php" class="logo">
+            <img src="./img/bidder-high-resolution-logo-black-transparent.png" alt="">
+          </a>
         </div>
+
+        <!-- Hamburger Menu Button for Mobile -->
         <button class="hamburger" aria-label="Toggle navigation">
-      <span class="bar"></span>
-      <span class="bar"></span>
-      <span class="bar"></span>
-    </button>
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+
         <ul id="homepageNav">
-        <li><a href="index.php">Home</a></li>
-          <!-- <li><a href="artworks.html">Artwork</a></li> -->
+          <li><a href="index.php">Home</a></li>
           <li><a href="collections.php">Collections</a></li>
           <li><a href="artists.php">Artists</a></li>
           <li><a href="auctions.php">Auctions</a></li>
           <li><a href="contact.php">Contact</a></li>
           <li><a href="forum.php">Forum</a></li>
+          <li><a href="faq.php">FAQ</a></li>
           <?php if (isset($_SESSION['user_id'])): ?>
             <li class="nav-item dropdown">
-                <button class="dropbtn">
-                    <div class="user-profile">
-                        <img src="../img/—Pngtree—user avatar placeholder black_6796227.png" alt="Profile" class="profile-img">
-                        <span><?php echo htmlspecialchars($_SESSION['firstname']); ?></span>
-                    </div>
-                    <i class="arrow down"></i>
-                </button>
-                <div class="dropdown-content">
-                    <a href="profile.php">My Profile</a>
-                    <a href="my-collections.php">My Collections</a>
-                    <a href="my_favorites.php">My Favorites</a>
-                    <a href="../php/logout.php" style="background-color: #cb5050; !important;">Logout</a>
+              <button class="dropbtn">
+                <div class="user-profile">
+                  <img src="../img/—Pngtree—user avatar placeholder black_6796227.png" alt="Profile" class="profile-img">
+                  <span><?php echo htmlspecialchars($_SESSION['firstname']); ?></span>
                 </div>
+                <i class="arrow down"></i>
+              </button>
+              <div class="dropdown-content">
+                <a href="profile.php">My Profile</a>
+                <a href="my-collections.php">My Collections</a>
+                <a href="my_favorites.php">My Favorites</a>
+                <a href="messages.php">Messages</a> <!-- Added Messages Link in Dropdown -->
+                <a href="../php/logout.php" style="background-color: #cb5050; !important;">Logout</a>
+              </div>
             </li>
           <?php else: ?>
-            <li><a href="web.html">Login/Signup</a></li>
+            <li><a href="HTML/web.html">Login/Signup</a></li>
           <?php endif; ?>
         </ul>
       </div>
@@ -74,5 +84,38 @@ session_start();
         <!-- Threads will appear here -->
       </div>
     </section>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>About Us</h4>
+                <p>Bidder is your go-to marketplace for discovering, bidding on, and collecting unique artworks from around the world.</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="collections.php">Collections</a></li>
+                    <li><a href="artists.php">Artists</a></li>
+                    <li><a href="auctions.php">Auctions</a></li>
+                    <li><a href="contact.php">Contact</a></li>
+                    <li><a href="faq.php">FAQ</a></li>
+                    <li><a href="terms.html">Terms & Conditions</a></li>
+                    <li><a href="legal.html">Legal</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <p>Email: <a href="mailto:support@bidder.com">support@bidder.com</a></p>
+                <p>Phone: +1 (111) 111-111</p>
+                <p>Location: Paris, France</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; <?php echo date("M, Y"); ?> Bidder. All Rights Reserved.</p>
+        </div>
+      </footer>
   </body>
 </html>

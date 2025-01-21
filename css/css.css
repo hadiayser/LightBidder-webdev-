@@ -255,6 +255,7 @@ header div {
     border: 2px solid black;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    line-height: 5rem;
 }
 #Discover:hover,
 #shopNow:hover {

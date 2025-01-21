@@ -39,7 +39,7 @@ if (isset($_POST['login'])) {
             // Redirect based on user role
             if ($user['role'] === 'admin') {
                 error_log("Redirecting to admin dashboard");
-                header("Location: ./admin/dashboard.php");
+                header("Location: ../admin/dashboard.php");
             } else {
                 error_log("Redirecting to index.php");
                 header("Location: ../front-php/index.php");

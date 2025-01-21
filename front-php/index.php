@@ -19,7 +19,7 @@ session_start();
     <header>
       <div>
         <div class="nav-logo">
-          <a href="#" class="logo">
+          <a href="index.php" class="logo">
             <img src="./img/bidder-high-resolution-logo-black-transparent.png" alt="">
           </a>
         </div>
@@ -57,7 +57,7 @@ session_start();
               </div>
             </li>
           <?php else: ?>
-            <li><a href="./HTML/web.html">Login/Signup</a></li>
+            <li><a href="HTML/web.html">Login/Signup</a></li>
           <?php endif; ?>
         </ul>
       </div>

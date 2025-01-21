@@ -16,8 +16,9 @@ while($row = $result->fetch_assoc()) {
 <head>
   <meta charset="UTF-8" />
   <title>Manage Users</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/admin.css?v=<?php echo time(); ?>" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="../css/admin.css" />
 </head>
 <body>
   <header>
@@ -27,10 +28,11 @@ while($row = $result->fetch_assoc()) {
     <nav class="sidebar">
       <ul>
         <li><a href="dashboard.php">Dashboard</a></li>
-        <li><a href="manage_users.php">Manage Users</a></li>
+        <li><a href="manage_users.php" class="active">Manage Users</a></li>
         <li><a href="manage_faq.php">Manage FAQs</a></li>
         <li><a href="manage_terms.php">Manage Terms &amp; Conditions</a></li>
         <li><a href="manage_legal.php">Manage Legal Notices</a></li>
+        <li><a href="../front-php/index.php" class="return-site">Return to Site</a></li>
         <!-- Additional links as needed -->
       </ul>
     </nav>
@@ -56,8 +58,8 @@ while($row = $result->fetch_assoc()) {
             <td><?= htmlspecialchars($user['username']); ?></td>
             <td><?= htmlspecialchars($user['role']); ?></td>
             <td>
-              <a href="edit_user.php?id=<?= htmlspecialchars($user['user_id']) ?>">Edit</a>
-              <a href="delete_user.php?id=<?= htmlspecialchars($user['user_id']) ?>" onclick="return confirm('Delete this user?');">Delete</a>
+              <a href="edit_user.php?id=<?= htmlspecialchars($user['user_id']) ?>" class="button">Edit</a>
+              <a href="delete_user.php?id=<?= htmlspecialchars($user['user_id']) ?>" class="button cancel-btn" onclick="return confirm('Delete this user?');">Delete</a>
             </td>
           </tr>
           <?php endforeach; ?>

@@ -221,7 +221,7 @@ header div {
 /* Example sections from your homepage or other pages */
 #ads {
     padding-left: 0.5rem;
-    margin-top: 100px;
+    margin-top: 150px;
 }
 
 #ads h1 {
@@ -256,6 +256,7 @@ header div {
     cursor: pointer;
     transition: background-color 0.3s ease;
     line-height: 5rem;
+    margin-top:  2rem;
 }
 #Discover:hover,
 #shopNow:hover {

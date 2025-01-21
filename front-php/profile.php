@@ -213,12 +213,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </style>
 </head>
 <body>
-    <header>
+<header id="messagesHeader">
         <div>
             <div class="nav-logo">
                 <!-- Example brand logo -->
                 <a href="#" class="logo">
-                    <img src="../img/bidder-high-resolution-logo-black-transparent.png" alt="Brand Logo">
+                    <img src="./img/bidder-high-resolution-logo-black-transparent.png" alt="Brand Logo">
                 </a>
             </div>
             <ul id="homepageNav">
@@ -230,7 +230,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <li><a href="forum.php">Forum</a></li>
                 <li><a href="faq.php">FAQ</a></li>
 
-                <?php if (isset($_SESSION['user_id'])): ?>
+                <?php if (!empty($user)): ?>
                     <li class="nav-item dropdown">
                         <button class="dropbtn">
                             <div class="user-profile">
@@ -252,11 +252,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <a href="profile.php">My Profile</a>
                             <a href="my-collections.php">My Collections</a>
                             <a href="my_favorites.php">My Favorites</a>
+                            <a href="messages.php">Messages</a>
                             <a href="../php/logout.php" style="background-color: #cb5050; !important;">Logout</a>
                         </div>
                     </li>
                 <?php else: ?>
-                    <li><a href="web.html">Login/Signup</a></li>
+                    <li><a href="./HTML/web.html">Login/Signup</a></li>
                 <?php endif; ?>
             </ul>
         </div>

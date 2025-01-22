@@ -156,7 +156,7 @@ body {
 <header>
       <div>
         <div class="nav-logo">
-          <a href="#" class="logo"><img src="../img/bidder-high-resolution-logo-black-transparent.png" alt=""></a>
+          <a href="index.php" class="logo"><img src="../css/img/bidder-high-resolution-logo-black-transparent.png" alt=""></a>
         </div>
         <button class="hamburger" aria-label="Toggle navigation">
       <span class="bar"></span>

@@ -2,20 +2,19 @@
 require_once('admin_auth.php');
 require_once('../php/conn.php');
 
-// Fetch data for dashboard cards (example queries)
+// Fetch data for dashboard cards 
 $stmt_users = $conn->prepare("SELECT COUNT(*) as total_users FROM users");
 $stmt_users->execute();
 $result_users = $stmt_users->get_result();
 $total_users = $result_users->fetch_assoc()['total_users'];
 $stmt_users->close();
 
-$stmt_faq = $conn->prepare("SELECT COUNT(*) as total_faqs FROM faqs"); // Assuming a faqs table
+$stmt_faq = $conn->prepare("SELECT COUNT(*) as total_faqs FROM faqs"); 
 $stmt_faq->execute();
 $result_faq = $stmt_faq->get_result();
 $total_faqs = $result_faq->fetch_assoc()['total_faqs'];
 $stmt_faq->close();
 
-// Add more queries as needed for other dashboard metrics
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +39,6 @@ $stmt_faq->close();
                 <li><a href="manage_legal.php">Manage Legal Notices</a></li>
                 <li><a href="manage_forum_threads.php">Manage Forum</a></li>
                 <li><a href="../front-php/index.php" class="return-site">Return to Site</a></li>
-                <!-- Additional links as needed -->
             </ul>
         </nav>
         <main class="content">
@@ -54,9 +52,7 @@ $stmt_faq->close();
                     <h2>Total FAQs</h2>
                     <p><?= htmlspecialchars($total_faqs); ?></p>
                 </div>
-                <!-- Add more cards or dashboard widgets as needed -->
             </section>
-            <!-- Add additional dashboard content here -->
         </main>
     </div>
 </body>

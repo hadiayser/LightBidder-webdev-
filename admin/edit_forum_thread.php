@@ -43,11 +43,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
   <header>
-    <!-- Header content -->
   </header>
   <div class="wrapper">
     <nav class="sidebar">
-      <!-- Sidebar navigation -->
     </nav>
     <main class="content">
       <h1>Edit Forum Thread</h1>

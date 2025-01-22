@@ -7,7 +7,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $content = $_POST['content'] ?? '';
     $effective_date = $_POST['effective_date'] ?? null;
     $is_active = isset($_POST['is_active']) ? 1 : 0;
-    
     // Insert new legal notice with doc_type 'legal'
     $stmt = $conn->prepare("
       INSERT INTO legal_documents (doc_type, version, content, effective_date, is_active) 
@@ -33,10 +32,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <link rel="stylesheet" href="../css/admin.css" />
 </head>
 <body>
-  <header><!-- Header content here --></header>
+  <header></header>
   <div class="wrapper">
     <nav class="sidebar">
-      <!-- Sidebar navigation here -->
     </nav>
     <main class="content">
       <h1>Add New Legal Notice</h1>

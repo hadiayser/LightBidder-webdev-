@@ -29,11 +29,13 @@ $stmt->close();
     <nav class="sidebar">
       <!-- Insert your sidebar navigation here -->
       <ul>
-        <li><a href="dashboard.php">Dashboard</a></li>
-        <li><a href="manage_users.php">Manage Users</a></li>
-        <li><a href="manage_faq.php">Manage FAQs</a></li>
-        <li><a href="manage_terms.php">Manage Terms &amp; Conditions</a></li>
-        <li><a href="manage_legal.php">Manage Legal Notices</a></li>
+      <li><a href="dashboard.php" class="active">Dashboard</a></li>
+                <li><a href="manage_users.php">Manage Users</a></li>
+                <li><a href="manage_faq.php">Manage FAQs</a></li>
+                <li><a href="manage_terms.php">Manage Terms &amp; Conditions</a></li>
+                <li><a href="manage_legal.php">Manage Legal Notices</a></li>
+                <li><a href="manage_forum_threads.php">Manage Forum</a></li>
+                <li><a href="../front-php/index.php" class="return-site">Return to Site</a></li>
         <!-- Add more navigation links as needed -->
       </ul>
     </nav>

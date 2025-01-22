@@ -2,8 +2,8 @@
 require_once('admin_auth.php');
 require_once('../php/conn.php');
 
-// Fetch legal documents (doc_type 'legal')
-$sql = "SELECT id, version, effective_date FROM legal_documents WHERE doc_type = 'legal'";
+// Fetch legal documents (doc_type 'legal') including content
+$sql = "SELECT id, version, effective_date, content FROM legal_documents WHERE doc_type = 'legal'";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -12,6 +12,7 @@ $legalDocs = [];
 while($row = $result->fetch_assoc()) {
     $legalDocs[] = $row;
 }
+$stmt->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,11 +29,13 @@ while($row = $result->fetch_assoc()) {
   <div class="wrapper">
     <nav class="sidebar">
       <ul>
-        <li><a href="dashboard.php">Dashboard</a></li>
+        <li><a href="dashboard.php" class="active">Dashboard</a></li>
         <li><a href="manage_users.php">Manage Users</a></li>
         <li><a href="manage_faq.php">Manage FAQs</a></li>
         <li><a href="manage_terms.php">Manage Terms &amp; Conditions</a></li>
         <li><a href="manage_legal.php">Manage Legal Notices</a></li>
+        <li><a href="manage_forum_threads.php">Manage Forum</a></li>
+        <li><a href="../front-php/index.php" class="return-site">Return to Site</a></li>
       </ul>
     </nav>
     <main class="content">

@@ -2,14 +2,15 @@
 require_once('admin_auth.php');
 require_once('../php/conn.php');
 
-// Fetch Terms and Conditions document(s)
-$stmt = $conn->prepare("SELECT id, version, effective_date FROM legal_documents WHERE doc_type = 'terms'");
+// Fetch all Terms & Conditions documents
+$stmt = $conn->prepare("SELECT id, version, effective_date, is_active FROM terms_conditions ORDER BY created_at DESC");
 $stmt->execute();
 $result = $stmt->get_result();
 $termsDocs = [];
 while($row = $result->fetch_assoc()) {
-  $termsDocs[] = $row;
+    $termsDocs[] = $row;
 }
+$stmt->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,16 +22,20 @@ while($row = $result->fetch_assoc()) {
 </head>
 <body>
   <header>
+    <!-- Include fixed header content -->
     <h1>Admin Dashboard</h1>
   </header>
   <div class="wrapper">
     <nav class="sidebar">
+      <!-- Include sidebar navigation -->
       <ul>
-        <li><a href="dashboard.php">Dashboard</a></li>
-        <li><a href="manage_users.php">Manage Users</a></li>
-        <li><a href="manage_faq.php">Manage FAQs</a></li>
-        <li><a href="manage_terms.php">Manage Terms &amp; Conditions</a></li>
-        <li><a href="manage_legal.php">Manage Legal Notices</a></li>
+      <li><a href="dashboard.php" class="active">Dashboard</a></li>
+                <li><a href="manage_users.php">Manage Users</a></li>
+                <li><a href="manage_faq.php">Manage FAQs</a></li>
+                <li><a href="manage_terms.php">Manage Terms &amp; Conditions</a></li>
+                <li><a href="manage_legal.php">Manage Legal Notices</a></li>
+                <li><a href="manage_forum_threads.php">Manage Forum</a></li>
+                <li><a href="../front-php/index.php" class="return-site">Return to Site</a></li>
       </ul>
     </nav>
     <main class="content">
@@ -41,6 +46,7 @@ while($row = $result->fetch_assoc()) {
             <th>ID</th>
             <th>Version</th>
             <th>Effective Date</th>
+            <th>Active</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -50,6 +56,7 @@ while($row = $result->fetch_assoc()) {
             <td><?= htmlspecialchars($doc['id']); ?></td>
             <td><?= htmlspecialchars($doc['version']); ?></td>
             <td><?= htmlspecialchars($doc['effective_date']); ?></td>
+            <td><?= $doc['is_active'] ? 'Yes' : 'No'; ?></td>
             <td>
               <a href="edit_terms.php?id=<?= htmlspecialchars($doc['id']) ?>">Edit</a>
               <a href="delete_terms.php?id=<?= htmlspecialchars($doc['id']) ?>" onclick="return confirm('Delete this document?');">Delete</a>

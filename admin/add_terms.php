@@ -3,22 +3,21 @@ require_once('admin_auth.php');
 require_once('../php/conn.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $content        = $_POST['content'] ?? '';
-    $version        = $_POST['version'] ?? '';
+    $version = $_POST['version'] ?? '';
+    $content = $_POST['content'] ?? '';
     $effective_date = $_POST['effective_date'] ?? null;
+    $is_active = isset($_POST['is_active']) ? 1 : 0;
 
-    $doc_type = 'terms'; // Set doc_type for Terms & Conditions
-
-    $sql = "INSERT INTO legal_documents (doc_type, content, version, effective_date, created_at) VALUES (?, ?, ?, ?, NOW())";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssss", $doc_type, $content, $version, $effective_date);
-
+    $stmt = $conn->prepare("INSERT INTO terms_conditions (version, content, effective_date, is_active) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("sssi", $version, $content, $effective_date, $is_active);
+    
     if ($stmt->execute()) {
-        header("Location: manage_terms.php"); 
+        header("Location: manage_terms.php");
         exit();
     } else {
-        $error_message = "Error adding Terms Document: " . $conn->error;
+        $error_message = "Error adding document: " . $conn->error;
     }
+    $stmt->close();
 }
 ?>
 <!DOCTYPE html>
@@ -26,28 +25,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
   <meta charset="UTF-8" />
   <title>Add New Terms Document</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="../css/admin.css" />
 </head>
 <body>
-<div class="container">
-  <h1>Add New Terms Document</h1>
-  <?php if(isset($error_message)) echo "<p class='error-message'>$error_message</p>"; ?>
-  <form method="POST">
-    <div class="form-group">
-      <label>Version:</label>
-      <input type="text" name="version" required>
-    </div>
-    <div class="form-group">
-      <label>Effective Date:</label>
-      <input type="date" name="effective_date">
-    </div>
-    <div class="form-group">
-      <label>Content:</label>
-      <textarea name="content" required></textarea>
-    </div>
-    <button type="submit" class="save-btn">Add Terms Document</button>
-    <a href="manage_terms.php" class="button">Cancel</a>
-  </form>
-</div>
+  <header>
+    <!-- Include fixed header content -->
+  </header>
+  <div class="wrapper">
+    <nav class="sidebar">
+      <!-- Include sidebar navigation -->
+    </nav>
+    <main class="content">
+      <h1>Add New Terms Document</h1>
+      <?php if(isset($error_message)) echo "<p class='error-message'>$error_message</p>"; ?>
+      <form method="POST">
+        <div class="form-group">
+          <label for="version">Version:</label>
+          <input type="text" id="version" name="version" required />
+        </div>
+        <div class="form-group">
+          <label for="effective_date">Effective Date:</label>
+          <input type="date" id="effective_date" name="effective_date" />
+        </div>
+        <div class="form-group">
+          <label for="content">Content:</label>
+          <textarea id="content" name="content" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="checkbox" name="is_active" checked /> Active
+          </label>
+        </div>
+        <button type="submit" class="button">Add Document</button>
+      </form>
+    </main>
+  </div>
 </body>
 </html>

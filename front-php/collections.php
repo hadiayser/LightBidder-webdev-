@@ -125,19 +125,25 @@ echo "<!-- Debug: Query executed = $query -->";
 
 
     <?php if (empty($collections)): ?>
+        <!-- Display message if no artworks are found -->
         <p>No artworks found for "<?php echo htmlspecialchars($searchKeyword); ?>".</p>
     <?php else: ?>
+        <!-- Loop through each collection and display its artworks -->
         <?php foreach ($collections as $collection_id => $artworks): ?>
             <div class="category-row">
+                <!-- Display collection name -->
                 <h3><?php echo $collectionsNames[$collection_id] ?? 'Unknown Collection'; ?></h3>
                 <div class="artwork-row">
+                    <!-- Loop through each artwork in the collection -->
                     <?php foreach ($artworks as $artwork): ?>
                         <div class="artwork">
+                            <!-- Display artwork image and title -->
                             <img src="<?php echo $artwork['image_url']; ?>" alt="<?php echo htmlspecialchars($artwork['title']); ?>">
                             <h4><?php echo htmlspecialchars($artwork['title']); ?></h4>
                         </div>
                     <?php endforeach; ?>
                 </div>
+                <!-- Link to browse the entire collection -->
                 <a href="browse.php?collection_id=<?php echo (int)$collection_id; ?>" class="browse-button">
                     Browse <?php echo $collectionsNames[$collection_id] ?? 'Collection'; ?>
                 </a>

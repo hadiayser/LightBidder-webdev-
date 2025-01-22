@@ -313,7 +313,8 @@ if (isset($_SESSION['user_id'])) {
     <title>My Collections</title>
     <!-- Use a dynamic query param for cache-busting or a version constant in production -->
     <link rel="stylesheet" href="../css/css.css?v=<?php echo filemtime(__DIR__ . '/../css/css.css'); ?>">
-    <link rel="stylesheet" href="../css/collections.css?v5">
+    <link rel="stylesheet" href="../css/collections.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="../css/auctions.css?<?php echo time(); ?>">
 </head>
 <body>
 <header id="messagesHeader">
@@ -365,7 +366,7 @@ if (isset($_SESSION['user_id'])) {
             </ul>
         </div>
     </header>
-    <div class="collections-container">
+    <div id="collections">
         <div class="collections-header">
             <h1>My Artworks</h1>
             <button class="new-artwork-btn" onclick="showNewArtworkForm()">

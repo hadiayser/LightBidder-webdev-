@@ -116,6 +116,7 @@ img {
 -------------------------------------------------- */
 .artworks-section {
     margin: 40px 0;
+    background-color: #ffffff65;
 }
 
 .artworks-section h2 {
@@ -183,7 +184,7 @@ img {
 .overlay {
     position: absolute;
     bottom: 0;
-    background: rgba(0,123,255,0.8);
+    background: rgba(206, 211, 216, 0.8);
     color: #fff;
     width: 100%;
     transform: translateY(100%);
@@ -212,7 +213,7 @@ img {
 .artwork-details h3 {
     font-size: 24px;
     margin-bottom: 10px;
-    color: #007BFF;
+    color: #000000;
 }
 
 .artwork-details .description {

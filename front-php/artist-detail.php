@@ -68,6 +68,8 @@ $artworks_result = $stmt->get_result();
     <title><?php echo htmlspecialchars($artist['artist_name']); ?> - Artist Profile</title>
     <link rel="stylesheet" href="../css/artist-details.css?v=<?php echo time(); ?>">
     <link rel="stylesheet" href="../css/css.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../css/collections.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../css/auctions.css?v=<?php echo time(); ?>">
     <!-- Google Fonts for better typography -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <!-- Font Awesome for icons -->

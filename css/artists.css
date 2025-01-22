@@ -499,6 +499,14 @@
     color: #2c5a8f;
   }
 
+  .artist-name {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #e9e8e8;
+    margin-bottom: 5px;
+    text-shadow: 1px 1px 4px rgba(92, 90, 90, 0.558);
+  }
+
   
   
   /* Responsive Adjustments for the Popup */

@@ -25,12 +25,10 @@ while($row = $result->fetch_assoc()) {
 </head>
 <body>
   <header>
-    <!-- Include fixed header content -->
     <h1>Admin Dashboard</h1>
   </header>
   <div class="wrapper">
     <nav class="sidebar">
-      <!-- Include sidebar navigation -->
       <ul>
       <li><a href="dashboard.php" class="active">Dashboard</a></li>
                 <li><a href="manage_users.php">Manage Users</a></li>
@@ -39,7 +37,6 @@ while($row = $result->fetch_assoc()) {
                 <li><a href="manage_legal.php">Manage Legal Notices</a></li>
                 <li><a href="manage_forum_threads.php">Manage Forum</a></li>
                 <li><a href="../front-php/index.php" class="return-site">Return to Site</a></li>
-        <!-- Add more navigation items as needed -->
       </ul>
     </nav>
     <main class="content">

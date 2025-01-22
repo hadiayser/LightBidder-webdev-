@@ -50,10 +50,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <link rel="stylesheet" href="../css/admin.css" />
 </head>
 <body>
-  <header><!-- Header content here --></header>
+  <header></header>
   <div class="wrapper">
     <nav class="sidebar">
-      <!-- Sidebar navigation here -->
     </nav>
     <main class="content">
       <h1>Edit Legal Notice</h1>

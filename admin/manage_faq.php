@@ -22,12 +22,10 @@ $stmt->close();
 </head>
 <body>
   <header>
-    <!-- Insert your fixed header content here -->
     <h1>Admin Dashboard</h1>
   </header>
   <div class="wrapper">
     <nav class="sidebar">
-      <!-- Insert your sidebar navigation here -->
       <ul>
       <li><a href="dashboard.php" class="active">Dashboard</a></li>
                 <li><a href="manage_users.php">Manage Users</a></li>
@@ -36,7 +34,6 @@ $stmt->close();
                 <li><a href="manage_legal.php">Manage Legal Notices</a></li>
                 <li><a href="manage_forum_threads.php">Manage Forum</a></li>
                 <li><a href="../front-php/index.php" class="return-site">Return to Site</a></li>
-        <!-- Add more navigation links as needed -->
       </ul>
     </nav>
     <main class="content">

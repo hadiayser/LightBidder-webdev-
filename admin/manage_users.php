@@ -34,7 +34,6 @@ while($row = $result->fetch_assoc()) {
                 <li><a href="manage_legal.php">Manage Legal Notices</a></li>
                 <li><a href="manage_forum_threads.php">Manage Forum</a></li>
                 <li><a href="../front-php/index.php" class="return-site">Return to Site</a></li>
-        <!-- Additional links as needed -->
       </ul>
     </nav>
     <main class="content">

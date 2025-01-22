@@ -82,7 +82,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <li><a href="manage_terms.php"><i class="fas fa-file-alt"></i> Manage Terms &amp; Conditions</a></li>
                 <li><a href="manage_legal.php"><i class="fas fa-gavel"></i> Manage Legal Notices</a></li>
                 <li><a href="../front-php/index.php" class="return-site"><i class="fas fa-home"></i> Return to Site</a></li>
-                <!-- Add more navigation links as needed -->
             </ul>
         </nav>
         <main class="content">
@@ -125,7 +124,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
         </main>
     </div>
-    <!-- Font Awesome JS (Optional for Icons) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 </body>
 </html>

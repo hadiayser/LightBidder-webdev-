@@ -43,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <link rel="stylesheet" href="../css/admin.css" />
 </head>
 <body>
-  <!-- Include header and sidebar here similar to dashboard layout -->
   <header>...</header>
   <div class="wrapper">
     <nav class="sidebar">...</nav>

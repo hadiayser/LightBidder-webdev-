@@ -30,11 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
   <header>
-    <!-- Include fixed header content -->
   </header>
   <div class="wrapper">
     <nav class="sidebar">
-      <!-- Include sidebar navigation -->
     </nav>
     <main class="content">
       <h1>Add New Terms Document</h1>

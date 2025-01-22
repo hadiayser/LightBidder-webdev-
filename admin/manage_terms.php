@@ -22,12 +22,10 @@ $stmt->close();
 </head>
 <body>
   <header>
-    <!-- Include fixed header content -->
     <h1>Admin Dashboard</h1>
   </header>
   <div class="wrapper">
     <nav class="sidebar">
-      <!-- Include sidebar navigation -->
       <ul>
       <li><a href="dashboard.php" class="active">Dashboard</a></li>
                 <li><a href="manage_users.php">Manage Users</a></li>

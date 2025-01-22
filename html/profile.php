@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <header>
         <div>
             <div class="nav-logo">
-                <a href="#" class="logo"><img src="../img/bidder-high-resolution-logo-black-transparent.png" alt=""></a>
+                <a href="#" class="logo"><img src="..css/img/bidder-high-resolution-logo-black-transparent.png" alt=""></a>
             </div>
             <ul id="homepageNav">
             <li><a href="index.php">Home</a></li>

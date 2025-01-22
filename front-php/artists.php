@@ -46,6 +46,8 @@ while ($row = $result->fetch_assoc()) {
   <!-- Main CSS for the Glassy Search Bar & New Card Layout -->
   <link rel="stylesheet" href="../css/artists.css?v=<?php echo time(); ?>">
   <link rel="stylesheet" href="../css/css.css?v=<?php echo time(); ?>" />
+ <link rel="stylesheet" href="../css/auctions.css?v=<?php echo time(); ?>" />
+ <link rel="stylesheet" href="../css/collections.css?v=<?php echo time(); ?>" />
 
 
   <!-- (Optional) Font Awesome for the magnifying glass icon -->
@@ -102,7 +104,7 @@ while ($row = $result->fetch_assoc()) {
         </div>
     </header>
 
-<div class="artists-page-container">
+<div id="collections">
     <h1>Our Artists</h1>
 
     <!-- Glassy Search Bar -->
@@ -143,7 +145,7 @@ while ($row = $result->fetch_assoc()) {
                    alt="<?php echo htmlspecialchars($artistName); ?>">
             </figure>
             <div class="article-body">
-              <h2><?php echo htmlspecialchars($artistName); ?></h2>
+              <h1 class="artist-name"><?php echo htmlspecialchars($artistName); ?></h1>
             </div>
           </a>
         </article>
@@ -161,7 +163,7 @@ function filterArtists() {
   const cards = grid.getElementsByTagName('article'); // or 'artist-card' class
 
   for (let i = 0; i < cards.length; i++) {
-    const artistName = cards[i].getElementsByTagName('h2')[0].textContent || '';
+    const artistName = cards[i].getElementsByTagName('h1')[0].textContent || '';
     if (artistName.toLowerCase().includes(filter)) {
       cards[i].style.display = '';
     } else {

@@ -7,12 +7,6 @@
     box-sizing: border-box;
 }
 
-body {
-    background-color: whitesmoke;
-    font-family: Arial, sans-serif; /* Change to any preferred font or a Google Font */
-    margin-top: 80px;               /* Leaves space for fixed header */
-    color: #333;                    /* Base text color */
-}
 
 /*******************************************************
    2. Header & Navigation
@@ -392,7 +386,7 @@ input[type=submit]:hover {
                   rgba(0, 0, 0, 0.4),
                   rgba(0, 0, 0, 0.4)
                 ),
-                url("../img/saint_john_the_evangelist__right_panel__1939.1.261.c.jpg") center/cover no-repeat;
+                url("img/saint_john_the_evangelist__right_panel__1939.1.261.c.jpg") center/cover no-repeat;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -651,7 +645,7 @@ input[type=submit]:hover {
 .contact-container {
     max-width: 600px;
     margin: 0 auto;
-    background-color: #fff;
+    background-color: #ffffffa5;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     padding: 2rem;

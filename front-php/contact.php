@@ -54,32 +54,14 @@ $conn->close();
   rel="stylesheet" 
   href="../css/css.css?v=<?php echo time(); ?>" 
 />
-<link 
-  rel="stylesheet" 
-  href="../css/css.css?v=<?php echo time(); ?>" 
-/>
+<link rel="stylesheet" href="../css/contact.css?v=<?php echo time(); ?>" />
+<link rel="stylesheet" href="../css/auctions.css?v=<?php echo time(); ?>" />
 </head>
 <style>
-  #body_contact {
-    /* Remove or comment the old background-image line */
-    /* background-image: url("..."); */
-    
-    background: linear-gradient(
-                  rgba(0, 0, 0, 0.4),
-                  rgba(0, 0, 0, 0.4)
-                ),
-                url("../img/saint_john_the_evangelist__right_panel__1939.1.261.c.jpg") center/cover no-repeat;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    min-height: 100vh; /* Ensures we have a full view height background */
-    color: #fff;       /* White text if you want text directly on BG */
-    position: relative;
-}
 </style>
 <body id="body_contact">
 <header id="messagesHeader">
-        <div>
+        <div id="collections">
             <div class="nav-logo">
                 <!-- Example brand logo -->
                 <a href="#" class="logo">

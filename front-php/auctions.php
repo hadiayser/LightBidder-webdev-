@@ -42,35 +42,15 @@ while ($auction = mysqli_fetch_assoc($result)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/css.css?v=v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="../css/dropdown.css?v=3">
-    <link rel="stylesheet" href="../css/collections.css?v=3">
-    <link rel="stylesheet" href="../css/auctions.css?v=4">
+    <link rel="stylesheet" href="../css/dropdown.css?v=v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../css/collections.css?v=v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../css/auctions.css?v=v=<?php echo time(); ?>">
     <script src="../js/hamburger.js"></script>
 
     <title>All Auctions</title>
     <style>
-        /* Background styling */
-        body {
-            background: 
-                url('../img/madonna_and_child_on_a_curved_throne_1937.1.1.jpg') no-repeat center center fixed,
-                url('../img/saint_john_the_evangelist__right_panel__1939.1.261.c.jpg') no-repeat center center fixed,
-                url('../img/background3.jpg') no-repeat center center fixed;
-            background-size: cover;
-            position: relative;
-            color: white; /* Change text color for better visibility */
-        }
-
-        /* Dimmed overlay */
-        .background-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5); /* Adjust opacity for dimming effect */
-            z-index: 1; /* Ensure overlay is above the background */
-        }
-
+   
+    
         /* Ensure content is above the overlay */
         .content {
             position: relative;

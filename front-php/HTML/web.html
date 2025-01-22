@@ -1,3 +1,8 @@
+<?php
+session_start();
+$error = $_SESSION['error'] ?? '';
+unset($_SESSION['error']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,6 +39,10 @@
 <!----------------------------- Form box ----------------------------------->    
     <div class="form-box">
         
+        <?php if ($error): ?>
+            <div class="error-message"><?php echo htmlspecialchars($error); ?></div>
+        <?php endif; ?>
+
         <!------------------- login form -------------------------->
 
         <div class="login-container" id="login">
@@ -41,7 +50,7 @@
                 <span>Don't have an account? <a href="#" onclick="register()">Sign Up</a></span>
                 <header>Login</header>
             </div>
-            <form method="POST" action="/php/auth.php">
+            <form method="POST" action="../../PHP/auth.php">
                 <div class="input-box">
                     <input type="email" class="input-field" placeholder="Username or Email" name="email" required>
                     <i class="bx bx-user"></i>
@@ -71,7 +80,7 @@
                 <span>Have an account? <a href="#" onclick="login()">Login</a></span>
                 <header>Sign Up</header>
             </div>
-            <form method="POST" action="/php/auth.php">
+            <form method="POST" action="../../PHP/auth.php">
                 <div class="two-forms">
                     <div class="input-box">
                         <input type="text" class="input-field" placeholder="Firstname" name="firstname" required>
@@ -83,7 +92,7 @@
                     </div>
                 </div>
                 <div class="input-box">
-                    <input type="text" class="input-field" placeholder="Email" name="email" required>
+                    <input type="email" class="input-field" placeholder="Email" name="email" required>
                     <i class="bx bx-envelope"></i>
                 </div>
                 <div class="input-box">
@@ -92,9 +101,12 @@
                 </div>
                 <label for="role">Register as:</label>
                 <select id="role" name="role" required>
-                    <option value="bidder">Bidder</option>
-                    <option value="artist">Artist</option>
+                    <option value="Bidder">Bidder</option>
+                    <option value="Artist">Artist</option>
                 </select>
+
+                <!-- Additional Fields for Artist -->
+    
                 <div class="input-box">
                     <input type="submit" class="submit" value="Register" name="register">
                 </div>
@@ -149,7 +161,31 @@
         x.style.opacity = 0;
         y.style.opacity = 1;
     }
+
+    // Toggle artist fields based on role selection
+    document.getElementById('role').addEventListener('change', function() {
+        var artistFields = document.getElementById('artist-fields');
+        if (this.value.toLowerCase() === 'artist') {
+            artistFields.style.display = 'block';
+        } else {
+            artistFields.style.display = 'none';
+        }
+    });
 </script>
+
+<style>
+    /* Optional: Add some basic styling for error messages */
+    .error-message {
+        color: red;
+        background-color: #fdd;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid red;
+        border-radius: 5px;
+        text-align: center;
+        display: none;
+    }
+</style>
 
 </body>
 </html>

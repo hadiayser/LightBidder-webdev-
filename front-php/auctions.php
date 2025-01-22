@@ -8,6 +8,12 @@ $user = [];
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
     $stmt = $conn->prepare("SELECT firstname, profile_picture FROM users WHERE user_id = ?");
+    if (!$stmt) {
+        error_log("Prepare failed: " . $conn->error);
+        $_SESSION['error'] = "Internal server error. Please try again later.";
+        header("Location: web.php");
+        exit();
+    }
     $stmt->bind_param("i", $user_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -40,55 +46,16 @@ while ($auction = mysqli_fetch_assoc($result)) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/css.css?v=v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="../css/dropdown.css?v=v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="../css/collections.css?v=v=<?php echo time(); ?>">
-    <link rel="stylesheet" href="../css/auctions.css?v=v=<?php echo time(); ?>">
-    <script src="../js/hamburger.js"></script>
-
     <title>All Auctions</title>
-    <style>
-   
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-        /* Ensure content is above the overlay */
-        .content {
-            position: relative;
-            z-index: 2; /* Ensure content is above the overlay */
-        }
-        /* Notification Styles */
-/* Notification Styles */
-.notification {
-    position: fixed;
-    top: 150px; /* Adjust this value to position it lower */
-    right: 20px; /* Keep this value to position it to the right */
-    background-color: #3f7dc0;
-    color: white;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    opacity: 0;
-    transform: translateY(-20px);
-}
-
-.notification-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.hidden {
-    display: none;
-}
-
-.notification.show {
-    display: flex;
-    opacity: 1;
-    transform: translateY(0);
-}
-    </style>
+    <!-- Main CSS Files -->
+    <link rel="stylesheet" href="../css/css.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../css/dropdown.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../css/collections.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="../css/auctions.css?v=<?php echo time(); ?>">
+    
+    
 </head>
 <body>
     <div class="background-overlay"></div> <!-- Dimmed overlay -->
@@ -115,15 +82,20 @@ while ($auction = mysqli_fetch_assoc($result)) {
                         <button class="dropbtn">
                             <div class="user-profile">
                                 <?php
-                                // For the top-right corner small avatar
-                                $avatarPath = '../img/default-avatar.png'; // Ensure this path is correct
+                                // Determine the user's profile image path
                                 if (!empty($user['profile_picture'])) {
-                                    $avatarPath = '../' . $user['profile_picture'];
+                                    if (strpos($user['profile_picture'], 'uploads/') === 0) {
+                                        $avatarPath = '../' . $user['profile_picture'];
+                                    } else {
+                                        $avatarPath = $user['profile_picture']; // External URL
+                                    }
+                                } else {
+                                    $avatarPath = '../img/default-avatar.png'; // Default avatar
                                 }
                                 ?>
                                 <img src="<?php echo htmlspecialchars($avatarPath); ?>" 
                                      alt="Profile" 
-                                     class="profile-img">
+                                     class="profile-img" style="width:40px; height:40px; border-radius:50%;">
                                 <span><?php echo htmlspecialchars($user['firstname']); ?></span>
                             </div>
                             <i class="arrow down"></i>
@@ -133,11 +105,11 @@ while ($auction = mysqli_fetch_assoc($result)) {
                             <a href="my-collections.php">My Collections</a>
                             <a href="my_favorites.php">My Favorites</a>
                             <a href="messages.php">Messages</a>
-                            <a href="../php/logout.php" style="background-color: #cb5050; !important;">Logout</a>
+                            <a href="../php/logout.php" style="background-color: #cb5050 !important;">Logout</a>
                         </div>
                     </li>
                 <?php else: ?>
-                    <li><a href="./HTML/web.html">Login/Signup</a></li>
+                    <li><a href="./HTML/web.php">Login/Signup</a></li> <!-- Changed to web.php -->
                 <?php endif; ?>
             </ul>
         </div>
@@ -157,114 +129,102 @@ while ($auction = mysqli_fetch_assoc($result)) {
                 <h3>Artist: <?php echo htmlspecialchars($artistName); ?></h3>
                 <div class="auctions-grid">
                     <?php foreach ($auctions as $auction): ?>
+                        <?php
+                            // Determine the auction's artwork image path
+                            if (!empty($auction['image_url'])) {
+                                if (strpos($auction['image_url'], 'uploads/') === 0) {
+                                    // Internal path
+                                    $auctionImagePath = '../' . $auction['image_url'];
+                                } else {
+                                    // External URL
+                                    $auctionImagePath = $auction['image_url'];
+                                }
+                            } else {
+                                // Default placeholder image
+                                $auctionImagePath = '../img/placeholder.jpg';
+                            }
+                        ?>
                         <div class="auction-card">
-                            <img src="<?php echo htmlspecialchars($auction['image_url']); ?>" alt="Artwork Image">
+                            <img src="<?php echo htmlspecialchars($auctionImagePath); ?>" alt="Artwork Image">
                             <h3><?php echo htmlspecialchars($auction['title']); ?></h3>
                             <p>Current Highest Bid: $<?php echo number_format($auction['highest_bid'], 2); ?></p>
                             <p>Auction Starts On: <?php echo date('Y-m-d H:i', strtotime($auction['start_date'])); ?></p>
                             <p>Auction Ends On: <?php echo date('Y-m-d H:i', strtotime($auction['end_date'])); ?></p>
                             <div class="button-container">
-        <button class="fav-button" data-auction-id="<?php echo $auction['auction_id']; ?>">
-            Favorite
-        </button>
-        <a href="bid.php?auction_id=<?php echo $auction['auction_id']; ?>" class="bid-button">Bid</a>
-    </div>
+                                <button class="fav-button" data-auction-id="<?php echo $auction['auction_id']; ?>">
+                                    Favorite
+                                </button>
+                                <a href="bid.php?auction_id=<?php echo $auction['auction_id']; ?>" class="bid-button">Bid</a>
+                            </div>
                         </div>
                     <?php endforeach; ?>
                 </div>
             </div>
         <?php endforeach; ?>
     </div>
+    <!-- Footer Content -->
     <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-section">
-                <h4>About Us</h4>
-                <p>Bidder is your go-to marketplace for discovering, bidding on, and collecting unique artworks from around the world.</p>
-            </div>
-
-            <div class="footer-section">
-                <h4>Quick Links</h4>
-                <ul>
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="collections.php">Collections</a></li>
-                    <li><a href="artists.php">Artists</a></li>
-                    <li><a href="auctions.php">Auctions</a></li>
-                    <li><a href="contact.php">Contact</a></li>
-                    <li><a href="faq.php">FAQ</a></li>
-                    <li><a href="./HTML/terms.html">Terms & Conditions</a></li>
-                    <li><a href="./HTML/legal.html">Legal</a></li>
-                </ul>
-            </div>
-
-            <div class="footer-section">
-                <h4>Contact Us</h4>
-                <p>Email: <a href="mailto:support@bidder.com">support@bidder.com</a></p>
-                <p>Phone: +1 (111) 111-111</p>
-                <p>Location: Paris, France</p>
-            </div>
+        <!-- Footer Content -->
+    </footer>
+    <!-- Notification Element -->
+    <div id="notification" class="notification hidden">
+        <div class="notification-content">
+            <span id="notification-message"></span>
+            <button id="close-notification">Close</button>
         </div>
-
-        <div class="footer-bottom">
-            <p>&copy; <?php echo date("M, Y"); ?> Bidder. All Rights Reserved.</p>
-        </div>
-      </footer>
+    </div>
+    <!-- Scripts -->
     <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const favoriteButtons = document.querySelectorAll('.fav-button');
-    const notification = document.getElementById('notification');
-    const notificationMessage = document.getElementById('notification-message');
-    const closeNotificationButton = document.getElementById('close-notification');
+    document.addEventListener('DOMContentLoaded', function() {
+        const favoriteButtons = document.querySelectorAll('.fav-button');
+        const notification = document.getElementById('notification');
+        const notificationMessage = document.getElementById('notification-message');
+        const closeNotificationButton = document.getElementById('close-notification');
 
-    favoriteButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const auctionId = this.getAttribute('data-auction-id');
+        favoriteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const auctionId = this.getAttribute('data-auction-id');
 
-            fetch('../php/add_favorite.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'auction_id=' + auctionId
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    notificationMessage.textContent = 'Added to favorites!';
-                    notification.classList.add('show');
-                    setTimeout(() => {
-                        notification.classList.remove('show');
-                    }, 3000); // Hide after 3 seconds
-                } else if (data.status === 'already_favorited') {
-                    notificationMessage.textContent = 'This item is already in your favorites.';
-                    notification.classList.add('show');
-                    setTimeout(() => {
-                        notification.classList.remove('show');
-                    }, 3000); // Hide after 3 seconds
-                } else {
-                    notificationMessage.textContent = 'Error adding to favorites.';
-                    notification.classList.add('show');
-                    setTimeout(() => {
-                        notification.classList.remove('show');
-                    }, 3000); // Hide after 3 seconds
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
+                fetch('../php/add_favorite.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: 'auction_id=' + auctionId
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        notificationMessage.textContent = 'Added to favorites!';
+                        notification.classList.add('show');
+                        setTimeout(() => {
+                            notification.classList.remove('show');
+                        }, 3000); // Hide after 3 seconds
+                    } else if (data.status === 'already_favorited') {
+                        notificationMessage.textContent = 'This item is already in your favorites.';
+                        notification.classList.add('show');
+                        setTimeout(() => {
+                            notification.classList.remove('show');
+                        }, 3000); // Hide after 3 seconds
+                    } else {
+                        notificationMessage.textContent = 'Error adding to favorites.';
+                        notification.classList.add('show');
+                        setTimeout(() => {
+                            notification.classList.remove('show');
+                        }, 3000); // Hide after 3 seconds
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
             });
         });
-    });
 
-    closeNotificationButton.addEventListener('click', function() {
-        notification.classList.remove('show');
+        closeNotificationButton.addEventListener('click', function() {
+            notification.classList.remove('show');
+        });
     });
-});
-</script>
-<script src="../JS/dropdown.js"></script>
-<div id="notification" class="notification hidden">
-    <div class="notification-content">
-        <span id="notification-message"></span>
-        <button id="close-notification">Close</button>
-    </div>
-</div>
+    </script>
+    <script src="../JS/dropdown.js"></script>
 </body>
-</html> 
+</html>

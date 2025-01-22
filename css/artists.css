@@ -318,6 +318,8 @@
     cursor: pointer;
     text-align: center;
     min-height: 320px;
+    width: auto;
+    max-height: 200px;
   }
   
   /* Image styling */

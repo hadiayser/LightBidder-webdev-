@@ -156,7 +156,7 @@ if (isset($_POST['register'])) {
             header("Location: http://localhost/LightBidder-webdev-/front-php/HTML/web.html");
             exit();
         }
-    }
+    }   
 }
 
 ob_end_flush(); // Flush the output buffer

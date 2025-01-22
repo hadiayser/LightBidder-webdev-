@@ -121,8 +121,8 @@ if (isset($_SESSION['user_id'])) {
                     <li><a href="auctions.php">Auctions</a></li>
                     <li><a href="contact.php">Contact</a></li>
                     <li><a href="faq.php">FAQ</a></li>
-                    <li><a href="terms.html">Terms & Conditions</a></li>
-                    <li><a href="legal.html">Legal</a></li>
+                    <li><a href="./HTML/terms.html">Terms & Conditions</a></li>
+                    <li><a href="./HTML/legal.html">Legal</a></li>
                 </ul>
             </div>
 

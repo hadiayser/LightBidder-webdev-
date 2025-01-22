@@ -82,7 +82,7 @@ $artworks_result = $stmt->get_result();
             <div class="nav-logo">
                 <!-- Example brand logo -->
                 <a href="#" class="logo">
-                    <img src="./img/bidder-high-resolution-logo-black-transparent.png" alt="Brand Logo">
+                    <img src="../css/img/bidder-high-resolution-logo-black-transparent.png" alt="Brand Logo">
                 </a>
             </div>
             <ul id="homepageNav">

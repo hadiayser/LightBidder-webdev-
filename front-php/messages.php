@@ -8,15 +8,21 @@ $user = [];
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
     $stmt = $conn->prepare("SELECT firstname, profile_picture FROM users WHERE user_id = ?");
-    $stmt->bind_param("i", $user_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
+    if ($stmt) {
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+        }
+        
+        $stmt->close();
+    } else {
+        // Handle prepare statement error
+        error_log("Prepare failed: " . $conn->error);
+        // Optionally, set an error message for the user
     }
-    
-    $stmt->close();
 }
 ?>
 <!DOCTYPE html>
@@ -28,6 +34,7 @@ if (isset($_SESSION['user_id'])) {
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <link rel="stylesheet" href="../css/messages.css?v=<?php echo time(); ?>" />
   <link rel="stylesheet" href="../css/css.css?v=<?php echo time(); ?>" />
+  <link rel="stylesheet" href="../css/auctions.css?v=<?php echo time(); ?>" />
 </head>
 <body>
 <header id="messagesHeader">
@@ -70,7 +77,7 @@ if (isset($_SESSION['user_id'])) {
                             <a href="my-collections.php">My Collections</a>
                             <a href="my_favorites.php">My Favorites</a>
                             <a href="messages.php">Messages</a>
-                            <a href="../php/logout.php" style="background-color: #cb5050; !important;">Logout</a>
+                            <a href="../php/logout.php" style="background-color: #cb5050 !important;">Logout</a>
                         </div>
                     </li>
                 <?php else: ?>
@@ -109,6 +116,41 @@ if (isset($_SESSION['user_id'])) {
     </div>
 </div>
 
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-section">
+            <h4>About Us</h4>
+            <p>Bidder is your go-to marketplace for discovering, bidding on, and collecting unique artworks from around the world.</p>
+        </div>
+
+        <div class="footer-section">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="collections.php">Collections</a></li>
+                <li><a href="artists.php">Artists</a></li>
+                <li><a href="auctions.php">Auctions</a></li>
+                <li><a href="contact.php">Contact</a></li>
+                <li><a href="faq.php">FAQ</a></li>
+                <li><a href="../html/terms.php">Terms & Conditions</a></li>
+                <li><a href="../html/legal.php">Legal</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4>Contact Us</h4>
+            <p>Email: <a href="mailto:support@bidder.com">support@bidder.com</a></p>
+            <p>Phone: +1 (111) 111-111</p>
+            <p>Location: Paris, France</p>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>&copy; <?php echo date("M, Y"); ?> Bidder. All Rights Reserved.</p>
+    </div>
+</footer>
+
 <script>
 $(document).ready(function() {
   // Load user list on page load
@@ -129,7 +171,10 @@ $(document).ready(function() {
               var avatar = user.avatar_url ? user.avatar_url : '../uploads/profile_pictures/default-avatar.png';
               usersHtml += "<li class='user-item' data-user-id='" + user.user_id + "'>";
               usersHtml += "<img src='" + avatar + "' alt='Avatar'>";
+              usersHtml += "<div class='user-info'>";
               usersHtml += "<span class='username'>" + user.username + "</span>";
+              usersHtml += "<span class='user-role'>" + user.role + "</span>"; // Display role
+              usersHtml += "</div>";
               usersHtml += "</li>";
             });
           } else {
@@ -218,13 +263,14 @@ $(document).ready(function() {
   $(document).on('click', '.user-item', function() {
     var userId = $(this).data('user-id');
     var username = $(this).find('.username').text();
+    var role = $(this).find('.user-role').text(); // Get role
     var avatar = $(this).find('img').attr('src');
 
     // Set receiver_id in the form
     $('#receiver_id').val(userId);
 
-    // Update chat header with selected user's name and avatar
-    $('#chatWithName').text(username);
+    // Update chat header with selected user's name and role
+    $('#chatWithName').text(username + " (" + role + ")"); // Display role
     $('#chatWithAvatar').attr('src', avatar);
 
     // Highlight the selected user

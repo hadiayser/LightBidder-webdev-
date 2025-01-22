@@ -260,6 +260,7 @@ header div {
     background-color: #fbf9f8;
     border: 1px solid #e6c5b8;
     border-radius: 12px;
+    margin-top: 100px;
   }
   
   #create-thread input[type="text"],

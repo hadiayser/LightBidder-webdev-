@@ -47,6 +47,7 @@ img {
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    margin-top: 100px;
 }
 
 .profile-image {
@@ -107,7 +108,7 @@ img {
 }
 
 .portfolio-link:hover {
-    background-color: #0056b3;
+    background-color: #007BFF;
     transform: translateY(-3px);
 }
 

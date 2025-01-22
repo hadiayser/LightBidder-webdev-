@@ -202,8 +202,8 @@ header div {
 }
 
 .profile-img {
-    width: 30px;
-    height: 30px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid white;
@@ -350,7 +350,7 @@ textarea {
     width: 100%;
     margin-bottom: 10px;
     padding: 10px;
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
     border-radius: 5px;
 }
 
@@ -639,6 +639,7 @@ input[type=submit]:hover {
 /* Main Section for contact content */
 .contact-section {
     padding: 2rem 1rem;
+    margin-top: 100px;
 }
 
 /* Card-like container for the contact form */

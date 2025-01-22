@@ -7,7 +7,7 @@ $user = [];
 // Ensure user is logged in and fetch user data
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
-    $stmt = $conn->prepare("SELECT firstname, profile_picture FROM users WHERE user_id = ?");
+    $stmt = $conn->prepare("SELECT firstname, profile_picture, role FROM users WHERE user_id = ?");
     if (!$stmt) {
         error_log("Prepare failed: " . $conn->error);
         $_SESSION['error'] = "Internal server error. Please try again later.";
@@ -36,7 +36,7 @@ $query = "
 
 $result = mysqli_query($conn, $query);
 
-// Initialize an array to hold auctions grouped by artist ID
+// Initialize an array to hold auctions grouped by artist name
 $auctionsByArtist = [];
 while ($auction = mysqli_fetch_assoc($result)) {
     $auctionsByArtist[$auction['artist_name']][] = $auction;
@@ -109,7 +109,7 @@ while ($auction = mysqli_fetch_assoc($result)) {
                         </div>
                     </li>
                 <?php else: ?>
-                    <li><a href="./HTML/web.php">Login/Signup</a></li> <!-- Changed to web.php -->
+                    <li><a href="./HTML/web.php">Login/Signup</a></li>
                 <?php endif; ?>
             </ul>
         </div>
@@ -118,9 +118,10 @@ while ($auction = mysqli_fetch_assoc($result)) {
     <div class="auctions-container">
         <h2>All Auctions</h2>
 
-        <?php if (isset($_SESSION['user_id']) && isset($_SESSION['role']) && $_SESSION['role'] === 'Artist'): ?>
+        <?php if (isset($user['role']) && $user['role'] === 'Artist'): ?>
             <div class="create-auction-button">
                 <a href="create_auction.php" class="button">Create Auction</a>
+                <a href="my_auctions.php" class="fav-button" >My Auctions</a>
             </div>
         <?php endif; ?>
 
@@ -164,8 +165,38 @@ while ($auction = mysqli_fetch_assoc($result)) {
     </div>
     <!-- Footer Content -->
     <footer class="footer">
-        <!-- Footer Content -->
-    </footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>About Us</h4>
+                <p>Bidder is your go-to marketplace for discovering, bidding on, and collecting unique artworks from around the world.</p>
+            </div>
+
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.php">Home</a></li>
+                    <li><a href="collections.php">Collections</a></li>
+                    <li><a href="artists.php">Artists</a></li>
+                    <li><a href="auctions.php">Auctions</a></li>
+                    <li><a href="contact.php">Contact</a></li>
+                    <li><a href="faq.php">FAQ</a></li>
+                    <li><a href="../html/terms.php">Terms & Conditions</a></li>
+                    <li><a href="../html/legal.php">Legal</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <p>Email: <a href="mailto:support@bidder.com">support@bidder.com</a></p>
+                <p>Phone: +1 (111) 111-111</p>
+                <p>Location: Paris, France</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; <?php echo date("M, Y"); ?> Bidder. All Rights Reserved.</p>
+        </div>
+      </footer>
     <!-- Notification Element -->
     <div id="notification" class="notification hidden">
         <div class="notification-content">

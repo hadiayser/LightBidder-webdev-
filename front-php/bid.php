@@ -2,6 +2,26 @@
 session_start();
 require_once('../php/conn.php');
 
+// **Added: Helper function to determine the correct image path**
+function getImagePath($image_url, $placeholder = '../img/placeholder.jpg') {
+    if (!empty($image_url)) {
+        // Check if the image URL is an external link
+        if (filter_var($image_url, FILTER_VALIDATE_URL)) {
+            return $image_url; // External URL
+        }
+        // Check if the image URL starts with 'uploads/' indicating an internal path
+        elseif (strpos($image_url, 'uploads/') === 0) {
+            return '../' . $image_url; // Internal path
+        }
+        else {
+            return $image_url; // Other internal path or relative path
+        }
+    }
+    else {
+        return $placeholder; // Return placeholder if image_url is empty
+    }
+}
+
 // Initialize $user as an empty array
 $user = [];
 
@@ -9,15 +29,20 @@ $user = [];
 if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id'];
     $stmt = $conn->prepare("SELECT firstname, profile_picture FROM users WHERE user_id = ?");
-    $stmt->bind_param("i", $user_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    
-    if ($result->num_rows > 0) {
-        $user = $result->fetch_assoc();
+    if ($stmt) {
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        if ($result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+        }
+        
+        $stmt->close();
+    } else {
+        error_log("Prepare failed: " . $conn->error);
+        // Optionally, set an error message for the user
     }
-    
-    $stmt->close();
 }
 // Check if user is logged in
 if (!isset($_SESSION['user_id'])) {
@@ -57,6 +82,7 @@ if (isset($_GET['auction_id'])) {
     header("Location: auctions.php");
     exit();
 }
+
 function time_ago($datetime) {
     $timestamp = strtotime($datetime);
     $time_ago = time() - $timestamp;
@@ -113,137 +139,138 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bid_amount'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/css.css?v=7">
-    <link rel="stylesheet" href="../css/collections.css?v=5">
-    <link rel="stylesheet" href="../css/auctions.css?v=3">
-        <title>Bid on Artwork</title>
+    <title>Bid on Artwork</title>
+    <link rel="stylesheet" href="../css/css.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="../css/collections.css?<?php echo time(); ?>">
+    <link rel="stylesheet" href="../css/auctions.css?<?php echo time(); ?>">
 </head>
 <body>
 <header id="messagesHeader">
-        <div>
-            <div class="nav-logo">
-                <!-- Example brand logo -->
-                <a href="#" class="logo">
-                    <img src="./img/bidder-high-resolution-logo-black-transparent.png" alt="Brand Logo">
-                </a>
-            </div>
-            <ul id="homepageNav">
-                <li><a href="index.php">Home</a></li>
-                <li><a href="collections.php">Collections</a></li>
-                <li><a href="artists.php">Artists</a></li>
-                <li><a href="auctions.php">Auctions</a></li>
-                <li><a href="contact.php">Contact</a></li>
-                <li><a href="forum.php">Forum</a></li>
-                <li><a href="faq.php">FAQ</a></li>
+    <div>
+        <div class="nav-logo">
+            <!-- Example brand logo -->
+            <a href="#" class="logo">
+                <img src="./img/bidder-high-resolution-logo-black-transparent.png" alt="Brand Logo">
+            </a>
+        </div>
+        <ul id="homepageNav">
+            <li><a href="index.php">Home</a></li>
+            <li><a href="collections.php">Collections</a></li>
+            <li><a href="artists.php">Artists</a></li>
+            <li><a href="auctions.php">Auctions</a></li>
+            <li><a href="contact.php">Contact</a></li>
+            <li><a href="forum.php">Forum</a></li>
+            <li><a href="faq.php">FAQ</a></li>
 
-                <?php if (!empty($user)): ?>
-                    <li class="nav-item dropdown">
-                        <button class="dropbtn">
-                            <div class="user-profile">
-                                <?php
-                                // For the top-right corner small avatar
-                                $avatarPath = '../img/default-avatar.png'; // Ensure this path is correct
-                                if (!empty($user['profile_picture'])) {
-                                    $avatarPath = '../' . $user['profile_picture'];
-                                }
-                                ?>
-                                <img src="<?php echo htmlspecialchars($avatarPath); ?>" 
-                                     alt="Profile" 
-                                     class="profile-img">
-                                <span><?php echo htmlspecialchars($user['firstname']); ?></span>
-                            </div>
-                            <i class="arrow down"></i>
-                        </button>
-                        <div class="dropdown-content">
-                            <a href="profile.php">My Profile</a>
-                            <a href="my-collections.php">My Collections</a>
-                            <a href="my_favorites.php">My Favorites</a>
-                            <a href="messages.php">Messages</a>
-                            <a href="../php/logout.php" style="background-color: #cb5050; !important;">Logout</a>
+            <?php if (!empty($user)): ?>
+                <li class="nav-item dropdown">
+                    <button class="dropbtn">
+                        <div class="user-profile">
+                            <?php
+                            // **Updated: Use getImagePath for profile picture**
+                            $avatarPath = '../img/default-avatar.png'; // Ensure this path is correct
+                            if (!empty($user['profile_picture'])) {
+                                $avatarPath = getImagePath($user['profile_picture'], '../img/default-avatar.png');
+                            }
+                            ?>
+                            <img src="<?php echo htmlspecialchars($avatarPath); ?>" 
+                                 alt="Profile" 
+                                 class="profile-img">
+                            <span><?php echo htmlspecialchars($user['firstname']); ?></span>
                         </div>
-                    </li>
-                <?php else: ?>
-                    <li><a href="./HTML/web.html">Login/Signup</a></li>
-                <?php endif; ?>
-            </ul>
-        </div>
-    </header>
+                        <i class="arrow down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="profile.php">My Profile</a>
+                        <a href="my-collections.php">My Collections</a>
+                        <a href="my_favorites.php">My Favorites</a>
+                        <a href="messages.php">Messages</a>
+                        <a href="../php/logout.php" style="background-color: #cb5050; !important;">Logout</a>
+                    </div>
+                </li>
+            <?php else: ?>
+                <li><a href="./HTML/web.html">Login/Signup</a></li>
+            <?php endif; ?>
+        </ul>
+    </div>
+</header>
 
-    <div class="auctions-container">
-        <div class="bid-content">
-            <div class="artwork-display">
-                <h1><?php echo htmlspecialchars($auction['title']); ?></h1>
-                <p class="price"><strong>Starting Price:</strong> $<?php echo number_format($auction['reserve_price'], 2); ?></p>
-                <p class="price"><strong>Highest Bid:</strong> $<?php echo number_format($highest_bid, 2); ?></p>
-                <img src="<?php echo htmlspecialchars($auction['image_url']); ?>" alt="<?php echo htmlspecialchars($auction['title']); ?>">
-                <!-- <p><strong>Starting Price:</strong> $<?php echo number_format($auction['reserve_price'], 2); ?></p> -->
-                <!-- <p><strong>Auction Ends On:</strong> <?php echo date('Y-m-d H:i', strtotime($auction['end_date'])); ?></p> -->
-                <!-- <?php if ($last_bid): ?>
-                    <p><strong>Last Bid:</strong> $<?php echo number_format($last_bid, 2); ?> (Placed <?php echo time_ago($last_bid_time); ?> ago)</p>
-                <?php endif; ?> -->
-            </div>
-            <div class="bid-form">
+<div class="auctions-container">
+    <div class="bid-content">
+        <div class="artwork-display">
+            <h1><?php echo htmlspecialchars($auction['title']); ?></h1>
+            <p class="price"><strong>Starting Price:</strong> $<?php echo number_format($auction['reserve_price'], 2); ?></p>
+            <p class="price"><strong>Highest Bid:</strong> $<?php echo number_format($highest_bid, 2); ?></p>
+            <!-- **Updated: Use getImagePath for artwork image** -->
+            <img src="<?php echo htmlspecialchars(getImagePath($auction['image_url'], '../img/placeholder.jpg')); ?>" alt="<?php echo htmlspecialchars($auction['title']); ?>">
+            <!-- <p><strong>Starting Price:</strong> $<?php echo number_format($auction['reserve_price'], 2); ?></p> -->
+            <!-- <p><strong>Auction Ends On:</strong> <?php echo date('Y-m-d H:i', strtotime($auction['end_date'])); ?></p> -->
+            <!-- <?php if ($last_bid): ?>
+                <p><strong>Last Bid:</strong> $<?php echo number_format($last_bid, 2); ?> (Placed <?php echo time_ago($last_bid_time); ?> ago)</p>
+            <?php endif; ?> -->
+        </div>
+        <div class="bid-form">
             <div class="bidding-log">
-            <h4>Bidding Log</h4>
-            <ul>
-                <?php
-                // Fetch and display the bidding history
-                $log_query = "SELECT bid_amount, bid_time FROM bids WHERE auction_id = ? ORDER BY bid_time DESC";
-                $log_stmt = $conn->prepare($log_query);
-                $log_stmt->bind_param("i", $auction_id);
-                $log_stmt->execute();
-                $log_result = $log_stmt->get_result();
+                <h4>Bidding Log</h4>
+                <ul>
+                    <?php
+                    // Fetch and display the bidding history
+                    $log_query = "SELECT bid_amount, bid_time FROM bids WHERE auction_id = ? ORDER BY bid_time DESC";
+                    $log_stmt = $conn->prepare($log_query);
+                    $log_stmt->bind_param("i", $auction_id);
+                    $log_stmt->execute();
+                    $log_result = $log_stmt->get_result();
 
-                while ($log_entry = $log_result->fetch_assoc()) {
-                    echo '<li>$' . number_format($log_entry['bid_amount'], 2) . ' - ' . time_ago($log_entry['bid_time']) . '</li>';
-                }
-                ?>
-            </ul>
-        </div>
-                <form method="POST" action="">
-                    <input type="hidden" name="auction_id" value="<?php echo $auction['auction_id']; ?>">
-                    <label for="bid_amount">Your Bid Amount:</label>
-                    <input type="number" id="bid_amount" name="bid_amount" step="0.01" required>
-                    <button type="submit">Place Bid</button>
-                </form>
-                <?php if (isset($error_message)): ?>
-                    <div class="error-message"><?php echo $error_message; ?></div>
-                <?php endif; ?>
-                <?php if (isset($success_message)): ?>
-                    <div class="success-message"><?php echo $success_message; ?></div>
-                <?php endif; ?>
+                    while ($log_entry = $log_result->fetch_assoc()) {
+                        echo '<li>$' . number_format($log_entry['bid_amount'], 2) . ' - ' . time_ago($log_entry['bid_time']) . '</li>';
+                    }
+                    ?>
+                </ul>
             </div>
+            <form method="POST" action="">
+                <input type="hidden" name="auction_id" value="<?php echo $auction['auction_id']; ?>">
+                <label for="bid_amount">Your Bid Amount:</label>
+                <input type="number" id="bid_amount" name="bid_amount" step="0.01" required>
+                <button type="submit">Place Bid</button>
+            </form>
+            <?php if (isset($error_message)): ?>
+                <div class="error-message"><?php echo htmlspecialchars($error_message); ?></div>
+            <?php endif; ?>
+            <?php if (isset($success_message)): ?>
+                <div class="success-message"><?php echo htmlspecialchars($success_message); ?></div>
+            <?php endif; ?>
         </div>
-
-        <!-- Bidding Log Section -->
-        
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const dropdown = document.querySelector('.nav-item.dropdown');
-            const dropbtn = document.querySelector('.dropbtn');
+    <!-- Bidding Log Section -->
+    
+</div>
 
-            if (dropdown && dropbtn) {
-                dropbtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    dropdown.classList.toggle('active');
-                });
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const dropdown = document.querySelector('.nav-item.dropdown');
+        const dropbtn = document.querySelector('.dropbtn');
 
-                // Close dropdown when clicking outside
-                document.addEventListener('click', function(e) {
-                    if (!dropdown.contains(e.target)) {
-                        dropdown.classList.remove('active');
-                    }
-                });
+        if (dropdown && dropbtn) {
+            dropbtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropdown.classList.toggle('active');
+            });
 
-                // Prevent dropdown from closing when clicking inside
-                dropdown.querySelector('.dropdown-content').addEventListener('click', function(e) {
-                    e.stopPropagation();
-                });
-            }
-        });
-    </script>
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!dropdown.contains(e.target)) {
+                    dropdown.classList.remove('active');
+                }
+            });
+
+            // Prevent dropdown from closing when clicking inside
+            dropdown.querySelector('.dropdown-content').addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        }
+    });
+</script>
 </body>
-</html> 
+</html>

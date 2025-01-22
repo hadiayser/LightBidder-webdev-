@@ -18,7 +18,7 @@ if (isset($_SESSION['user_id'])) {
     $user_id = $_SESSION['user_id']; // Logged-in user ID
 
     // Fetch all users except the logged-in user
-    $sql = "SELECT user_id, username FROM users WHERE user_id != ?";
+    $sql = "SELECT user_id, username, role, profile_picture FROM users WHERE user_id != ?";
     $stmt = $conn->prepare($sql);
     if ($stmt === false) {
         $response['status'] = 'error';
@@ -35,7 +35,9 @@ if (isset($_SESSION['user_id'])) {
         while ($row = $result->fetch_assoc()) {
             $users[] = array(
                 'user_id' => $row['user_id'],
-                'username' => htmlspecialchars($row['username'])
+                'username' => htmlspecialchars($row['username']),
+                'role' => htmlspecialchars($row['role']), // Include role
+                'avatar_url' => !empty($row['profile_picture']) ? '../' . $row['profile_picture'] : '../uploads/profile_pictures/default-avatar.png'
             );
         }
         $response['status'] = 'success';

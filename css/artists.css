@@ -317,7 +317,7 @@
     overflow: hidden;
     cursor: pointer;
     text-align: center;
-    min-height: 320px;
+    min-height: 220px;
     width: auto;
     max-height: 200px;
   }
@@ -515,6 +515,25 @@
   @media (max-width: 768px) {
     .popup-content {
       grid-template-columns: 1fr;
+    }
+    .artist-card img {
+      width: 100%;
+      max-height: auto;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    article.artist-card {
+      position: relative;
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      overflow: hidden;
+      cursor: pointer;
+      text-align: center;
+      max-height: 120px;
+      width: auto;
+      max-width: 200px;
     }
   }
   

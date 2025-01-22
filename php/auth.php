@@ -121,12 +121,12 @@ if (isset($_POST['register'])) {
                 }
 
             // Redirect to login page after successful registration
-            header("Location: ../html/web.html");
+            header("Location: ../front-php/HTML/web.html");
             exit();
         } else {
             error_log("Error inserting into users: " . $stmt->error);
         }
-    }
+    }   
 }
 }
 ?>

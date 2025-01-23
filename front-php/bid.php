@@ -2,6 +2,11 @@
 session_start();
 require_once('../php/conn.php');
 
+// **Added: Generate CSRF Token if not set**
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32)); // Generate a CSRF token
+}
+
 // **Added: Helper function to determine the correct image path**
 function getImagePath($image_url, $placeholder = '../img/placeholder.jpg') {
     if (!empty($image_url)) {
@@ -113,22 +118,27 @@ function time_ago($datetime) {
 
 // Handle bid submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bid_amount'])) {
-    $bid_amount = $_POST['bid_amount'];
-
-    // Validate bid amount
-    if ($bid_amount <= $highest_bid) {
-        $error_message = "Your bid must be higher than the current highest bid of $" . number_format($highest_bid, 2) . ".";
+    // **Added: CSRF Token validation**
+    if ($_POST['csrf_token'] !== $_SESSION['csrf_token']) {
+        $error_message = "Invalid CSRF token.";
     } else {
-        // Insert the bid into the database
-        $insert_bid_query = "INSERT INTO bids (auction_id, user_id, bid_amount) VALUES (?, ?, ?)";
-        $stmt = $conn->prepare($insert_bid_query);
-        $stmt->bind_param("iid", $auction_id, $_SESSION['user_id'], $bid_amount);
+        $bid_amount = $_POST['bid_amount'];
 
-        if ($stmt->execute()) {
-            $success_message = "Your bid has been placed successfully!";
-            // Optionally, you can redirect to the auction page or show a confirmation
+        // Validate bid amount
+        if ($bid_amount <= $highest_bid) {
+            $error_message = "Your bid must be higher than the current highest bid of $" . number_format($highest_bid, 2) . ".";
         } else {
-            $error_message = "Error placing your bid.";
+            // Insert the bid into the database
+            $insert_bid_query = "INSERT INTO bids (auction_id, user_id, bid_amount) VALUES (?, ?, ?)";
+            $stmt = $conn->prepare($insert_bid_query);
+            $stmt->bind_param("iid", $auction_id, $_SESSION['user_id'], $bid_amount);
+
+            if ($stmt->execute()) {
+                $success_message = "Your bid has been placed successfully!";
+                // Optionally, you can redirect to the auction page or show a confirmation
+            } else {
+                $error_message = "Error placing your bid.";
+            }
         }
     }
 }
@@ -203,11 +213,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bid_amount'])) {
             <p class="price"><strong>Highest Bid:</strong> $<?php echo number_format($highest_bid, 2); ?></p>
             <!-- **Updated: Use getImagePath for artwork image** -->
             <img src="<?php echo htmlspecialchars(getImagePath($auction['image_url'], '../img/placeholder.jpg')); ?>" alt="<?php echo htmlspecialchars($auction['title']); ?>">
-            <!-- <p><strong>Starting Price:</strong> $<?php echo number_format($auction['reserve_price'], 2); ?></p> -->
-            <!-- <p><strong>Auction Ends On:</strong> <?php echo date('Y-m-d H:i', strtotime($auction['end_date'])); ?></p> -->
-            <!-- <?php if ($last_bid): ?>
-                <p><strong>Last Bid:</strong> $<?php echo number_format($last_bid, 2); ?> (Placed <?php echo time_ago($last_bid_time); ?> ago)</p>
-            <?php endif; ?> -->
         </div>
         <div class="bid-form">
             <div class="bidding-log">
@@ -228,6 +233,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['bid_amount'])) {
                 </ul>
             </div>
             <form method="POST" action="">
+                <!-- CSRF Token -->
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                 <input type="hidden" name="auction_id" value="<?php echo $auction['auction_id']; ?>">
                 <label for="bid_amount">Your Bid Amount:</label>
                 <input type="number" id="bid_amount" name="bid_amount" step="0.01" required>

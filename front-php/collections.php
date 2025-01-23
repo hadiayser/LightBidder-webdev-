@@ -48,7 +48,7 @@ if (isset($_SESSION['user_id'])) {
 
 // Redirect to login/signup page if not logged in
 if (!isset($_SESSION['user_id'])) {
-    header("Location: web.php"); // Ensure it's web.php
+    header("Location: HTML/web.html"); // Ensure it's web.php
     exit();
 }
 
